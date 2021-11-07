@@ -8,15 +8,19 @@
 class i2c_master_agent extends uvm_component;
   `uvm_component_utils(i2c_master_agent)
 
+  i2c_master_agent_config i2c_master_agent_cfg_h;
+
+
+  i2c_master_monitor_proxy i2c_master_mon_proxy_h;
+  i2c_master_sequencer i2c_master_seqr_h;
+  i2c_master_driver_proxy i2c_master_drv_proxy_h;
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
   extern function new(string name = "i2c_master_agent", uvm_component parent = null);
   extern virtual function void build_phase(uvm_phase phase);
-  extern virtual function void connect_phase(uvm_phase phase);
-  extern virtual function void end_of_elaboration_phase(uvm_phase phase);
-  extern virtual function void start_of_simulation_phase(uvm_phase phase);
-  extern virtual task run_phase(uvm_phase phase);
+  //extern virtual function void connect_phase(uvm_phase phase);
 
 endclass : i2c_master_agent
 
@@ -40,7 +44,20 @@ endfunction : new
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
 function void i2c_master_agent::build_phase(uvm_phase phase);
+  
   super.build_phase(phase);
+  if(!uvm_config_db #(i2c_master_agent_config)::get(this,"","i2c_master_agent_config",i2c_master_agent_cfg_h))
+    `uvm_fatal("config","cannot get the config m_cfg from uvm_config_db. Have u set it ?")
+    
+    i2c_master_mon_proxy_h=i2c_master_monitor_proxy::type_id::create("i2c_master_mon_proxy_h",this);
+  
+  if(i2c_master_agent_cfg_h.is_active==UVM_ACTIVE)
+  
+  begin
+    i2c_master_drv_proxy_h=i2c_master_driver_proxy::type_id::create("master_driver_h",this);
+    i2c_master_seqr_h=i2c_master_sequencer::type_id::create("i2c_master_seqr_h",this);
+  end
+
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------
@@ -50,50 +67,16 @@ endfunction : build_phase
 // Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
+/*
 function void i2c_master_agent::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
+  if(i2c_master_agent_cfg_h.is_active==UVM_ACTIVE)
+    begin
+      i2c_master_drv_proxy_h.seq_item_port.connect(i2c_master_seqr_h.seq_item_export);
+    end
+
 endfunction : connect_phase
-
-//--------------------------------------------------------------------------------------------
-// Function: end_of_elaboration_phase
-// <Description_here>
-//
-// Parameters:
-//  phase - uvm phase
-//--------------------------------------------------------------------------------------------
-function void i2c_master_agent::end_of_elaboration_phase(uvm_phase phase);
-  super.end_of_elaboration_phase(phase);
-endfunction  : end_of_elaboration_phase
-
-//--------------------------------------------------------------------------------------------
-// Function: start_of_simulation_phase
-// <Description_here>
-//
-// Parameters:
-//  phase - uvm phase
-//--------------------------------------------------------------------------------------------
-function void i2c_master_agent::start_of_simulation_phase(uvm_phase phase);
-  super.start_of_simulation_phase(phase);
-endfunction : start_of_simulation_phase
-
-//--------------------------------------------------------------------------------------------
-// Task: run_phase
-// <Description_here>
-//
-// Parameters:
-//  phase - uvm phase
-//--------------------------------------------------------------------------------------------
-task i2c_master_agent::run_phase(uvm_phase phase);
-
-  phase.raise_objection(this, "i2c_master_agent");
-
-  super.run_phase(phase);
-
-  // Work here
-  // ...
-
-  phase.drop_objection(this);
-
-endtask : run_phase
+*/
 
 `endif
+
