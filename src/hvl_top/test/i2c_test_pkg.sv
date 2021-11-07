@@ -21,9 +21,9 @@ package i2c_test_pkg;
   import i2c_master_pkg::*;
   import i2c_slave_pkg::*;
   import i2c_env_pkg::*;
-  import i2c_master_seq_pkg::*;
-  import i2c_slave_seq_pkg::*;
-  import i2c_virtual_seq_pkg::*;
+  //import i2c_master_seq_pkg::*;
+  //import i2c_slave_seq_pkg::*;
+  //import i2c_virtual_seq_pkg::*;
 
  //including base_test for testing
  `include "i2c_base_test.sv"
