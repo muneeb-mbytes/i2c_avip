@@ -1,0 +1,140 @@
+# vsim -vopt work.hvl_top work.hdl_top -voptargs="+acc=npr" -assertdebug "+UVM_TESTNAME=i2c_base_test" -l i2c_base_test/i2c_base_test.log -c -do "log -r /*; add wave -r /*; run -all;" -wlf i2c_base_test/waveform.wlf 
+# Start time: 22:12:49 on Nov 06,2021
+# ** Note: (vsim-3812) Design is being optimized...
+# //  Questa Sim
+# //  Version 10.6c linux Jul 25 2017
+# //
+# //  Copyright 1991-2017 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.i2c_slave_driver_bfm(fast)
+# Loading work.i2c_slave_monitor_bfm(fast)
+# Loading mtiUvm.uvm_pkg
+# Loading work.i2c_slave_pkg(fast)
+# Loading work.i2c_master_driver_bfm(fast)
+# Loading work.i2c_master_pkg(fast)
+# Loading work.i2c_env_pkg(fast)
+# Loading work.test_pkg(fast)
+# Loading work.hvl_top(fast)
+# Loading work.hdl_top(fast)
+# Loading work.i2c_if(fast__1)
+# Loading work.i2c_master_agent_bfm(fast)
+# Loading work.i2c_master_driver_bfm(fast)
+# Loading work.i2c_master_monitor_bfm(fast)
+# Loading work.i2c_slave_agent_bfm(fast)
+# Loading work.i2c_slave_driver_bfm(fast)
+# Loading work.i2c_slave_monitor_bfm(fast)
+# Loading mtiUvm.questa_uvm_pkg(fast)
+# Loading /tools/mentor/questasim_10.6c/questasim/uvm-1.1d/linux/uvm_dpi.so
+# log -r /*
+#  add wave -r /*
+#  run -all
+# ----------------------------------------------------------------
+# UVM-1.1d
+# (C) 2007-2013 Mentor Graphics Corporation
+# (C) 2007-2013 Cadence Design Systems, Inc.
+# (C) 2006-2013 Synopsys, Inc.
+# (C) 2011-2013 Cypress Semiconductor Corp.
+# ----------------------------------------------------------------
+# 
+#   ***********       IMPORTANT RELEASE NOTES         ************
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_NO_DEPRECATED undefined.
+#   See http://www.eda.org/svdb/view.php?id=3313 for more details.
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_OBJECT_MUST_HAVE_CONSTRUCTOR undefined.
+#   See http://www.eda.org/svdb/view.php?id=3770 for more details.
+# 
+#       (Specify +UVM_NO_RELNOTES to turn off this notice)
+# 
+# UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(215) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
+# UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(217) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
+# UVM_INFO @ 0: reporter [RNTST] Running test i2c_base_test...
+# UVM_INFO ../../src/hdl_top/hdl_top.sv(20) @ 0: reporter [UVM_INFO] HDL_TOP
+# HDL TOP
+#  I2C Master Agent BFM
+# I2C Master Driver BFM
+# i2c master Monitor BFM
+# SLAVE AGENT BFM
+# Slave Driver BFM
+# SLAVE MONITOR BFM
+# ----------------------------------------------
+# Name               Type            Size  Value
+# ----------------------------------------------
+# i2c_env_cfg_h      i2c_env_config  -     @485 
+#   has_scoreboard   integral        1     1    
+#   has_virtual_sqr  integral        1     1    
+#   NO_OF_SLAVES     integral        32    'h0  
+#   NO_OF_MASTERS    integral        32    'h0  
+# ----------------------------------------------
+# UVM_INFO ../../src/hvl_top/env/i2c_env.sv(61) @ 0: uvm_test_top.i2c_env_h [uvm_test_top.i2c_env_h] I2C_ENV: build_phase
+# UVM_INFO @ 0: reporter [UVMTOP] UVM testbench topology:
+# -----------------------------------------------------------------------
+# Name                            Type                        Size  Value
+# -----------------------------------------------------------------------
+# uvm_test_top                    i2c_base_test               -     @471 
+#   i2c_env_cfg_h                 i2c_env_config              -     @485 
+#     has_scoreboard              integral                    1     1    
+#     has_virtual_sqr             integral                    1     1    
+#     NO_OF_SLAVES                integral                    32    'h0  
+#     NO_OF_MASTERS               integral                    32    'h0  
+#   i2c_env_h                     i2c_env                     -     @478 
+#     i2c_virtual_seqr_h          i2c_virtual_sequencer       -     @497 
+#       i2c_master_seqr_h         i2c_master_sequencer        -     @512 
+#         rsp_export              uvm_analysis_export         -     @519 
+#         seq_item_export         uvm_seq_item_pull_imp       -     @613 
+#         arbitration_queue       array                       0     -    
+#         lock_queue              array                       0     -    
+#         num_last_reqs           integral                    32    'd1  
+#         num_last_rsps           integral                    32    'd1  
+#       i2c_slave_seqr_h          i2c_slave_sequencer         -     @621 
+#         rsp_export              uvm_analysis_export         -     @628 
+#         seq_item_export         uvm_seq_item_pull_imp       -     @722 
+#         arbitration_queue       array                       0     -    
+#         lock_queue              array                       0     -    
+#         num_last_reqs           integral                    32    'd1  
+#         num_last_rsps           integral                    32    'd1  
+#     scoreboard_h                i2c_scoreboard              -     @504 
+#       i2c_master_analysis_fifo  uvm_tlm_analysis_fifo #(T)  -     @740 
+#         analysis_export         uvm_analysis_imp            -     @779 
+#         get_ap                  uvm_analysis_port           -     @771 
+#         get_peek_export         uvm_get_peek_imp            -     @755 
+#         put_ap                  uvm_analysis_port           -     @763 
+#         put_export              uvm_put_imp                 -     @747 
+#       i2c_slave_analysis_fifo   uvm_tlm_analysis_fifo #(T)  -     @787 
+#         analysis_export         uvm_analysis_imp            -     @826 
+#         get_ap                  uvm_analysis_port           -     @818 
+#         get_peek_export         uvm_get_peek_imp            -     @802 
+#         put_ap                  uvm_analysis_port           -     @810 
+#         put_export              uvm_put_imp                 -     @794 
+# -----------------------------------------------------------------------
+# 
+# 
+# --- UVM Report Summary ---
+# 
+# ** Report counts by severity
+# UVM_INFO :    6
+# UVM_WARNING :    0
+# UVM_ERROR :    0
+# UVM_FATAL :    0
+# ** Report counts by id
+# [Questa UVM]     2
+# [RNTST]     1
+# [UVMTOP]     1
+# [UVM_INFO]     1
+# [uvm_test_top.i2c_env_h]     1
+# ** Note: $finish    : /tools/mentor/questasim_10.6c/questasim/linux/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
+#    Time: 0 ns  Iteration: 215  Instance: /hvl_top
+# End time: 22:12:53 on Nov 06,2021, Elapsed time: 0:00:04
+# Errors: 0, Warnings: 0
