@@ -3,7 +3,7 @@
 
 //--------------------------------------------------------------------------------------------
 // Class: i2c_slave_agent
-// <Description_here>
+// This agent has sequencer, driver_proxy, monitor_proxy for SPI  
 //--------------------------------------------------------------------------------------------
 class i2c_slave_agent extends uvm_component;
   `uvm_component_utils(i2c_slave_agent)
@@ -36,7 +36,7 @@ endfunction : new
 
 //--------------------------------------------------------------------------------------------
 // Function: build_phase
-// <Description_here>
+// Creates the required ports, gets the required configuration from config_db
 //
 // Parameters:
 //  phase - uvm phase
