@@ -25,8 +25,8 @@ class i2c_virtual_sequencer extends uvm_sequencer #(uvm_sequence_item);
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
-  extern function new(string name = "i2c_virtual_sequencer", uvm_component parent );
-  extern i2c_virtual function void build_phase(uvm_phase phase);
+  extern function new(string name = "i2c_virtual_sequencer", uvm_component parent);
+  extern function void build_phase(uvm_phase phase);
 
 endclass : i2c_virtual_sequencer
 
