@@ -1,5 +1,5 @@
-  `ifdef HDL_TOP INCLUDED_
-  `define HDL_TOP_INCLUDED_
+`ifndef HDL_TOP_INCLUDED_
+`define HDL_TOP_INCLUDED_
 //--------------------------------------------------------------------------------------------
 // module : hdl_top
 // Description : hdl top has a interface and master and slave agent bfm

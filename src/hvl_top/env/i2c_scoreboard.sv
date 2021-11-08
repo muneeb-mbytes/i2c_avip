@@ -16,9 +16,9 @@ class i2c_scoreboard extends uvm_component;
 
 
 
-  uvm_tlm_analysis_fifo#(i2c_master_tx)i2c_master_analysis_fifo;
+  uvm_tlm_analysis_fifo#(i2c_master_tx)master_analysis_fifo;
 
-  uvm_tlm_analysis_fifo#(i2c_slave_tx)i2c_slave_analysis_fifo;
+  uvm_tlm_analysis_fifo#(i2c_slave_tx)slave_analysis_fifo;
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
@@ -50,8 +50,8 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void i2c_scoreboard::build_phase(uvm_phase phase);
   super.build_phase(phase);
-  i2c_master_analysis_fifo=new("i2c_master_analysis_fifo",this);
-  i2c_slave_analysis_fifo=new("i2c_slave_analysis_fifo",this);
+  master_analysis_fifo=new("master_analysis_fifo",this);
+  slave_analysis_fifo=new("slave_analysis_fifo",this);
 
 endfunction : build_phase
 

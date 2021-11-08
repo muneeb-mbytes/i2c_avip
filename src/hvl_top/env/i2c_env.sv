@@ -97,12 +97,12 @@ function void i2c_env::connect_phase(uvm_phase phase);
   if(i2c_env_cfg_h.has_virtual_sequencer)
   begin
     foreach(i2c_master_agent_h[i])begin
-      virtual_seqr_h.i2c_master_seqr_h=i2c_master_agent_h[i].i2c_master_seqr_h;
-      i2c_master_agent_h[i].i2c_master_monitor_h.i2c_master_analysis_port.connect(scoreboard_h.i2c_master_analysis_fifo.analysis_export); 
+      i2c_virtual_seqr_h.i2c_master_seqr_h=i2c_master_agent_h[i].i2c_master_seqr_h;
+      i2c_master_agent_h[i].i2c_master_mon_proxy_h.master_analysis_port.connect(scoreboard_h.master_analysis_fifo.analysis_export); 
     end
     foreach(i2c_slave_agent_h[i])begin
-      virtual_seqr_h.i2c_slave_seqr_h=i2c_slave_agent_h[i].i2c_slave_seqr_h;
-      i2c_slave_agent_h[i].i2c_slave_monitor_h.i2c_slave_analysis_port.connect(scoreboard_h.i2c_slave_analysis_fifo.analysis_export);
+      i2c_virtual_seqr_h.i2c_slave_seqr_h=i2c_slave_agent_h[i].i2c_slave_seqr_h;
+      i2c_slave_agent_h[i].i2c_slave_mon_proxy_h.slave_analysis_port.connect(scoreboard_h.slave_analysis_fifo.analysis_export);
     end
   end
 endfunction : connect_phase

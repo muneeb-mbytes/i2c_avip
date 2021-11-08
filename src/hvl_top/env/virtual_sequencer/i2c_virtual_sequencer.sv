@@ -52,7 +52,7 @@ endfunction : new
 function void i2c_virtual_sequencer::build_phase(uvm_phase phase);
   super.build_phase(phase);
   
-  if(!uvm_config_db #(env_config)::get(this,"","env_config",env_cfg_h))
+  if(!uvm_config_db #(i2c_env_config)::get(this,"","i2c_env_config",i2c_env_cfg_h))
   `uvm_error("VSEQR","COULDNT GET")
   
   //slave_seqr_h = new[env_cfg_h.no_of_sagent];

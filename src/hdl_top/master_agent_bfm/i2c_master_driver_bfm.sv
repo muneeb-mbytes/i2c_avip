@@ -1,4 +1,5 @@
-//--------------------------------------------------------------------------------------------
+`ifndef I2C_MASTER_DRIVER_BFM_INCLUDED_
+`define I2C_MASTER_DRIVER_BFM_INCLUDED_
 //Interface : i2c_master_driver_bfm
 //It connects with the HVL driver_proxy for driving the stimulus
 //

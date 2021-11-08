@@ -10,9 +10,9 @@ class i2c_slave_agent extends uvm_component;
 
   i2c_slave_agent_config i2c_slave_agent_cfg_h;
   
-  i2c_slave_monitor_proxy i2c_slave_monitor_h;
+  i2c_slave_monitor_proxy i2c_slave_mon_proxy_h;
   i2c_slave_sequencer i2c_slave_seqr_h;
-  i2c_slave_driver_proxy i2c_slave_driver_h;
+  i2c_slave_driver_proxy i2c_slave_drv_proxy_h;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -46,12 +46,12 @@ function void i2c_slave_agent::build_phase(uvm_phase phase);
   if(!uvm_config_db #(i2c_slave_agent_config)::get(this,"","i2c_slave_agent_config",i2c_slave_agent_cfg_h))
     `uvm_fatal("CONFIG","cannot get() the i2c_slave_agent_cfg_h from the uvm_config_db. have you set it?")
     
-    i2c_slave_monitor_h=i2c_slave_monitor_proxy::type_id::create("i2c_slave_monitor_h",this);
+    i2c_slave_mon_proxy_h=i2c_slave_monitor_proxy::type_id::create("i2c_slave_mon_proxy_h",this);
 
     if(i2c_slave_agent_cfg_h.is_active==UVM_ACTIVE)
       begin
 
-        i2c_slave_driver_h=i2c_slave_driver_proxy::type_id::create("i2c_slave_driver_h",this);
+        i2c_slave_drv_proxy_h=i2c_slave_driver_proxy::type_id::create("i2c_slave_drv_proxy_h",this);
         i2c_slave_seqr_h=i2c_slave_sequencer::type_id::create("i2c_slave_seqr_h",this);
       
       end
@@ -71,7 +71,7 @@ function void i2c_slave_agent::connect_phase(uvm_phase phase);
 
   if(s_cfg.is_active==UVM_ACTIVE)
   begin
-    i2c_slave_driver_h.seq_item_port.connect(i2c_slave_seqr_h.seq_item_export);
+    i2c_slave_drv_proxy_h.seq_item_port.connect(i2c_slave_seqr_h.seq_item_export);
   end
 endfunction : connect_phase
 */
