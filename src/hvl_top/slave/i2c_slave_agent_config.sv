@@ -9,6 +9,7 @@ class i2c_slave_agent_config extends uvm_object;
   `uvm_object_utils(i2c_slave_agent_config)
 
   int slave_id;
+  bit has_coverage;
   uvm_active_passive_enum is_active = UVM_ACTIVE;
   //-------------------------------------------------------
   // Externally defined Tasks and Functions

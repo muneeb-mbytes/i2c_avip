@@ -12,6 +12,7 @@ class i2c_master_agent_config extends uvm_object;
 
   int no_of_slaves;
 
+  bit has_coverage;
 
   uvm_active_passive_enum is_active = UVM_ACTIVE;
   //-------------------------------------------------------

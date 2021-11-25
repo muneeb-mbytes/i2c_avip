@@ -14,6 +14,7 @@ class i2c_master_agent extends uvm_component;
   i2c_master_monitor_proxy i2c_master_mon_proxy_h;
   i2c_master_sequencer i2c_master_seqr_h;
   i2c_master_driver_proxy i2c_master_drv_proxy_h;
+  i2c_master_coverage i2c_master_cov_h;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -58,6 +59,9 @@ function void i2c_master_agent::build_phase(uvm_phase phase);
     i2c_master_seqr_h=i2c_master_sequencer::type_id::create("i2c_master_seqr_h",this);
   end
 
+  if(i2c_master_agent_cfg_h.has_coverage)begin
+    i2c_master_cov_h=i2c_master_coverage::type_id::create("master_cov_h",this);
+  end
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------
@@ -70,10 +74,23 @@ endfunction : build_phase
 /*
 function void i2c_master_agent::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
-  if(i2c_master_agent_cfg_h.is_active==UVM_ACTIVE)
-    begin
-      i2c_master_drv_proxy_h.seq_item_port.connect(i2c_master_seqr_h.seq_item_export);
-    end
+  if(i2c_master_agent_cfg_h.is_active==UVM_ACTIVE)begin
+    
+      i2c_master_drv_proxy_h.i2c_master_agent_cfg_h=i2c_master_agent_cfg_h;
+      i2c_master_seqr_h.i2c_master_agent_cfg_h=i2c_master_agent_cfg_h;
+      i2c_master_drv_proxy_h.seq_item_port.connect(i2c_master_seqr_h.seq_item_export);                        
+   end                                                                                               
+                                                                                                       
+     if(i2c_master_agent_cfg_h.has_coverage) begin                                                         
+         // MSHA: master_cov_h.master_agent_cfg_h = master_agent_cfg_h;                                  
+        i2c_master_cov_h.i2c_master_agent_cfg_h = i2c_master_agent_cfg_h;                                          
+            // TODO(mshariff):                                                                              
+          // connect monitor port to coverage                                                             
+                                                                                                           
+            i2c_master_mon_proxy_h.master_analysis_port.connect(i2c_master_cov_h.analysis_export);                  
+          end                                                                                               
+                                                                                                            
+          i2c_master_mon_proxy_h.i2c_master_agent_cfg_h = i2c_master_agent_cfg_h; 
 
 endfunction : connect_phase
 */

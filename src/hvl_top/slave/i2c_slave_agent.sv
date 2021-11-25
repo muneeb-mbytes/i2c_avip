@@ -13,6 +13,7 @@ class i2c_slave_agent extends uvm_component;
   i2c_slave_monitor_proxy i2c_slave_mon_proxy_h;
   i2c_slave_sequencer i2c_slave_seqr_h;
   i2c_slave_driver_proxy i2c_slave_drv_proxy_h;
+  i2c_slave_coverage i2c_slave_cov_h;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -56,7 +57,10 @@ function void i2c_slave_agent::build_phase(uvm_phase phase);
       
       end
 
+      if(i2c_slave_agent_cfg_h.has_coverage)begin
 
+        i2c_slave_cov_h=i2c_slave_coverage::type_id::create("i2c_slave_cov_h",this);
+      end
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------

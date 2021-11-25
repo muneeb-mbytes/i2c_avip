@@ -26,6 +26,7 @@ package i2c_slave_pkg;
   // `include "i2c_slave_sequence.sv"
   `include "i2c_slave_driver_proxy.sv"
   `include "i2c_slave_monitor_proxy.sv"
+  `include "i2c_slave_coverage.sv"
   `include "i2c_slave_agent.sv"
   
 endpackage : i2c_slave_pkg
