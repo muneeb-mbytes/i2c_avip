@@ -55,12 +55,12 @@ function void i2c_master_agent::build_phase(uvm_phase phase);
   if(i2c_master_agent_cfg_h.is_active==UVM_ACTIVE)
   
   begin
-    i2c_master_drv_proxy_h=i2c_master_driver_proxy::type_id::create("master_driver_h",this);
+    i2c_master_drv_proxy_h=i2c_master_driver_proxy::type_id::create("i2c_master_driver_h",this);
     i2c_master_seqr_h=i2c_master_sequencer::type_id::create("i2c_master_seqr_h",this);
   end
 
   if(i2c_master_agent_cfg_h.has_coverage)begin
-    i2c_master_cov_h=i2c_master_coverage::type_id::create("master_cov_h",this);
+    i2c_master_cov_h=i2c_master_coverage::type_id::create("i2c_master_cov_h",this);
   end
 endfunction : build_phase
 
