@@ -24,9 +24,9 @@ class i2c_env extends uvm_env;
   // Declaring environment configuration handle
   i2c_env_config i2c_env_cfg_h;
   
-  // Variable: scoreboard_h
+  // Variable: i2c_scoreboard_h
   // declaring scoreboard handle
-  i2c_scoreboard scoreboard_h;
+  i2c_scoreboard i2c_scoreboard_h;
   
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -80,7 +80,7 @@ function void i2c_env::build_phase(uvm_phase phase);
   end 
   
   if(i2c_env_cfg_h.has_scoreboard)begin
-   scoreboard_h=i2c_scoreboard::type_id::create("scoreboard_h",this);
+   i2c_scoreboard_h=i2c_scoreboard::type_id::create("i2c_scoreboard_h",this);
   end 
 
 endfunction : build_phase
@@ -98,11 +98,11 @@ function void i2c_env::connect_phase(uvm_phase phase);
   begin
     foreach(i2c_master_agent_h[i])begin
       i2c_virtual_seqr_h.i2c_master_seqr_h=i2c_master_agent_h[i].i2c_master_seqr_h;
-      i2c_master_agent_h[i].i2c_master_mon_proxy_h.master_analysis_port.connect(scoreboard_h.master_analysis_fifo.analysis_export); 
+      i2c_master_agent_h[i].i2c_master_mon_proxy_h.master_analysis_port.connect(i2c_scoreboard_h.master_analysis_fifo.analysis_export); 
     end
     foreach(i2c_slave_agent_h[i])begin
       i2c_virtual_seqr_h.i2c_slave_seqr_h=i2c_slave_agent_h[i].i2c_slave_seqr_h;
-      i2c_slave_agent_h[i].i2c_slave_mon_proxy_h.slave_analysis_port.connect(scoreboard_h.slave_analysis_fifo.analysis_export);
+      i2c_slave_agent_h[i].i2c_slave_mon_proxy_h.slave_analysis_port.connect(i2c_scoreboard_h.slave_analysis_fifo.analysis_export);
     end
   end
 endfunction : connect_phase
