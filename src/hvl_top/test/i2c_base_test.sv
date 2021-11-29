@@ -93,7 +93,7 @@ function void i2c_base_test::setup_master_agent_cfg();
   //i2c_env_cfg_h.i2c_master_agent_cfg_h.t2cdelay             = 1;
   //i2c_env_cfg_h.i2c_master_agent_cfg_h.primary_prescalar    = 0;
   //i2c_env_cfg_h.i2c_master_agent_cfg_h.secondary_prescalar  = 0;
-  //i2c_env_cfg_h.i2c_master_agent_cfg_h.has_coverage         = 1;
+  i2c_env_cfg_h.i2c_master_agent_cfg_h[i].has_coverage         = 1;
 
 
   uvm_config_db #(i2c_master_agent_config)::set(this,$sformatf("*2c_master_agent_h[%0d]*",i),"i2c_master_agent_config",i2c_env_cfg_h.i2c_master_agent_cfg_h[i]);
@@ -116,7 +116,7 @@ function void i2c_base_test::setup_slave_agent_cfg();
     i2c_env_cfg_h.i2c_slave_agent_cfg_h[i].is_active    = uvm_active_passive_enum'(UVM_ACTIVE);
     //i2c_env_cfg_h.i2c_slave_agent_cfg_h[i].spi_mode     = operation_modes_e'(CPOL0_CPHA0);
     //i2c_env_cfg_h.i2c_slave_agent_cfg_h[i].shift_dir    = shift_direction_e'(LSB_FIRST);
-    //i2c_env_cfg_h.i2c_slave_agent_cfg_h[i].has_coverage = 1;
+    i2c_env_cfg_h.i2c_slave_agent_cfg_h[i].has_coverage = 1;
 
     // MSHAdb #(i2c_slave_agent_config)::set(this,"*slave_agent*",
     // MSHA:                                         $sformatf("i2c_slave_agent_config[%0d]",i),
