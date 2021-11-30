@@ -22,6 +22,7 @@ package i2c_globals_pkg;
  // The parameter for MAXIMUM_BITS supported per transfer
  parameter int MAXIMUM_BITS = 1024;
  
+ 
  //The parameter NO_OF_ROWS specifies the no of rows of an array
  parameter int NO_OF_ROWS  = MAXIMUM_BITS/DATA_LENGTH;
  
@@ -33,8 +34,12 @@ package i2c_globals_pkg;
  //SLAVE_ADDRESS_WIDTH_10 - specifies 10 bit slave address
  //
  typedef enum bit {
+
    SLAVE_ADDRESS_WIDTH_7 = 1'b0,
    SLAVE_ADDRESS_WIDTH_10 = 1'b1
+
+   int no_of_slave_address_bits_transfer; 
+   
  } slave_address_width_e;
  
  // Enum: shift_direction_e
@@ -61,31 +66,35 @@ package i2c_globals_pkg;
    READ = 1'b1
  } read_write_e;
  
-// // struct: i2c_transfer_char_s
-// //
-// // sda: array which holds the sda transactions
-// // no_of_sda_bits_transfer: specifies how many sda bits to trasnfer 
-// //
-// typedef struct {
-// 
-//   bit[SLAVE_ADDRESS_WIDTH-1:0] slave_addr;
-//
-//   bit[REGISTER_ADDRESS_WIDTH-1:0]register_address;
-// 
-//   bit[NO_OF_ROWS-1][DATA_LENGTH-1:0] data;
-// 
-//   int no_of_data_bits_transfer; 
-// 
-// } i2c_transfer_data_s;
-// 
-// 
-// //struct: i2c_transfer_cfg_s
-// //read_write : read from or write to slave 
-// 
-// typedef struct {
-//   bit msb_first;
-//   bit read_write;
-// } i2c_transfer_cfg_s;
+ // struct: i2c_transfer_char_s
+ //
+ // sda: array which holds the sda transactions
+ // no_of_sda_bits_transfer: specifies how many sda bits to trasnfer 
+ //
+ typedef struct {
+
+   bit[REGISTER_ADDRESS_WIDTH-1:0]register_address;
+ 
+   int no_of_register_address_bits_transfer; 
+ 
+ } i2c_register_address_s 
+
+ typedef struct {
+ 
+   bit[NO_OF_ROWS-1][DATA_LENGTH-1:0] data;
+ 
+   int no_of_data_bits_transfer; 
+
+ } i2c_transfer_data_s;
+ 
+ 
+ //struct: i2c_transfer_cfg_s
+ //read_write : read from or write to slave 
+ 
+ typedef struct {
+   bit msb_first;
+   bit read_write;
+ } i2c_transfer_cfg_s;
 
 
 endpackage : i2c_globals_pkg 

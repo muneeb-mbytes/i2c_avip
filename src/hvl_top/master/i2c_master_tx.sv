@@ -1,7 +1,7 @@
 `ifndef I2C_MASTER_TX_INCLUDED_
 `define I2C_MASTER_TX_INCLUDED_
 
-  typedef enum {ADDRESS_7BIT=7, ADDRESS_10BIT=10} slave_address_e;
+ // typedef enum {ADDRESS_7BIT=7, ADDRESS_10BIT=10} slave_address_e;
 
 //--------------------------------------------------------------------------------------------
 // Class: i2c_master_tx
@@ -15,7 +15,7 @@ class i2c_master_tx extends uvm_sequence_item;
   rand bit read_write;
   bit ack;
   rand bit [7:0]write_data;
-  rand slave_address_e sl_addr_mode;
+  rand slave_address_width_e sl_addr_mode;
  
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -25,10 +25,10 @@ class i2c_master_tx extends uvm_sequence_item;
 
   constraint w_data{ write_data == 8'b0000_0000; }
   constraint s_addr{
-                    if(sl_addr_mode == ADDRESS_7BIT)  { slave_address == 7'b100_0000;}
-                    if(sl_addr_mode == ADDRESS_10BIT) { slave_address == 10'b00_0000_0001;}
+                    if(sl_addr_mode ==SLAVE_ADDRESS_WIDTH_7)  { slave_address == 7'b100_0000;}
+                    if(sl_addr_mode == SLAVE_ADDRESS_WIDTH_10) { slave_address == 10'b00_0000_0001;}
   }
-  constraint slave_address_mode_c {sl_addr_mode == ADDRESS_7BIT;}
+  constraint slave_address_mode_c {sl_addr_mode == SLAVE_ADDRESS_WIDTH_7;}
   //constraint read_write{read_write == 1'b0;}
 endclass : i2c_master_tx
 
