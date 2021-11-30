@@ -14,7 +14,10 @@ package i2c_globals_pkg;
  parameter int NO_OF_SLAVES = 1;
  
  //The parameter for the data width
- parameter int DATA_LENGTH = 8;
+ parameter int DATA_LENGTH = 10;
+ 
+ //The parameter for the register address width
+ parameter int SLAVE_ADDRESS_WIDTH  = 10;
  
  //The parameter for the register address width
  parameter int REGISTER_ADDRESS_WIDTH  = 8;
@@ -68,7 +71,16 @@ package i2c_globals_pkg;
    READ = 1'b1
  } read_write_e;
  
- // struct: i2c_transfer_char_s
+
+ typedef struct {
+
+   bit[SLAVE_ADDRESS_WIDTH-1:0]register_address;
+ 
+   int no_of_slave_address_bits_transfer; 
+ 
+ } i2c_slave_address_s;
+
+ // struct: i2c_register_address_s
  //
  // sda: array which holds the sda transactions
  // no_of_sda_bits_transfer: specifies how many sda bits to trasnfer 
