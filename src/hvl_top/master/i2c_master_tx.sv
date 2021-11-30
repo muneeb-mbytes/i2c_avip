@@ -25,11 +25,11 @@ class i2c_master_tx extends uvm_sequence_item;
 
   constraint w_data{ write_data == 8'b0000_0000; }
   constraint s_addr{
-                    if(s1_addr_mode == ADDRESS_7BIT)  { slave_address == 7'b100_0000;}
+                    if(sl_addr_mode == ADDRESS_7BIT)  { slave_address == 7'b100_0000;}
                     if(sl_addr_mode == ADDRESS_10BIT) { slave_address == 10'b00_0000_0001;}
   }
   constraint slave_address_mode_c {sl_addr_mode == ADDRESS_7BIT;}
-  constraint read_write{read_write == 1'b0;}
+  //constraint read_write{read_write == 1'b0;}
 endclass : i2c_master_tx
 
 //--------------------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ function i2c_master_tx::new(string name = "i2c_master_tx");
   super.new(name);
 endfunction : new
 
-function void master_tx::do_print(uvm_printer printer);
+function void i2c_master_tx::do_print(uvm_printer printer);
   super.do_print(printer);
   printer.print_field("RD_WR", this.read_write, 1, UVM_BIN);
   printer.print_field("SLAVE_ADDRESS", this.slave_address, 7, UVM_BIN);
