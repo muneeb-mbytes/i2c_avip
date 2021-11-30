@@ -24,14 +24,18 @@ package i2c_globals_pkg;
  
  
  //The parameter NO_OF_ROWS specifies the no of rows of an array
+ // The parameter NO_OF_ROWS specifies the no of rows of an array
  parameter int NO_OF_ROWS  = MAXIMUM_BITS/DATA_LENGTH;
  
+ // acknowledge bit or no acknowledge
+ parameter bit ack;
+
  // Enum: slave_address_width_e
  //  
  // Specifies the width of slave address
  //
- //SLAVE_ADDRESS_WIDTH_7 - specifies 7 bit slave address 
- //SLAVE_ADDRESS_WIDTH_10 - specifies 10 bit slave address
+ // SLAVE_ADDRESS_WIDTH_7 - specifies 7 bit slave address 
+ // SLAVE_ADDRESS_WIDTH_10 - specifies 10 bit slave address
  //
  typedef enum bit {
 
@@ -81,10 +85,12 @@ package i2c_globals_pkg;
 
  typedef struct {
  
+ 
    bit[NO_OF_ROWS-1][DATA_LENGTH-1:0] data;
  
    int no_of_data_bits_transfer; 
 
+ 
  } i2c_transfer_data_s;
  
  

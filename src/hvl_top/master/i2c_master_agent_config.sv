@@ -33,7 +33,6 @@ class i2c_master_agent_config extends uvm_object;
   // Used for enabling the master agent coverage
   bit has_coverage;
 
-  
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
