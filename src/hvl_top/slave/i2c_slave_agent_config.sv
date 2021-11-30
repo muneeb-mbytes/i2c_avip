@@ -7,10 +7,27 @@
 //--------------------------------------------------------------------------------------------
 class i2c_slave_agent_config extends uvm_object;
   `uvm_object_utils(i2c_slave_agent_config)
-
+  
+  // Variable: is_active
+  // Used for creating the agent in either passive or active mode
+  uvm_active_passive_enum is_active=UVM_ACTIVE;
+  
+  // Variable: slave_id
+  // Used for indicating the ID of this slave
   int slave_id;
+  
+  // Variable: shift_dir
+  // Shifts the data, LSB first or MSB first
+  shift_direction_e shift_dir;
+
+  // Variable:slave_address_width_e
+  // Used for enabling the address with  
+  slave_address_width_e slave_address_width;
+  
+  // Variable: has_coverage
+  // Used for enabling the slave agent coverage
   bit has_coverage;
-  uvm_active_passive_enum is_active = UVM_ACTIVE;
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
