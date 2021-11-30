@@ -28,7 +28,7 @@ package i2c_globals_pkg;
  parameter int NO_OF_ROWS  = MAXIMUM_BITS/DATA_LENGTH;
  
  // acknowledge bit or no acknowledge
- parameter bit ack;
+ bit ack;
 
  // Enum: slave_address_width_e
  //  
@@ -41,9 +41,7 @@ package i2c_globals_pkg;
 
    SLAVE_ADDRESS_WIDTH_7 = 1'b0,
    SLAVE_ADDRESS_WIDTH_10 = 1'b1
-
-   int no_of_slave_address_bits_transfer; 
-   
+     
  } slave_address_width_e;
  
  // Enum: shift_direction_e
@@ -81,7 +79,7 @@ package i2c_globals_pkg;
  
    int no_of_register_address_bits_transfer; 
  
- } i2c_register_address_s 
+ } i2c_register_address_s;
 
  typedef struct {
  
