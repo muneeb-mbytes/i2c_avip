@@ -31,7 +31,8 @@ package i2c_globals_pkg;
  parameter int NO_OF_ROWS  = MAXIMUM_BITS/DATA_LENGTH;
  
  // acknowledge bit or no acknowledge
- bit ack;
+ //parameter bit ACK = 0;
+ //parameter bit NACK = 1;
 
  // Enum: slave_address_width_e
  //  
