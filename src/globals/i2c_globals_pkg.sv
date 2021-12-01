@@ -14,7 +14,7 @@ package i2c_globals_pkg;
  parameter int NO_OF_SLAVES = 1;
  
  //The parameter for the data width
- parameter int DATA_LENGTH = 10;
+ parameter int DATA_LENGTH = 8;
  
  //The parameter for the register address width
  parameter int SLAVE_ADDRESS_WIDTH  = 10;

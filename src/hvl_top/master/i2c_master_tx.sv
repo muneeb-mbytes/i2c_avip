@@ -9,8 +9,7 @@
 class i2c_master_tx extends uvm_sequence_item;
   `uvm_object_utils(i2c_master_tx)
 
-  rand bit [9:0]slave_address;
-  rand bit [6:0]slave_addr;
+  rand bit [SLAVE_ADDRESS_WIDTH-1:0]slave_address;
   rand bit read_write;
   rand bit [7:0]reg_address;
   rand bit [7:0]data;
@@ -23,7 +22,7 @@ class i2c_master_tx extends uvm_sequence_item;
 
   constraint w_data{ data == 8'b0000_0000; }
   constraint s_addr{
-                    if(sl_addr_mode == 1'b0)  { slave_addr == 7'b100_0000;}
+                    if(sl_addr_mode == 1'b0)  { slave_address == 7'b100_0000;}
                     if(sl_addr_mode == 1'b1) { slave_address == 10'b00_0000_0001;}
   }
   constraint slave_address_width_e {sl_addr_mode == 1'b0;}
