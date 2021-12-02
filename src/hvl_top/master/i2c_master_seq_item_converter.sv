@@ -63,7 +63,7 @@ function void i2c_master_seq_item_converter::from_class(input i2c_master_tx inpu
     output_conv.no_of_i2c_bits_transfer = 10;
   
    //Running the loop based on the no_of_i2c_bits_transfer 
-  for(int i=0; i<no_of_i2c_bits_transfer;i++) begin
+  for(int i=0; i<output_conv.no_of_i2c_bits_transfer;i++) begin
  
     `uvm_info("master_seq_item_conv_class",
     $sformatf("slave_address = \n %p",output_conv.slave_address[i]),UVM_LOW)
