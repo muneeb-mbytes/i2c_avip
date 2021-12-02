@@ -27,6 +27,7 @@ package i2c_master_pkg;
   `include "i2c_master_monitor_proxy.sv"
   `include "i2c_master_coverage.sv"
   `include "i2c_master_agent.sv"
+  //`include "i2c_master_seq_item_converter.sv"
   
 endpackage : i2c_master_pkg
 

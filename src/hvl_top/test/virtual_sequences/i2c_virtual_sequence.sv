@@ -12,7 +12,7 @@ class i2c_virtual_sequence extends uvm_sequence#(uvm_sequence_item);
   `uvm_object_utils(i2c_virtual_sequence)
 
    //p sequencer macro declaration 
-   `uvm_declare_p_sequencer(virtual_sequencer)
+   `uvm_declare_p_sequencer(i2c_virtual_sequencer)
         
    //declaring virtual sequencer handle
    //virtual_sequencer  virtual_seqr_h;
@@ -59,7 +59,7 @@ task i2c_virtual_sequence::body();
 
   //dynamic casting of p_sequncer and m_sequencer
   if(!$cast(p_sequencer,m_sequencer))begin
-  `uvm_error(get_full_name(),"Virtual sequencer pointer cast failed")
+  `uvm_error(get_full_name(),"i2c Virtual sequencer pointer cast failed")
   end
                                              
   //connecting master sequencer and slave sequencer present in p_sequencer to
