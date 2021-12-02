@@ -20,5 +20,6 @@ package i2c_master_seq_pkg;
   //-------------------------------------------------------
   
   `include "i2c_master_base_sequences.sv"
+  `include "i2c_write_master_seq.sv"
 endpackage : i2c_master_seq_pkg
 `endif

@@ -81,16 +81,10 @@ package i2c_globals_pkg;
  typedef struct {
 
    //bit[SLAVE_ADDRESS_WIDTH-1:0]slave_address;
- 
-   
    bit[REGISTER_ADDRESS_WIDTH-1:0]register_address;
- 
-   
    bit[NO_OF_ROWS-1][DATA_LENGTH-1:0] data;
- 
    int no_of_i2c_bits_transfer; 
 
- 
  } i2c_bits_transfer_s;
 
  
