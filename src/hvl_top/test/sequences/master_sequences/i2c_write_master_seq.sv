@@ -43,11 +43,11 @@ task i2c_write_master_seq::body();
 
   start_item(req);
 
-  if(!req.randomize() with {req.data.size() == 1;
-                            req.reg_address.size() == 1;
-                           }) begin
-    `uvm_fatal(get_type_name(),"Randomization failed")
-  end
+//  if(!req.randomize() with {req.data.size() == 1;
+//                            req.reg_address.size() == 1;
+//                           }) begin
+//    `uvm_fatal(get_type_name(),"Randomization failed")
+//  end
  //if(!req.randomize() with {req.reg_address.size() == 1;
   req.print();
   finish_item(req);

@@ -11,14 +11,14 @@ class i2c_master_tx extends uvm_sequence_item;
 
   rand bit read_write;
   bit [SLAVE_ADDRESS_WIDTH-1:0]slave_address;
-  rand bit [DATA_LENGTH-1:0]reg_address[];
-  rand bit [DATA_LENGTH-1:0]data[];
+  rand bit [REGISTER_ADDRESS_WIDTH-1:0]reg_address;
+  rand bit [DATA_WIDTH-1:0]data[];
   rand slave_address_width_e slave_addr_mode;
   bit ack;
   bit nack;
   
   //-------------------------------------------------------
-  // Constraints for SPI
+  // Constraints for I2C
   //-------------------------------------------------------
   
  // constraint reg_addr{reg_address.size() > 0 ;
