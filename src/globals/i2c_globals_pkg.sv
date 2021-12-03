@@ -14,7 +14,7 @@ package i2c_globals_pkg;
  parameter int NO_OF_SLAVES = 1;
  
  //The parameter for the data width
- parameter int DATA_LENGTH = 8;
+ parameter int DATA_WIDTH = 8;
  
  //The parameter for the register address width
  parameter int SLAVE_ADDRESS_WIDTH  = 10;
@@ -24,11 +24,9 @@ package i2c_globals_pkg;
  
  // The parameter for MAXIMUM_BITS supported per transfer
  parameter int MAXIMUM_BITS = 1024;
- 
- 
- //The parameter NO_OF_ROWS specifies the no of rows of an array
- // The parameter NO_OF_ROWS specifies the no of rows of an array
- parameter int NO_OF_ROWS  = MAXIMUM_BITS/DATA_LENGTH;
+
+ // The parameter for MAXIMUM_BYTES supported per transfer
+ parameter int MAXIMUM_BYTES = MAXIMUM_BITS/DATA_WIDTH ;
  
  // acknowledge bit or no acknowledge
  //parameter bit ACK = 0;
@@ -41,10 +39,10 @@ package i2c_globals_pkg;
  // SLAVE_ADDRESS_WIDTH_7 - specifies 7 bit slave address 
  // SLAVE_ADDRESS_WIDTH_10 - specifies 10 bit slave address
  //
- typedef enum bit {
+ typedef enum bit [3:0] {
 
-   SLAVE_ADDRESS_WIDTH_7 = 1'b0,
-   SLAVE_ADDRESS_WIDTH_10 = 1'b1
+   SLAVE_ADDRESS_WIDTH_7 = 7,
+   SLAVE_ADDRESS_WIDTH_10 = 10
      
  } slave_address_width_e;
  
@@ -97,7 +95,7 @@ package i2c_globals_pkg;
  typedef struct {
  
  
-   bit[NO_OF_ROWS-1][DATA_LENGTH-1:0] data;
+   bit[MAXIMUM_BYTES-1][DATA_WIDTH-1:0] data;
  
    int no_of_data_bits_transfer; 
 
