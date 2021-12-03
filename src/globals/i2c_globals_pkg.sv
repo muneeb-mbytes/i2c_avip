@@ -13,13 +13,13 @@ package i2c_globals_pkg;
  // NO_OF_MASTERS to be connected to the i2c_interface
  parameter int NO_OF_SLAVES = 1;
  
- //The parameter for the data width
+ // The parameter for the data width
  parameter int DATA_WIDTH = 8;
  
- //The parameter for the register address width
+ // The parameter for the register address width
  parameter int SLAVE_ADDRESS_WIDTH  = 10;
  
- //The parameter for the register address width
+ // The parameter for the register address width
  parameter int REGISTER_ADDRESS_WIDTH  = 8;
  
  // The parameter for MAXIMUM_BITS supported per transfer
@@ -29,8 +29,8 @@ package i2c_globals_pkg;
  parameter int MAXIMUM_BYTES = MAXIMUM_BITS/DATA_WIDTH ;
  
  // acknowledge bit or no acknowledge
- //parameter bit ACK = 0;
- //parameter bit NACK = 1;
+ // parameter bit ACK = 0;
+ // parameter bit NACK = 1;
 
  // Enum: slave_address_width_e
  //  
@@ -70,22 +70,15 @@ package i2c_globals_pkg;
    READ = 1'b1
  } read_write_e;
  
-
- typedef struct {
-
-   bit[SLAVE_ADDRESS_WIDTH-1:0]register_address;
- 
-   int no_of_slave_address_bits_transfer; 
- 
- } i2c_slave_address_s;
-
- // struct: i2c_register_address_s
+ // struct: i2c_bits_transfer_s
  //
  // sda: array which holds the sda transactions
  // no_of_sda_bits_transfer: specifies how many sda bits to trasnfer 
  //
+
  typedef struct {
 
+   // bit[SLAVE_ADDRESS_WIDTH-1:0]slave_address;
    bit[REGISTER_ADDRESS_WIDTH-1:0]register_address;
  
    int no_of_register_address_bits_transfer; 
@@ -99,12 +92,12 @@ package i2c_globals_pkg;
  
    int no_of_data_bits_transfer; 
 
+ } i2c_bits_transfer_s;
+
  
- } i2c_transfer_data_s;
  
- 
- //struct: i2c_transfer_cfg_s
- //read_write : read from or write to slave 
+ // struct: i2c_transfer_cfg_s
+ // read_write : read from or write to slave 
  
  typedef struct {
    bit msb_first;

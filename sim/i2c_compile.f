@@ -13,7 +13,10 @@
 ../../src/globals/i2c_globals_pkg.sv
 ../../src/hvl_top/master/i2c_master_pkg.sv
 ../../src/hvl_top/slave/i2c_slave_pkg.sv
+../../src/hvl_top/test/sequences/master_sequences/i2c_master_seq_pkg.sv
+../../src/hvl_top/test/sequences/slave_sequences/i2c_slave_seq_pkg.sv
 ../../src/hvl_top/env/i2c_env_pkg.sv
+../../src/hvl_top/test/virtual_sequences/i2c_virtual_seq_pkg.sv
 ../../src/hvl_top/test/i2c_test_pkg.sv
 ../../src/hdl_top/i2c_interface/i2c_if.sv
 ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv
