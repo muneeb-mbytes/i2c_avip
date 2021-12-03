@@ -72,37 +72,27 @@ package i2c_globals_pkg;
    READ = 1'b1
  } read_write_e;
  
-
- typedef struct {
-
-   bit[SLAVE_ADDRESS_WIDTH-1:0]register_address;
- 
-   int no_of_slave_address_bits_transfer; 
- 
- } i2c_slave_address_s;
-
- // struct: i2c_register_address_s
+ // struct: i2c_bits_transfer_s
  //
  // sda: array which holds the sda transactions
  // no_of_sda_bits_transfer: specifies how many sda bits to trasnfer 
  //
+
  typedef struct {
 
+   //bit[SLAVE_ADDRESS_WIDTH-1:0]slave_address;
+ 
+   
    bit[REGISTER_ADDRESS_WIDTH-1:0]register_address;
  
-   int no_of_register_address_bits_transfer; 
- 
- } i2c_register_address_s;
-
- typedef struct {
- 
- 
+   
    bit[NO_OF_ROWS-1][DATA_LENGTH-1:0] data;
  
-   int no_of_data_bits_transfer; 
+   int no_of_i2c_bits_transfer; 
 
  
- } i2c_transfer_data_s;
+ } i2c_bits_transfer_s;
+
  
  
  //struct: i2c_transfer_cfg_s
