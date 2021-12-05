@@ -37,8 +37,8 @@ package i2c_globals_pkg;
  // MSB_FIRST - MSB is shifted out first
  //
  typedef enum bit {
-   LSB_FIRST = 1'b0,
-   MSB_FIRST = 1'b1
+   MSB_FIRST = 1'b0,
+   LSB_FIRST = 1'b1
  } shift_direction_e;
  
  
