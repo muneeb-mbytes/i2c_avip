@@ -16,7 +16,11 @@ class i2c_master_agent_config extends uvm_object;
   // Used for specifying the number of slaves connected to 
   // this master over i2c interface
   int no_of_slaves;
-  
+ 
+  // Variable: no_of_mastesr
+  // Used for specifying the number of mastesr connected to 
+  int no_of_masters;
+
 
   // Variable: shift_dir
   // Shifts the data, LSB first or MSB first
@@ -51,7 +55,6 @@ function i2c_master_agent_config::new(string name = "i2c_master_agent_config");
   super.new(name);
 endfunction : new
 
-`endif
 //--------------------------------------------------------------------------------------------
 // Function: do_print method
 // Print method can be added to display the data members values
@@ -68,3 +71,5 @@ function void i2c_master_agent_config::do_print(uvm_printer printer);
   printer.print_field ("has_coverage",has_coverage, 1, UVM_DEC);
   
 endfunction : do_print
+
+`endif

@@ -13,8 +13,8 @@ package i2c_globals_pkg;
  // NO_OF_MASTERS to be connected to the i2c_interface
  parameter int NO_OF_SLAVES = 1;
  
- //The parameter for the data width
- parameter int DATA_LENGTH = 8;
+ //The parameter for the Data length
+ parameter int CHAR_LENGTH = 8;
  
  //The parameter for the register address width
  parameter int SLAVE_ADDRESS_WIDTH  = 10;
@@ -28,7 +28,7 @@ package i2c_globals_pkg;
  
  //The parameter NO_OF_ROWS specifies the no of rows of an array
  // The parameter NO_OF_ROWS specifies the no of rows of an array
- parameter int NO_OF_ROWS  = MAXIMUM_BITS/DATA_LENGTH;
+ parameter int NO_OF_ROWS  = MAXIMUM_BITS/CHAR_LENGTH;
  
  // acknowledge bit or no acknowledge
  //parameter bit ACK = 0;
@@ -97,7 +97,7 @@ package i2c_globals_pkg;
  typedef struct {
  
  
-   bit[NO_OF_ROWS-1][DATA_LENGTH-1:0] data;
+   bit[NO_OF_ROWS-1][CHAR_LENGTH-1:0] data;
  
    int no_of_data_bits_transfer; 
 
