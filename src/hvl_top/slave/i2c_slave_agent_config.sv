@@ -47,21 +47,10 @@ function void i2c_slave_agent_config::do_print(uvm_printer printer);
 
 
   printer.print_string ("is_active",is_active.name());
-<<<<<<< HEAD
   printer.print_string ("shift_dir",shift_dir.name());
-=======
-  //printer.print_field ("no_of_slaves",no_of_slaves,$bits(no_of_slaves), UVM_DEC);
-  printer.print_string ("shift_dir",shift_dir.name());
-  //printer.print_string ("read_write",read_write.name());
-  //printer.print_string ("slave_address_width",slave_address_width.name());
->>>>>>> eb2c30b053f80320e7eccda8e8968ea496b86512
   printer.print_field ("has_coverage",has_coverage, 1, UVM_DEC);
   
 endfunction : do_print
 
-<<<<<<< HEAD
-
-=======
->>>>>>> eb2c30b053f80320e7eccda8e8968ea496b86512
 `endif
 

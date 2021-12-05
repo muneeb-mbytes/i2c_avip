@@ -51,10 +51,6 @@ function i2c_master_agent_config::new(string name = "i2c_master_agent_config");
   super.new(name);
 endfunction : new
 
-<<<<<<< HEAD
-=======
-
->>>>>>> eb2c30b053f80320e7eccda8e8968ea496b86512
 //--------------------------------------------------------------------------------------------
 // Function: do_print method
 // Print method can be added to display the data members values
