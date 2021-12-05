@@ -23,37 +23,37 @@ class i2c_master_agent_config extends uvm_object;
   shift_direction_e shift_dir;
   // Variable:slave_address_width_e
   // Used for enabling the address with  
-  bit [SLAVE_ADDRESS-1:0] slave_address[];
-  bit [7:0] register_address[int];
+  bit [SLAVE_ADDRESS_WIDTH-1:0] slave_address_width[];
+  bit [7:0] register_address_width[int];
 
   // Variable: has_coverage
   // Used for enabling the master agent coverage
   bit has_coverage;
 
-  constraint slave_addr{slave_address.size() inside {[0:3]};}
+  constraint slave_addr{slave_address_width.size() inside {[0:3]};}
   
-  constraint register_addr{register_address.size() inside {[0:3]};}
+  constraint register_addr{register_address_width.size() inside {[0:3]};}
   
-  constraint slave_addr_1{slave_address[0] == 7'b0000000;}
-  constraint slave_addr_2{slave_address[1] == 7'b0000001;}
-  constraint slave_addr_3{slave_address[2] == 7'b0000010;}
-  constraint slave_addr_4{slave_address[3] == 7'b0000011;}
+  constraint slave_addr_1{slave_address_width[0] == 7'b0000000;}
+  constraint slave_addr_2{slave_address_width[1] == 7'b0000001;}
+  constraint slave_addr_3{slave_address_width[2] == 7'b0000010;}
+  constraint slave_addr_4{slave_address_width[3] == 7'b0000011;}
 
 
   constraint register_addr_1{
-    if(slave_address[0] == 7'b0000000)
-     register_address[0]==8'b00000000;
-     register_address[1]==8'b00001000;
-     register_address[2]==8'b00001001;
-     register_address[3]==8'b10000000;
+    if(slave_address_width[0] == 7'b0000000)
+     register_address_width[0]==8'b00000000;
+     register_address_width[1]==8'b00001000;
+     register_address_width[2]==8'b00001001;
+     register_address_width[3]==8'b10000000;
    }
     
   constraint register_addr_2{
-    if(slave_address[1] == 7'b0000001)
-     register_address[0]==8'b00010000;
-     register_address[1]==8'b00101000;
-     register_address[2]==8'b01001001;
-     register_address[3]==8'b11000000;}
+    if(slave_address_width[1] == 7'b0000001)
+     register_address_width[0]==8'b00010000;
+     register_address_width[1]==8'b00101000;
+     register_address_width[2]==8'b01001001;
+     register_address_width[3]==8'b11000000;}
   
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
