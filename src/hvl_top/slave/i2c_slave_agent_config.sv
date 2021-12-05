@@ -22,7 +22,7 @@ class i2c_slave_agent_config extends uvm_object;
 
   // Variable:slave_address_width_e
   // Used for enabling the address with  
-  slave_address_width_e slave_address_width;
+  //slave_address_width_e slave_address_width;
   
   // Variable: has_coverage
   // Used for enabling the slave agent coverage

@@ -10,13 +10,12 @@ class i2c_master_tx extends uvm_sequence_item;
   `uvm_object_utils(i2c_master_tx)
 
   rand bit read_write;
-  bit [SLAVE_ADDRESS_WIDTH-1:0]slave_address;
-  rand bit [REGISTER_ADDRESS_WIDTH-1:0]reg_address;
+  rand bit [SLAVE_ADDRESS-1:0]slave_address;
+  rand bit [REGISTER_ADDRESS_WIDTH-1:0]register_address;
   rand bit [DATA_WIDTH-1:0]data[];
-  rand slave_address_width_e slave_addr_mode;
   bit ack;
-  bit nack;
   
+ // i2c_master_agent_config i2c_master_agent_cfg_h;
   //-------------------------------------------------------
   // Constraints for I2C
   //-------------------------------------------------------
@@ -36,7 +35,9 @@ class i2c_master_tx extends uvm_sequence_item;
  //                         {slave_address == 10'b10_1010_0101;}
  // }
 
-
+//   constraint slave_addr{i2c_master_agent_cfg_h.slave_address_width.size() > 0 ;
+//                     i2c_master_agent_cfg_h.slave_address_width.size() < MAXIMUM_BITS/CHAR_LENGTH;}
+  
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
@@ -72,7 +73,7 @@ function void i2c_master_tx::do_copy (uvm_object rhs);
   super.do_copy(rhs);
 
   slave_address= rhs_.slave_address;
-  reg_address = rhs_.reg_address;
+  register_address = rhs_.register_address;
   data = rhs_.data;
 
 endfunction : do_copy
@@ -91,7 +92,7 @@ function bit  i2c_master_tx::do_compare (uvm_object rhs,uvm_comparer comparer);
 
   return super.do_compare(rhs,comparer) &&
   slave_address== rhs_.slave_address &&
-  reg_address == rhs_.reg_address &&
+  register_address == rhs_.register_address &&
   data == rhs_.data;
 endfunction : do_compare 
 //--------------------------------------------------------------------------------------------
@@ -100,8 +101,8 @@ endfunction : do_compare
 //--------------------------------------------------------------------------------------------
 function void i2c_master_tx::do_print(uvm_printer printer);
   super.do_print(printer);
-  foreach(reg_address[i]) begin
-    printer.print_field($sformatf("reg_address[%0d]",i),this.reg_address
+  foreach(register_address[i]) begin
+    printer.print_field($sformatf("register_address[%0d]",i),this.register_address
     [i],8,UVM_HEX);
   end
   foreach(data[i]) begin
