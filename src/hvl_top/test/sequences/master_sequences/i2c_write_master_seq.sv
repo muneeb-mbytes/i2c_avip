@@ -4,7 +4,11 @@
 //--------------------------------------------------------------------------------------------
 // class: extended class from base class
 //--------------------------------------------------------------------------------------------
+<<<<<<< HEAD
 class i2c_write_master_seq extends i2c_master_base_seq;
+=======
+class i2c_write_master_seq extends i2c_master_base_sequences;
+>>>>>>> eb2c30b053f80320e7eccda8e8968ea496b86512
 
   
   //register with factory so can use create uvm_method 
@@ -43,12 +47,21 @@ task i2c_write_master_seq::body();
 
   start_item(req);
 
+<<<<<<< HEAD
   if(!req.randomize() with {req.data.size() == 1;
                             req.reg_address == 0;
                            }) begin
     `uvm_fatal(get_type_name(),"Randomization failed")
   end
 
+=======
+//  if(!req.randomize() with {req.data.size() == 1;
+//                            req.reg_address.size() == 1;
+//                           }) begin
+//    `uvm_fatal(get_type_name(),"Randomization failed")
+//  end
+ //if(!req.randomize() with {req.reg_address.size() == 1;
+>>>>>>> eb2c30b053f80320e7eccda8e8968ea496b86512
   req.print();
   finish_item(req);
 

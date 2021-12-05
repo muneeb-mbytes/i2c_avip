@@ -19,9 +19,16 @@ module i2c_master_agent_bfm(i2c_if intf);
 //-------------------------------------------------------
 //master monitor bfm instatiation
 //-------------------------------------------------------
-   
-   i2c_master_monitor_bfm i2c_master_mon_bfm_h(intf);
 
+
+   i2c_master_monitor_bfm i2c_master_mon_bfm_h(intf);
+//
+//  initial begin
+//    uvm_config_db#(virtual i2c_master_driver_bfm)::set(null,"*","i2c_master_driver_bfm",i2c_master_driver_bfm_h);
+//
+//    uvm_config_db#(virtual i2c_master_monitor_bfm)::set(null,"*","i2c_master_monitor_bfm",i2c_master_monitor_bfm_h);
+//  end
+//
 endmodule : i2c_master_agent_bfm
 
 `endif

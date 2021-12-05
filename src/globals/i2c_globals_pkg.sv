@@ -13,17 +13,23 @@ package i2c_globals_pkg;
  // NO_OF_MASTERS to be connected to the i2c_interface
  parameter int NO_OF_SLAVES = 1;
  
+<<<<<<< HEAD
  //The parameter for the Data length
  parameter int CHAR_LENGTH = 8;
+=======
+ // The parameter for the register address width
+ parameter int SLAVE_ADDRESS_WIDTH  = 7;
+>>>>>>> eb2c30b053f80320e7eccda8e8968ea496b86512
  
- //The parameter for the register address width
- parameter int SLAVE_ADDRESS_WIDTH  = 10;
- 
- //The parameter for the register address width
+ // The parameter for the register address width
  parameter int REGISTER_ADDRESS_WIDTH  = 8;
+ 
+ // The parameter for the data width
+ parameter int DATA_WIDTH = 8;
  
  // The parameter for MAXIMUM_BITS supported per transfer
  parameter int MAXIMUM_BITS = 1024;
+<<<<<<< HEAD
  
  
  //The parameter NO_OF_ROWS specifies the no of rows of an array
@@ -42,12 +48,13 @@ package i2c_globals_pkg;
  // SLAVE_ADDRESS_WIDTH_10 - specifies 10 bit slave address
  //
  typedef enum bit {
+=======
+>>>>>>> eb2c30b053f80320e7eccda8e8968ea496b86512
 
-   SLAVE_ADDRESS_WIDTH_7 = 1'b0,
-   SLAVE_ADDRESS_WIDTH_10 = 1'b1
-     
- } slave_address_width_e;
+ // The parameter for MAXIMUM_BYTES supported per transfer
+ parameter int MAXIMUM_BYTES = MAXIMUM_BITS/DATA_WIDTH ;
  
+  
  // Enum: shift_direction_e
  // 
  // Specifies the shift direction
@@ -56,8 +63,8 @@ package i2c_globals_pkg;
  // MSB_FIRST - MSB is shifted out first
  //
  typedef enum bit {
-   LSB_FIRST = 1'b0,
-   MSB_FIRST = 1'b1
+   MSB_FIRST = 1'b0,
+   LSB_FIRST = 1'b1
  } shift_direction_e;
  
  
@@ -72,41 +79,34 @@ package i2c_globals_pkg;
    READ = 1'b1
  } read_write_e;
  
-
- typedef struct {
-
-   bit[SLAVE_ADDRESS_WIDTH-1:0]register_address;
- 
-   int no_of_slave_address_bits_transfer; 
- 
- } i2c_slave_address_s;
-
- // struct: i2c_register_address_s
+ // struct: i2c_bits_transfer_s
  //
  // sda: array which holds the sda transactions
  // no_of_sda_bits_transfer: specifies how many sda bits to trasnfer 
  //
- typedef struct {
 
+ typedef struct {
+   bit[SLAVE_ADDRESS_WIDTH-1:0]slave_address;
    bit[REGISTER_ADDRESS_WIDTH-1:0]register_address;
- 
    int no_of_register_address_bits_transfer; 
- 
- } i2c_register_address_s;
+  } i2c_register_address_s;
 
  typedef struct {
+<<<<<<< HEAD
  
  
    bit[NO_OF_ROWS-1][CHAR_LENGTH-1:0] data;
  
+=======
+   bit[MAXIMUM_BYTES-1][DATA_WIDTH-1:0] data;
+>>>>>>> eb2c30b053f80320e7eccda8e8968ea496b86512
    int no_of_data_bits_transfer; 
+ } i2c_bits_transfer_s;
 
  
- } i2c_transfer_data_s;
  
- 
- //struct: i2c_transfer_cfg_s
- //read_write : read from or write to slave 
+ // struct: i2c_transfer_cfg_s
+ // read_write : read from or write to slave 
  
  typedef struct {
    bit msb_first;

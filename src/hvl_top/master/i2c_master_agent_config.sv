@@ -30,10 +30,6 @@ class i2c_master_agent_config extends uvm_object;
   // Enables read or write operation 
   read_write_e read_write;
   
-  // Variable:slave_address_width_e
-  // Used for enabling the address with  
-  slave_address_width_e slave_address_width;
-
   // Variable: has_coverage
   // Used for enabling the master agent coverage
   bit has_coverage;
@@ -55,6 +51,10 @@ function i2c_master_agent_config::new(string name = "i2c_master_agent_config");
   super.new(name);
 endfunction : new
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> eb2c30b053f80320e7eccda8e8968ea496b86512
 //--------------------------------------------------------------------------------------------
 // Function: do_print method
 // Print method can be added to display the data members values
@@ -67,7 +67,6 @@ function void i2c_master_agent_config::do_print(uvm_printer printer);
   printer.print_field ("no_of_slaves",no_of_slaves,$bits(no_of_slaves), UVM_DEC);
   printer.print_string ("shift_dir",shift_dir.name());
   printer.print_string ("read_write",read_write.name());
-  printer.print_string ("slave_address_width",slave_address_width.name());
   printer.print_field ("has_coverage",has_coverage, 1, UVM_DEC);
   
 endfunction : do_print
