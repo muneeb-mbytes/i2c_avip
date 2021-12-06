@@ -28,6 +28,23 @@ package i2c_globals_pkg;
  // The parameter for MAXIMUM_BYTES supported per transfer
  parameter int MAXIMUM_BYTES = MAXIMUM_BITS/DATA_WIDTH ;
 
+ parameter int SLAVE_ADDRESS_R_W = 8;
+
+ parameter int SLAVE_MEMORY_SIZE = 12;
+
+ parameter int SLAVE_MEMORY_GAP = 3;
+
+
+
+ typedef enum bit[18:0]{
+   S0 = 19'd7,
+   S1 = 19'd18
+ }slave_max_addr_e;
+
+ typedef enum bit[18:0]{
+   S_MIN_0 = 19'd0,
+   S_MIN_1 = 19'd11
+ }slave_min_addr_e;
 
  // Enum: shift_direction_e
  // 

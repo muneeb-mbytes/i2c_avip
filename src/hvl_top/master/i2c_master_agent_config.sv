@@ -21,7 +21,6 @@ class i2c_master_agent_config extends uvm_object;
   // Used for specifying the number of mastesr connected to 
   int no_of_masters;
 
-
   // Variable: shift_dir
   // Shifts the data, LSB first or MSB first
   shift_direction_e shift_dir;
@@ -34,11 +33,19 @@ class i2c_master_agent_config extends uvm_object;
   // Used for enabling the master agent coverage
   bit has_coverage;
 
+  bit [DATA_WIDTH-1:0]master_memory[18:0];
+
+  bit [DATA_WIDTH-1:0]master_max_array[int];
+  bit [DATA_WIDTH-1:0]master_min_array[int];
+
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
   extern function new(string name = "i2c_master_agent_config");
   extern function void do_print(uvm_printer printer);
+  extern function void mem_mapping_max(int i,bit [18:0]value);
+  extern function void mem_mapping_min(int i,bit [18:0]value);
 endclass : i2c_master_agent_config
 
 //--------------------------------------------------------------------------------------------
@@ -66,5 +73,14 @@ function void i2c_master_agent_config::do_print(uvm_printer printer);
   printer.print_field ("has_coverage",has_coverage, 1, UVM_DEC);
   
 endfunction : do_print
+
+function void i2c_master_agent_config::mem_mapping_max(int i,bit [18:0]value);
+  master_max_array[i]=value;
+endfunction
+
+function void i2c_master_agent_config::mem_mapping_min(int i,bit [18:0]value);
+  master_min_array[i]=value;
+endfunction
+
 
 `endif

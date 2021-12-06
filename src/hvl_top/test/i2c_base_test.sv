@@ -44,10 +44,10 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void i2c_base_test::build_phase(uvm_phase phase);
   super.build_phase(phase);
+  setup_env_cfg();
   
   i2c_env_cfg_h = i2c_env_config::type_id::create("i2c_env_cfg_h");
   i2c_env_h = i2c_env::type_id::create("i2c_env_h",this);
-  setup_env_cfg();
 
 endfunction : build_phase
 
@@ -72,8 +72,9 @@ function void i2c_base_test::setup_env_cfg();
     i2c_env_cfg_h.i2c_master_agent_cfg_h[i] = i2c_master_agent_config::type_id::create
                                               ($sformatf("i2c_master_agent_cfg_h[%0d]",i));
   end
+ 
   setup_master_agent_cfg();
-
+  
   foreach(i2c_env_cfg_h.i2c_master_agent_cfg_h[i]) begin
   uvm_config_db
   #(i2c_master_agent_config)::set(this,"*","i2c_master_agent_config",i2c_env_cfg_h.i2c_master_agent_cfg_h[i]);
@@ -110,7 +111,9 @@ function void i2c_base_test::setup_env_cfg();
 //--------------------------------------------------------------------------------------------
 function void i2c_base_test::setup_master_agent_cfg();
   
+  bit [7:0]local_max_address;
   
+  bit [7:0]local_min_address;
   foreach(i2c_env_cfg_h.i2c_master_agent_cfg_h[i])begin
 
   // Configure the Master agent configuration
@@ -120,6 +123,25 @@ function void i2c_base_test::setup_master_agent_cfg();
   i2c_env_cfg_h.i2c_master_agent_cfg_h[i].has_coverage     = 1;
 
 end
+  for(int i =0; i<NO_OF_MASTERS; i++) begin
+    for(int j =0; j<NO_OF_SLAVES; j++) begin
+    if(i == 0) begin
+      i2c_env_cfg_h.i2c_master_agent_cfg_h[i].mem_mapping_max(j,SLAVE_MEMORY_SIZE - 1);
+      i2c_env_cfg_h.i2c_master_agent_cfg_h[i].mem_mapping_min(j, 0);
+      local_min_address = i2c_env_cfg_h.i2c_master_agent_cfg_h[i].master_min_array[j];
+      local_max_address = i2c_env_cfg_h.i2c_master_agent_cfg_h[i].master_max_array[j];
+    end
+    else begin
+      i2c_env_cfg_h.i2c_master_agent_cfg_h[i].mem_mapping_max(j,local_max_address + SLAVE_MEMORY_SIZE + SLAVE_MEMORY_GAP);
+      i2c_env_cfg_h.i2c_master_agent_cfg_h[i].mem_mapping_min(j,local_min_address + SLAVE_MEMORY_SIZE + SLAVE_MEMORY_GAP);
+      local_min_address = i2c_env_cfg_h.i2c_master_agent_cfg_h[i].master_min_array[j];
+      local_max_address = i2c_env_cfg_h.i2c_master_agent_cfg_h[i].master_max_array[j];
+    end
+  end
+end
+
+
+
 endfunction: setup_master_agent_cfg
 
 //--------------------------------------------------------------------------------------------

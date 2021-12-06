@@ -20,6 +20,12 @@ class i2c_slave_agent_config extends uvm_object;
   // Used for enabling the slave agent coverage
   bit has_coverage;
 
+  bit [18:0]max_address;
+  
+  bit [18:0]min_address;
+ 
+  bit [DATA_WIDTH-1:0]memory[SLAVE_ADDRESS_R_W-1:0];
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
