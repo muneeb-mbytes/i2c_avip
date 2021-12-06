@@ -44,11 +44,11 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void i2c_base_test::build_phase(uvm_phase phase);
   super.build_phase(phase);
-  setup_env_cfg();
   
   i2c_env_cfg_h = i2c_env_config::type_id::create("i2c_env_cfg_h");
   i2c_env_h = i2c_env::type_id::create("i2c_env_h",this);
 
+  setup_env_cfg();
 endfunction : build_phase
 
 
