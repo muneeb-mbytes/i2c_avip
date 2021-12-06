@@ -13,14 +13,14 @@ package i2c_globals_pkg;
  // NO_OF_MASTERS to be connected to the i2c_interface
  parameter int NO_OF_SLAVES = 1;
  
- // The parameter for the data width
- parameter int DATA_WIDTH = 8;
- 
  // The parameter for the register address width
- parameter int SLAVE_ADDRESS_WIDTH  = 10;
+ parameter int SLAVE_ADDRESS_WIDTH  = 7;
  
  // The parameter for the register address width
  parameter int REGISTER_ADDRESS_WIDTH  = 8;
+ 
+ // The parameter for the data width
+ parameter int DATA_WIDTH = 8;
  
  // The parameter for MAXIMUM_BITS supported per transfer
  parameter int MAXIMUM_BITS = 1024;
@@ -28,24 +28,7 @@ package i2c_globals_pkg;
  // The parameter for MAXIMUM_BYTES supported per transfer
  parameter int MAXIMUM_BYTES = MAXIMUM_BITS/DATA_WIDTH ;
  
- // acknowledge bit or no acknowledge
- // parameter bit ACK = 0;
- // parameter bit NACK = 1;
-
- // Enum: slave_address_width_e
- //  
- // Specifies the width of slave address
- //
- // SLAVE_ADDRESS_WIDTH_7 - specifies 7 bit slave address 
- // SLAVE_ADDRESS_WIDTH_10 - specifies 10 bit slave address
- //
- typedef enum bit [3:0] {
-
-   SLAVE_ADDRESS_WIDTH_7 = 7,
-   SLAVE_ADDRESS_WIDTH_10 = 10
-     
- } slave_address_width_e;
- 
+  
  // Enum: shift_direction_e
  // 
  // Specifies the shift direction
@@ -77,21 +60,14 @@ package i2c_globals_pkg;
  //
 
  typedef struct {
-
-   // bit[SLAVE_ADDRESS_WIDTH-1:0]slave_address;
+   bit[SLAVE_ADDRESS_WIDTH-1:0]slave_address;
    bit[REGISTER_ADDRESS_WIDTH-1:0]register_address;
- 
    int no_of_register_address_bits_transfer; 
- 
- } i2c_register_address_s;
+  } i2c_register_address_s;
 
  typedef struct {
- 
- 
    bit[MAXIMUM_BYTES-1][DATA_WIDTH-1:0] data;
- 
    int no_of_data_bits_transfer; 
-
  } i2c_bits_transfer_s;
 
  
