@@ -19,6 +19,7 @@ package i2c_slave_seq_pkg;
   // Importing the required packages
   //-------------------------------------------------------
   
-  `include "i2c_slave_base_sequences.sv"
+  `include "i2c_slave_base_seq.sv"
+  `include "i2c_8b_slave_seq.sv"
 endpackage : i2c_slave_seq_pkg
 `endif

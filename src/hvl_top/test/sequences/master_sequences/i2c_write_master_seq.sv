@@ -4,7 +4,7 @@
 //--------------------------------------------------------------------------------------------
 // class: extended class from base class
 //--------------------------------------------------------------------------------------------
-class i2c_write_master_seq extends i2c_master_base_sequences;
+class i2c_write_master_seq extends i2c_master_base_seq;
   
   //register with factory so can use create uvm_method 
   //and override in future if necessary 

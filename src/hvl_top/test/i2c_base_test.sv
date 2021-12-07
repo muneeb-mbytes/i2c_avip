@@ -157,6 +157,8 @@ function void i2c_base_test::setup_slave_agent_cfg();
     i2c_env_cfg_h.i2c_slave_agent_cfg_h[i].is_active    = uvm_active_passive_enum'(UVM_ACTIVE);
     i2c_env_cfg_h.i2c_slave_agent_cfg_h[i].shift_dir    = shift_direction_e'(MSB_FIRST);
     i2c_env_cfg_h.i2c_slave_agent_cfg_h[i].has_coverage = 1;
+    i2c_env_cfg_h.i2c_slave_agent_cfg_h[i].min_address  = i2c_env_cfg_h.i2c_master_agent_cfg_h[i].master_min_array[i];
+    i2c_env_cfg_h.i2c_slave_agent_cfg_h[i].max_address  = i2c_env_cfg_h.i2c_master_agent_cfg_h[i].master_max_array[i];
 
   end
 endfunction: setup_slave_agent_cfg

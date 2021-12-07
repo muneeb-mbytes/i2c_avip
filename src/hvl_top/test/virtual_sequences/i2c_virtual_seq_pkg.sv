@@ -27,6 +27,7 @@ package i2c_virtual_seq_pkg;
   // Include all other files
   //-------------------------------------------------------
    `include "i2c_virtual_seq_base.sv"
+   `include "i2c_8b_virtual_seq.sv"
 
 endpackage : i2c_virtual_seq_pkg
 
