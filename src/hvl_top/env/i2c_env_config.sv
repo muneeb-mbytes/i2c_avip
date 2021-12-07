@@ -38,7 +38,7 @@ class i2c_env_config extends uvm_object;
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
   extern function new(string name = "i2c_env_config");
-
+  extern function void do_print(uvm_printer printer);
 endclass : i2c_env_config
 
 //--------------------------------------------------------------------------------------------
@@ -50,6 +50,12 @@ endclass : i2c_env_config
 function i2c_env_config::new(string name = "i2c_env_config");
   super.new(name);
 endfunction : new
+
+function void i2c_env_config::do_print(uvm_printer printer);
+  super.do_print(printer);
+  printer.print_field ("has_scoreboard",has_scoreboard,1, UVM_DEC);
+  printer.print_field ("has_virtual_sequencer",has_virtual_sequencer,1, UVM_DEC);
+endfunction : do_print
 
 `endif
 
