@@ -11,7 +11,7 @@ class i2c_master_tx extends uvm_sequence_item;
 
   rand bit read_write;
   rand bit [SLAVE_ADDRESS_WIDTH-1:0]slave_address;
-  rand bit [REGISTER_ADDRESS_WIDTH-1:0]register_address;
+  rand bit [REGISTER_ADDRESS_WIDTH-1:0]register_address_array[$];
   rand bit [DATA_WIDTH-1:0]data[];
   bit ack;
   
@@ -20,7 +20,12 @@ class i2c_master_tx extends uvm_sequence_item;
   // Constraints for I2C
   //-------------------------------------------------------
   
- // constraint reg_addr{reg_address.size() > 0 ;
+  constraint register_addr{foreach (register_address_array[i])register_address_array[i]%4 == 0;} 
+  constraint slave_addr_0{slave_address==i2c_master_agent_cfg_h.slave_address_array[0];}
+  constraint slave_addr_1{slave_address==i2c_master_agent_cfg_h.slave_address_array[1];}
+  constraint slave_addr_2{slave_address==i2c_master_agent_cfg_h.slave_address_array[2];}
+  constraint slave_addr_3{slave_address==i2c_master_agent_cfg_h.slave_address_array[3];}
+
  //                    reg_address.size() < MAXIMUM_BITS/CHAR_LENGTH;}
  // 
  // constraint data{reg_address.size() > 0 ;
@@ -37,10 +42,10 @@ class i2c_master_tx extends uvm_sequence_item;
 
 //   constraint slave_addr{i2c_master_agent_cfg_h.slave_address_width.size() > 0 ;
 //                     i2c_master_agent_cfg_h.slave_address_width.size() < MAXIMUM_BITS/CHAR_LENGTH;}
-  constraint slave_addr_0{
-    if(i2c_master_agent_cfg_h.slave_address_array[0]==7'b0000000)
-      slave_address==i2c_master_agent_cfg_h.slave_address_array[0];
-    }
+ // constraint slave_addr_0{
+ //   if(i2c_master_agent_cfg_h.slave_address_array[0]==7'b0000000)
+ //     slave_address==i2c_master_agent_cfg_h.slave_address_array[0];
+ //   }
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -77,7 +82,7 @@ function void i2c_master_tx::do_copy (uvm_object rhs);
   super.do_copy(rhs);
 
   slave_address= rhs_.slave_address;
-  register_address = rhs_.register_address;
+  register_address_array= rhs_.register_address_array;
   data = rhs_.data;
 
 endfunction : do_copy
@@ -96,7 +101,7 @@ function bit  i2c_master_tx::do_compare (uvm_object rhs,uvm_comparer comparer);
 
   return super.do_compare(rhs,comparer) &&
   slave_address == rhs_.slave_address &&
-  register_address == rhs_.register_address &&
+  register_address_array == rhs_.register_address_array &&
   data == rhs_.data;
 endfunction : do_compare 
 //--------------------------------------------------------------------------------------------
@@ -105,9 +110,8 @@ endfunction : do_compare
 //--------------------------------------------------------------------------------------------
 function void i2c_master_tx::do_print(uvm_printer printer);
   super.do_print(printer);
-  foreach(register_address[i]) begin
-    printer.print_field($sformatf("register_address[%0d]",i),this.register_address
-    [i],8,UVM_HEX);
+  foreach(register_address_array[i]) begin
+    printer.print_field($sformatf("register_address_array[%0d]",i),this.register_address_array[i],8,UVM_HEX);
   end
   foreach(data[i]) begin
     printer.print_field($sformatf("data[%0d]",i),this.data[i],8,UVM_HEX);

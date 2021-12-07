@@ -32,7 +32,7 @@ class i2c_master_agent_config extends uvm_object;
 
   // Variable: register_address_array
   // Stores the register addresses for each slave
-  bit [31:0] register_address_array[int];
+  //bit [31:0] register_address_array[int];
 
   bit [7:0] slave_register_addresses_array[int][$];
 

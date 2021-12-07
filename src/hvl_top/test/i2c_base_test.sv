@@ -65,17 +65,17 @@ function void i2c_base_test::setup_env_cfg();
 
   i2c_env_cfg_h.i2c_master_agent_cfg_h = new[i2c_env_cfg_h.no_of_masters];
   foreach (i2c_env_cfg_h.i2c_master_agent_cfg_h[i])begin
-    i2c_env_cfg_h.i2c_master_agent_cfg_h[i] = i2c_master_agent_config::type_id::create
-                                                                    ("i2c_master_agent_cfg_h[i]");
+    i2c_env_cfg_h.i2c_master_agent_cfg_h[i] = i2c_master_agent_config::type_id::create($sformatf(
+                                                                    "i2c_master_agent_cfg_h[%0d]",i));
   end
   setup_master_agent_cfg();
   
   foreach (i2c_env_cfg_h.i2c_master_agent_cfg_h[i])begin
-    uvm_config_db #(i2c_master_agent_config)::set(this,"*i2c_master_agent*","i2c_master_agent_config",
-                                                          i2c_env_cfg_h.i2c_master_agent_cfg_h[i]);
+    uvm_config_db
+    #(i2c_master_agent_config)::set(this,$sformatf("*i2c_master_agent_h[%0d]*",i),"i2c_master_agent_config",i2c_env_cfg_h.i2c_master_agent_cfg_h[i]);
 
-    // TODO(mshariff): Call the required check functions                                                          
-    `uvm_info(get_type_name(),$sformatf("i2c_master_agent_cfg = \n %0p",
+  // TODO(mshariff): Call the required check functions                                                          
+  `uvm_info(get_type_name(),$sformatf("i2c_master_agent_cfg = \n %0p",
                                    i2c_env_cfg_h.i2c_master_agent_cfg_h[i].sprint()),UVM_NONE)
 
   end
@@ -83,8 +83,8 @@ function void i2c_base_test::setup_env_cfg();
   i2c_env_cfg_h.i2c_slave_agent_cfg_h = new[i2c_env_cfg_h.no_of_slaves];
   
   foreach (i2c_env_cfg_h.i2c_slave_agent_cfg_h[i])begin
-    i2c_env_cfg_h.i2c_slave_agent_cfg_h[i] = i2c_slave_agent_config::type_id::create
-                                                                    ("i2c_slave_agent_cfg_h[i]");
+    i2c_env_cfg_h.i2c_slave_agent_cfg_h[i] = i2c_slave_agent_config::type_id::create($sformatf
+                                                                    ("i2c_slave_agent_cfg_h[%0d]",i));
   end
   setup_slave_agent_cfg();
   
