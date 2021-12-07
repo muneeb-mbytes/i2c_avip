@@ -11,13 +11,13 @@ package i2c_globals_pkg;
  parameter int NO_OF_MASTERS = 1;
  
  // NO_OF_MASTERS to be connected to the i2c_interface
- parameter int NO_OF_SLAVES = 1;
+ parameter int NO_OF_SLAVES = 4;
  
  // The parameter NO_OF_REG is to assign number of registers in a slave
  parameter int NO_OF_REG = 1;
  
  // The parameter for the data width
- parameter int DATA_WIDTH = 8;
+ parameter int DATA_WIDTH = 32;
  
  // The parameter for the register address width
 // parameter int SLAVE_ADDRESS_WIDTH  = 10;
@@ -26,7 +26,7 @@ package i2c_globals_pkg;
  parameter int SLAVE_ADDRESS_WIDTH  = 7;
  
  // The parameter for the register address width
- parameter int REGISTER_ADDRESS_WIDTH  = 8;
+ parameter int REGISTER_ADDRESS_WIDTH  = 32;
  
  // The parameter for MAXIMUM_BITS supported per transfer
  parameter int MAXIMUM_BITS = 1024;
@@ -66,8 +66,8 @@ package i2c_globals_pkg;
  // MSB_FIRST - MSB is shifted out first
  //
  typedef enum bit {
-   MSB_FIRST = 1'b1,
-   LSB_FIRST = 1'b0
+   MSB_FIRST = 1'b0,
+   LSB_FIRST = 1'b1
  } shift_direction_e;
  
  
