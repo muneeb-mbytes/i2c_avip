@@ -17,44 +17,56 @@ class i2c_master_agent_config extends uvm_object;
   // this master over i2c interface
   int no_of_slaves;
   
-  // Variable:read_write_e
-  // Enables read or write operation 
+  // MSHA:// Variable:read_write_e
+  // MSHA:// Enables read or write operation 
   read_write_e read_write;
 
+  // Variable: shift_dir
+  // Tells the direction of data to be shifted
+  // MSB first or LSB first
   shift_direction_e shift_dir;
-  // Variable:slave_address_width_e
-  // Used for enabling the address with  
+
+  // Variable: slave_address_array
+  // Stores the addresses of different slaves
   bit [SLAVE_ADDRESS_WIDTH-1:0] slave_address_array[];
-  bit [7:0] register_address_array[int];
+
+  // Variable: register_address_array
+  // Stores the register addresses for each slave
+  bit [31:0] register_address_array[int];
+
+  bit [7:0] slave_register_addresses_array[int][$];
 
   // Variable: has_coverage
   // Used for enabling the master agent coverage
   bit has_coverage;
 
-  constraint slave_addr{slave_address_array.size() inside {[0:3]};}
-  
-  constraint register_addr{register_address_array.size() inside {[0:3]};}
-  
-  constraint slave_addr_0{slave_address_array[0] == 7'b0000000;}
-  constraint slave_addr_1{slave_address_array[1] == 7'b0000001;}
-  constraint slave_addr_2{slave_address_array[2] == 7'b0000010;}
-  constraint slave_addr_3{slave_address_array[3] == 7'b0000011;}
+  // MSHA: //-------------------------------------------------------
+  // MSHA: // Constraints 
+  // MSHA: //-------------------------------------------------------
+  // MSHA: constraint slave_addr{slave_address_array.size() inside {[1:no_of_slaves]};}
+  // MSHA: 
+  // MSHA: constraint register_addr{register_address_array.size() inside {[0:3]};}
+  // MSHA: 
+  // MSHA: constraint slave_addr_0{slave_address_array[0] == 7'b0000000;}
+  // MSHA: constraint slave_addr_1{slave_address_array[1] == 7'b0000001;}
+  // MSHA: constraint slave_addr_2{slave_address_array[2] == 7'b0000010;}
+  // MSHA: constraint slave_addr_3{slave_address_array[3] == 7'b0000011;}
 
 
-  constraint register_addr_0{
-    if(slave_address_array[0] == 7'b0000000)
-     register_address_array[0]==8'b00000000;
-     register_address_array[1]==8'b00001000;
-     register_address_array[2]==8'b00001001;
-     register_address_array[3]==8'b10000000;
-   }
-    
-  constraint register_addr_1{
-    if(slave_address_array[1] == 7'b0000001)
-     register_address_array[0]==8'b00010000;
-     register_address_array[1]==8'b00101000;
-     register_address_array[2]==8'b01001001;
-     register_address_array[3]==8'b11000000;}
+  // MSHA: constraint register_addr_0{
+  // MSHA:   if(slave_address_array[0] == 7'b0000000)
+  // MSHA:    register_address_array[0]==8'b00000000;
+  // MSHA:    register_address_array[1]==8'b00001000;
+  // MSHA:    register_address_array[2]==8'b00001001;
+  // MSHA:    register_address_array[3]==8'b10000000;
+  // MSHA:  }
+  // MSHA:   
+  // MSHA: constraint register_addr_1{
+  // MSHA:   if(slave_address_array[1] == 7'b0000001)
+  // MSHA:    register_address_array[0]==8'b00010000;
+  // MSHA:    register_address_array[1]==8'b00101000;
+  // MSHA:    register_address_array[2]==8'b01001001;
+  // MSHA:    register_address_array[3]==8'b11000000;}
   
  // constraint register_addr{
  //   foreach(slave_address_array[i])begin
@@ -96,4 +108,5 @@ function void i2c_master_agent_config::do_print(uvm_printer printer);
   
 endfunction : do_print
 
+// TODO(mshariff): Function for checking if the values in the slave_address_array are unique
 `endif

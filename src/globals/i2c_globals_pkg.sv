@@ -34,6 +34,12 @@ package i2c_globals_pkg;
  // The parameter for MAXIMUM_BYTES supported per transfer
  parameter int MAXIMUM_BYTES = MAXIMUM_BITS/DATA_WIDTH ;
  
+  // Slave addresses
+  parameter SLAVE0_ADDRESS = 7'b110_1000;
+  parameter SLAVE1_ADDRESS = 7'b110_1100;
+  parameter SLAVE2_ADDRESS = 7'b111_1100;
+  parameter SLAVE3_ADDRESS = 7'b100_1100;
+
  // acknowledge bit or no acknowledge
  // parameter bit ACK = 0;
  // parameter bit NACK = 1;

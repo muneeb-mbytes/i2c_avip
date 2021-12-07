@@ -73,6 +73,8 @@ function void i2c_base_test::setup_env_cfg();
   foreach (i2c_env_cfg_h.i2c_master_agent_cfg_h[i])begin
     uvm_config_db #(i2c_master_agent_config)::set(this,"*i2c_master_agent*","i2c_master_agent_config",
                                                           i2c_env_cfg_h.i2c_master_agent_cfg_h[i]);
+
+    // TODO(mshariff): Call the required check functions                                                          
     `uvm_info(get_type_name(),$sformatf("i2c_master_agent_cfg = \n %0p",
                                    i2c_env_cfg_h.i2c_master_agent_cfg_h[i].sprint()),UVM_NONE)
 
@@ -91,6 +93,7 @@ function void i2c_base_test::setup_env_cfg();
   foreach(i2c_env_cfg_h.i2c_slave_agent_cfg_h[i]) begin
     uvm_config_db #(i2c_slave_agent_config)::set(this,$sformatf("*i2c_slave_agent_h[%0d]*",i),
                                              "i2c_slave_agent_config", i2c_env_cfg_h.i2c_slave_agent_cfg_h[i]);
+    // TODO(mshariff): Call the required check functions                                                          
     `uvm_info(get_type_name(),$sformatf("i2c_slave_agent_cfg = \n %0p",
     i2c_env_cfg_h.i2c_slave_agent_cfg_h[i].sprint()),UVM_NONE)
   end
@@ -108,16 +111,40 @@ function void i2c_base_test::setup_env_cfg();
 //--------------------------------------------------------------------------------------------
 function void i2c_base_test::setup_master_agent_cfg();
   
-  
   foreach(i2c_env_cfg_h.i2c_master_agent_cfg_h[i])begin
+    // Configure the Master agent configuration
+    i2c_env_cfg_h.i2c_master_agent_cfg_h[i].is_active     = uvm_active_passive_enum'(UVM_ACTIVE);
+    i2c_env_cfg_h.i2c_master_agent_cfg_h[i].no_of_slaves  = NO_OF_SLAVES;
+    i2c_env_cfg_h.i2c_master_agent_cfg_h[i].shift_dir     = shift_direction_e'(MSB_FIRST);
+    i2c_env_cfg_h.i2c_master_agent_cfg_h[i].has_coverage  = 1;
 
-  // Configure the Master agent configuration
-  i2c_env_cfg_h.i2c_master_agent_cfg_h[i].is_active        = uvm_active_passive_enum'(UVM_ACTIVE);
-  i2c_env_cfg_h.i2c_master_agent_cfg_h[i].no_of_slaves     = NO_OF_SLAVES;
-  i2c_env_cfg_h.i2c_master_agent_cfg_h[i].shift_dir        = shift_direction_e'(MSB_FIRST);
-  i2c_env_cfg_h.i2c_master_agent_cfg_h[i].has_coverage     = 1;
+    // Stores all the Slave addresses
+    i2c_env_cfg_h.i2c_master_agent_cfg_h[i].slave_address_array = new[NO_OF_SLAVES]; 
+    i2c_env_cfg_h.i2c_master_agent_cfg_h[i].slave_address_array[0] = SLAVE0_ADDRESS;
+    i2c_env_cfg_h.i2c_master_agent_cfg_h[i].slave_address_array[1] = SLAVE1_ADDRESS;
+    i2c_env_cfg_h.i2c_master_agent_cfg_h[i].slave_address_array[2] = SLAVE2_ADDRESS;
+    i2c_env_cfg_h.i2c_master_agent_cfg_h[i].slave_address_array[3] = SLAVE3_ADDRESS;
 
-end
+    // MSHA:slave_address_array = new[NO_OF_SLAVES];
+
+    // MSHA:// TODO(mshariff): Make this logic work for many slaves
+    // MSHA:// Create a check for unique values
+    // MSHA:slave_address_array[0] = 7'b110_1000;
+    // MSHA:slave_address_array[1] = 7'b110_1100;
+    // MSHA:slave_address_array[2] = 7'b111_1100;
+    // MSHA:slave_address_array[3] = 7'b100_1100;
+
+
+    // MSHA:// Create a check for unique values
+    // MSHA:// Check to see if there are only 2**8 = 256 registers are there for each slave
+    // MSHA:// For each register we need to store 32bits of data
+    // MSHA:register_address_array[8'h0000_0000] = 0;
+    // MSHA:register_address_array[8'h0000_0000] = 0;
+    // MSHA:register_address_array[8'h0000_0000] = 0;
+    // MSHA:register_address_array[8'h0000_0000] = 0;
+
+  end
+
 endfunction: setup_master_agent_cfg
 
 //--------------------------------------------------------------------------------------------
@@ -129,12 +156,13 @@ function void i2c_base_test::setup_slave_agent_cfg();
   // Create slave agent(s) configurations
   // Setting the configuration for each slave
   
-  foreach(i2c_env_cfg_h.i2c_slave_agent_cfg_h[i]) begin
-    i2c_env_cfg_h.i2c_slave_agent_cfg_h[i].is_active    = uvm_active_passive_enum'(UVM_ACTIVE);
-    i2c_env_cfg_h.i2c_slave_agent_cfg_h[i].shift_dir    = shift_direction_e'(MSB_FIRST);
-    i2c_env_cfg_h.i2c_slave_agent_cfg_h[i].has_coverage = 1;
+  // Slave 0 
+  i2c_env_cfg_h.i2c_slave_agent_cfg_h[0].slave_address = SLAVE0_ADDRESS;
+  i2c_env_cfg_h.i2c_slave_agent_cfg_h[0].is_active    = uvm_active_passive_enum'(UVM_ACTIVE);
+  i2c_env_cfg_h.i2c_slave_agent_cfg_h[0].shift_dir    = shift_direction_e'(MSB_FIRST);
+  i2c_env_cfg_h.i2c_slave_agent_cfg_h[0].has_coverage = 1;
 
-  end
+  // TODO(mshariff): 
 
 endfunction: setup_slave_agent_cfg
 

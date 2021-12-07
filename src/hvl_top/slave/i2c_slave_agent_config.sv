@@ -16,9 +16,9 @@ class i2c_slave_agent_config extends uvm_object;
   // Shifts the data, LSB first or MSB first
   shift_direction_e shift_dir;
 
-  // Variable:slave_address_width_e
-  // Used for enabling the address with  
-  //slave_address_width_e slave_address_width;
+  // Variable:slave_address
+  // Used for storing the address 
+  bit [SLAVE_ADDRESS_WIDTH-1 :0] slave_address;
   
   // Variable: has_coverage
   // Used for enabling the slave agent coverage
