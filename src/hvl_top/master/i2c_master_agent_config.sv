@@ -35,13 +35,13 @@ class i2c_master_agent_config extends uvm_object;
   
   constraint register_addr{register_address_array.size() inside {[0:3]};}
   
-  constraint slave_addr_1{slave_address_array[0] == 7'b0000000;}
-  constraint slave_addr_2{slave_address_array[1] == 7'b0000001;}
-  constraint slave_addr_3{slave_address_array[2] == 7'b0000010;}
-  constraint slave_addr_4{slave_address_array[3] == 7'b0000011;}
+  constraint slave_addr_0{slave_address_array[0] == 7'b0000000;}
+  constraint slave_addr_1{slave_address_array[1] == 7'b0000001;}
+  constraint slave_addr_2{slave_address_array[2] == 7'b0000010;}
+  constraint slave_addr_3{slave_address_array[3] == 7'b0000011;}
 
 
-  constraint register_addr_1{
+  constraint register_addr_0{
     if(slave_address_array[0] == 7'b0000000)
      register_address_array[0]==8'b00000000;
      register_address_array[1]==8'b00001000;
@@ -49,12 +49,12 @@ class i2c_master_agent_config extends uvm_object;
      register_address_array[3]==8'b10000000;
    }
     
-  constraint register_addr_2{
-    if(slave_address_width[1] == 7'b0000001)
-     register_address_width[0]==8'b00010000;
-     register_address_width[1]==8'b00101000;
-     register_address_width[2]==8'b01001001;
-     register_address_width[3]==8'b11000000;}
+  constraint register_addr_1{
+    if(slave_address_array[1] == 7'b0000001)
+     register_address_array[0]==8'b00010000;
+     register_address_array[1]==8'b00101000;
+     register_address_array[2]==8'b01001001;
+     register_address_array[3]==8'b11000000;}
   
  // constraint register_addr{
  //   foreach(slave_address_array[i])begin

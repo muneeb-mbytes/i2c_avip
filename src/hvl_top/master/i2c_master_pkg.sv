@@ -19,8 +19,8 @@ package i2c_master_pkg;
   //-------------------------------------------------------
   // Include all other files
   //-------------------------------------------------------
-  `include "i2c_master_tx.sv"
   `include "i2c_master_agent_config.sv"
+  `include "i2c_master_tx.sv"
   `include "i2c_master_sequencer.sv"
 //`include "i2c_master_sequence.sv"
   `include "i2c_master_driver_proxy.sv"
