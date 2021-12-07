@@ -11,20 +11,37 @@ class i2c_master_tx extends uvm_sequence_item;
 
   rand bit read_write;
   rand bit [SLAVE_ADDRESS_WIDTH-1:0]slave_address;
-  rand bit [REGISTER_ADDRESS_WIDTH-1:0]register_address_array[$];
+  rand bit [REGISTER_ADDRESS_WIDTH-1:0]register_address;
   rand bit [DATA_WIDTH-1:0]data[];
   bit ack;
+  
+  rand bit [NO_OF_SLAVES-1:0] index; 
+  rand bit [7:0] raddr; 
   
   i2c_master_agent_config i2c_master_agent_cfg_h;
   //-------------------------------------------------------
   // Constraints for I2C
   //-------------------------------------------------------
   
-  constraint register_addr{foreach (register_address_array[i])register_address_array[i]%4 == 0;} 
-  constraint slave_addr_0{slave_address==i2c_master_agent_cfg_h.slave_address_array[0];}
-  constraint slave_addr_1{slave_address==i2c_master_agent_cfg_h.slave_address_array[1];}
-  constraint slave_addr_2{slave_address==i2c_master_agent_cfg_h.slave_address_array[2];}
-  constraint slave_addr_3{slave_address==i2c_master_agent_cfg_h.slave_address_array[3];}
+  //The register_address_arrayis of the mode of 4 because data width is 32bit 
+
+  constraint register_addr_c{register_address%4 == 0;} 
+  constraint s_addr_index_c{index inside {[0:NO_OF_SLAVES]};}
+  constraint s_addr_c{slave_address == i2c_master_agent_cfg_h.slave_address_array[index];}
+  constraint s_sb_c{solve index before slave_address;}
+ 
+  constraint r_addr_size_c{raddr inside {[0:7]};}
+  constraint r_addr_c{register_address == i2c_master_agent_cfg_h.slave_register_address_array[raddr];}
+  constraint r_sb_c{solve raddr before register_address;}
+  
+  
+  
+  
+  
+  //constraint slave_addr_0{slave_address==i2c_master_agent_cfg_h.slave_address_array[0];}
+  //constraint slave_addr_1{slave_address==i2c_master_agent_cfg_h.slave_address_array[1];}
+  //constraint slave_addr_2{slave_address==i2c_master_agent_cfg_h.slave_address_array[2];}
+  //constraint slave_addr_3{slave_address==i2c_master_agent_cfg_h.slave_address_array[3];}
 
  //                    reg_address.size() < MAXIMUM_BITS/CHAR_LENGTH;}
  // 
@@ -51,6 +68,7 @@ class i2c_master_tx extends uvm_sequence_item;
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
   extern function new(string name = "i2c_master_tx");
+  //extern function void post_randomize();
   extern function void do_copy(uvm_object rhs);
   extern function bit do_compare(uvm_object rhs, uvm_comparer comparer); 
   extern function void do_print(uvm_printer printer);
@@ -82,7 +100,7 @@ function void i2c_master_tx::do_copy (uvm_object rhs);
   super.do_copy(rhs);
 
   slave_address= rhs_.slave_address;
-  register_address_array= rhs_.register_address_array;
+  register_address= rhs_.register_address;
   data = rhs_.data;
 
 endfunction : do_copy
@@ -101,7 +119,7 @@ function bit  i2c_master_tx::do_compare (uvm_object rhs,uvm_comparer comparer);
 
   return super.do_compare(rhs,comparer) &&
   slave_address == rhs_.slave_address &&
-  register_address_array == rhs_.register_address_array &&
+  register_address == rhs_.register_address &&
   data == rhs_.data;
 endfunction : do_compare 
 //--------------------------------------------------------------------------------------------
@@ -110,9 +128,8 @@ endfunction : do_compare
 //--------------------------------------------------------------------------------------------
 function void i2c_master_tx::do_print(uvm_printer printer);
   super.do_print(printer);
-  foreach(register_address_array[i]) begin
-    printer.print_field($sformatf("register_address_array[%0d]",i),this.register_address_array[i],8,UVM_HEX);
-  end
+    printer.print_field($sformatf("register_address"),this.register_address,8,UVM_HEX);
+  
   foreach(data[i]) begin
     printer.print_field($sformatf("data[%0d]",i),this.data[i],8,UVM_HEX);
   end
