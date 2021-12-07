@@ -19,7 +19,7 @@ package i2c_master_seq_pkg;
   // Importing the required packages
   //-------------------------------------------------------
   
-  `include "i2c_master_base_sequences.sv"
-  `include "i2c_write_master_seq.sv"
+  `include "i2c_master_base_seq.sv"
+  `include "i2c_8b_master_seq.sv"
 endpackage : i2c_master_seq_pkg
 `endif

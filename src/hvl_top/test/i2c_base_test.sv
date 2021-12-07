@@ -204,7 +204,7 @@ endfunction : end_of_elaboration_phase
 //--------------------------------------------------------------------------------------------
 task i2c_base_test::run_phase(uvm_phase phase);
 
-  phase.raise_objection(this, "i2c_base_test");
+  phase.raise_objection(this);
 
   `uvm_info(get_type_name(), $sformatf("Inside I2C_BASE_TEST"), UVM_NONE);
   super.run_phase(phase);

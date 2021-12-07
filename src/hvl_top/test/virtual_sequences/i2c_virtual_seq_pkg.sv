@@ -24,8 +24,9 @@ package i2c_virtual_seq_pkg;
   import i2c_env_pkg::*;
 
  //including base_test for testing
- `include "i2c_virtual_sequence.sv"
+ `include "i2c_virtual_base_seq.sv"
 
+ `include "i2c_8b_virtual_seq.sv"
 endpackage : i2c_virtual_seq_pkg
 
 `endif

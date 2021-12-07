@@ -27,7 +27,7 @@ package i2c_test_pkg;
 
  //including base_test for testing
  `include "i2c_base_test.sv"
-
+ `include "i2c_8b_test.sv"
 endpackage : i2c_test_pkg
 
 `endif

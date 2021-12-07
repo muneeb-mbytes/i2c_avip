@@ -5,7 +5,7 @@
 // Class: i2c_master_sequencer
 // <Description_here>
 //--------------------------------------------------------------------------------------------
-class i2c_master_sequencer extends uvm_component;
+class i2c_master_sequencer extends uvm_sequencer#(i2c_master_tx) ;
   `uvm_component_utils(i2c_master_sequencer)
 
   //-------------------------------------------------------
