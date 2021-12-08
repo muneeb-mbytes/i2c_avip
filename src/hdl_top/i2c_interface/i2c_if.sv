@@ -40,13 +40,13 @@ interface i2c_if(input pclk, input areset);
 	logic sda_oen; 
   
   // Implementing week0 and week1 concept
- // assign scl=(scl_oen) ? scl_o:1'bz;
- // assign (weak0,weak1)scl=1'b1;
- // assign scl_i = scl;
+  assign scl=(scl_oen) ? scl_o:1'bz;
+  assign (weak0,weak1)scl=1'b1;
+  assign scl_i = scl;
 
- // assign sda=(sda_oen) ? sda_o:1'bz;
- // assign (weak0,weak1)sda=1'b1;
- // assign sda_i = sda;
+  assign sda=(sda_oen) ? sda_o:1'bz;
+  assign (weak0,weak1)sda=1'b1;
+  assign sda_i = sda;
 
 
 endinterface : i2c_if

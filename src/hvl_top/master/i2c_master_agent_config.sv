@@ -39,6 +39,22 @@ class i2c_master_agent_config extends uvm_object;
   // Variable: has_coverage
   // Used for enabling the master agent coverage
   bit has_coverage;
+  // Variable: primary_prescalar
+  // Used for setting the primary prescalar value for baudrate_divisor
+  protected bit[2:0] primary_prescalar;
+
+  // Variable: secondary_prescalar
+  // Used for setting the secondary prescalar value for baudrate_divisor
+  protected bit[2:0] secondary_prescalar;
+
+  // Variable: baudrate_divisor_divisor
+  // Defines the date rate 
+  //
+  // baudrate_divisor_divisor = (secondary_prescalar+1) * (2 ** (primary_prescalar+1))
+  // baudrate = busclock / baudrate_divisor_divisor;
+  //
+  // Default value is 2
+  int baudrate_divisor = 2;
 
   // MSHA: //-------------------------------------------------------
   // MSHA: // Constraints 

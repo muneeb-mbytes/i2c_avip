@@ -3,14 +3,18 @@
 // It consists of the test_pkg to run the base test
 //--------------------------------------------------------------------------------------------
 module hvl_top;
+ //-------------------------------------------------------
+ // Package : Importing Uvm Pakckage and Test Package
+ //-------------------------------------------------------
+ import i2c_test_pkg::*;
+ import uvm_pkg::*;
+ 
+ //-------------------------------------------------------
+ // run_test for simulation
+ //-------------------------------------------------------
 
-  import i2c_test_pkg::*;
-  import uvm_pkg::*;
-
-
-  initial
-  begin
-    run_test("i2c_base_test");
-  end
+ initial begin
+  run_test("i2c_base_test");
+ end
 
 endmodule : hvl_top

@@ -9,8 +9,6 @@ class i2c_master_agent extends uvm_component;
   `uvm_component_utils(i2c_master_agent)
 
   i2c_master_agent_config i2c_master_agent_cfg_h;
-
-
   i2c_master_monitor_proxy i2c_master_mon_proxy_h;
   i2c_master_sequencer i2c_master_seqr_h;
   i2c_master_driver_proxy i2c_master_drv_proxy_h;
