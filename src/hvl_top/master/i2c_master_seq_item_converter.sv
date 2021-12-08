@@ -18,12 +18,12 @@ class i2c_master_seq_item_converter extends uvm_object;
   //-------------------------------------------------------
   extern function new(string name = "i2c_master_seq_item_converter");
   extern static function void from_class(input i2c_master_tx input_conv_h,
-                                          output i2c_bits_transfer_s output_conv);
+                                        output i2c_transfer_bits_s output_conv);
 
-  extern static function void to_class(input i2c_bits_transfer_s input_conv_h,     
+  extern static function void to_class(input i2c_transfer_bits_s input_conv_h,     
                                         output i2c_master_tx output_conv);
-  extern function void from_class_msb_first(input i2c_master_tx input_conv_h, 
-                                            output i2c_bits_transfer_s output_conv);
+  //extern function void from_class_msb_first(input i2c_master_tx input_conv_h, 
+  //                                           output i2c_transfer_bits_s output_conv);
   extern function void do_print(uvm_printer printer);
 
 endclass : i2c_master_seq_item_converter
@@ -43,7 +43,7 @@ endfunction : new
 // converting seq_item transactions into struct data items
 //--------------------------------------------------------------------------------------------
 function void i2c_master_seq_item_converter::from_class(input i2c_master_tx input_conv_h,
-                                                        output i2c_bits_transfer_s output_conv);
+                                                        output i2c_transfer_bits_s output_conv);
   
   //converting of the slave address                                                      
   output_conv.slave_address = input_conv_h.slave_address;
@@ -63,7 +63,7 @@ function void i2c_master_seq_item_converter::from_class(input i2c_master_tx inpu
     `uvm_info("master_seq_item_conv_class",
     $sformatf("After shift input_cov_h data = \n %p",
     input_conv_h.data[i]),UVM_LOW)
-    output_conv.data[i][DATA_LENGTH-1:0] = input_conv_h.data[i];    
+    output_conv.data[i][DATA_WIDTH-1:0] = input_conv_h.data[i];    
     `uvm_info("master_seq_item_conv_class",
     $sformatf("After shift input_cov_h data = \n %p",
     input_conv_h.data[i]),UVM_LOW)
@@ -82,30 +82,30 @@ endfunction: from_class
 // function:to_class
 // converting struct data items into seq_item transactions
 //--------------------------------------------------------------------------------------------
-function void i2c_master_seq_item_converter::to_class(input i2c_bits_transfer_s input_conv_h,
+function void i2c_master_seq_item_converter::to_class(input i2c_transfer_bits_s input_conv_h,
                                                       output i2c_master_tx output_conv);
   output_conv = new();
 
   // Defining the size of arrays
-  output_conv.data = new[input_conv_h.no_of_i2c_bits_transfer/DATA_LENGTH];
+  output_conv.data = new[input_conv_h.no_of_i2c_bits_transfer/DATA_WIDTH];
 
   // Storing the values in the respective arrays
   //converting back the slave address 
   output_conv.slave_address = input_conv_h.slave_address;    
   `uvm_info("master_seq_item_conv_class",
-  $sformatf("To class slave_address = \n %p",output_conv_h.slave_address),UVM_LOW)
+  $sformatf("To class slave_address = \n %p",output_conv.slave_address),UVM_LOW)
 
   //converting back the register_address 
   output_conv.register_address = input_conv_h.register_address;
   `uvm_info("master_seq_item_conv_class",
-  $sformatf("To class register_address = \n %p",output_conv_h.register_address),UVM_LOW)
+  $sformatf("To class register_address = \n %p",output_conv.register_address),UVM_LOW)
 
  
   //converting back the data
-  for(int i=0; i<input_conv.no_of_i2c_bits_transfer/DATA_LENGTH; i++) begin
-  output_conv.data[i] = input_conv_h.data[i][DATA_LENGTH-1:0];
+  for(int i=0; i<input_conv_h.no_of_i2c_bits_transfer/DATA_WIDTH; i++) begin
+  output_conv.data[i] = input_conv_h.data[i][DATA_WIDTH-1:0];
   `uvm_info("master_seq_item_conv_class",
-  $sformatf("To class data = \n %p",output_conv_h.data[i]),UVM_LOW)
+  $sformatf("To class data = \n %p",output_conv.data[i]),UVM_LOW)
   end
 
   
@@ -117,15 +117,15 @@ endfunction: to_class
 //--------------------------------------------------------------------------------------------
 function void i2c_master_seq_item_converter::do_print(uvm_printer printer);
 
-  i2c_bits_transfer_s i2c_st;
+  i2c_transfer_bits_s i2c_st;
   super.do_print(printer);
 
 
-  foreach(i2c_st.slave_address) begin
+  if(i2c_st.slave_address) begin
     printer.print_field($sformatf("slave_address"),i2c_st.slave_address,8,UVM_HEX);
   end
   
-  foreach(i2c_st.register_address) begin
+  if(i2c_st.register_address) begin
     printer.print_field($sformatf("register_address"),i2c_st.register_address,8,UVM_HEX);
   end
 

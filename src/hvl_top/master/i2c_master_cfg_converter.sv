@@ -45,7 +45,7 @@ function void i2c_master_cfg_converter::from_class(input i2c_master_agent_config
   bit slave_address_width;
   
   //slave address is configurable so for it we do casting 
-  slave_address_width=slave_address_width_e'(input_conv_h.slave_address_width);
+ // slave_address_width=slave_address_width_e'(input_conv_h.slave_address_width);
   
  output_conv.msb_first = shift_direction_e'(input_conv_h.shift_dir);
   
