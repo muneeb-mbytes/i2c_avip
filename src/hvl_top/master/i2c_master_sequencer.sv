@@ -7,6 +7,8 @@
 //--------------------------------------------------------------------------------------------
 class i2c_master_sequencer extends uvm_sequencer#(i2c_master_tx) ;
   `uvm_component_utils(i2c_master_sequencer)
+ 
+  i2c_master_agent_config i2c_master_agent_cfg_h;
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions

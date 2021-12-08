@@ -67,13 +67,13 @@ task i2c_8b_test::run_phase(uvm_phase phase);
   i2c_8b_virtual_seq_h = i2c_8b_virtual_seq::type_id::create("i2c_8b_virtual_seq_h");
 
 
-  phase.raise_objection(this);
+ // phase.raise_objection(this);
 
 
   i2c_8b_virtual_seq_h.start(i2c_env_h.i2c_virtual_seqr_h); 
 
 
-  phase.drop_objection(this);
+  // phase.drop_objection(this);
 
 endtask : run_phase
 

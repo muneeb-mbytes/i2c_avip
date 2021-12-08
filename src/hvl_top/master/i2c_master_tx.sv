@@ -27,11 +27,11 @@ class i2c_master_tx extends uvm_sequence_item;
 
   constraint register_addr_c{register_address%4 == 0;} 
   constraint s_addr_index_c{index inside {[0:NO_OF_SLAVES]};}
-  constraint s_addr_c{slave_address == i2c_master_agent_cfg_h.slave_address_array[index];}
+  //constraint s_addr_c{slave_address == i2c_master_agent_cfg_h.slave_address_array[index];}
   constraint s_sb_c{solve index before slave_address;}
  
   constraint r_addr_size_c{raddr inside {[0:7]};}
-  constraint r_addr_c{register_address == i2c_master_agent_cfg_h.slave_register_address_array[raddr];}
+  //constraint r_addr_c{register_address == i2c_master_agent_cfg_h.slave_register_address_array[raddr];}
   constraint r_sb_c{solve raddr before register_address;}
   
   

@@ -5,7 +5,7 @@
 // Class: i2c_master_driver_proxy
 // <Description_here>
 //--------------------------------------------------------------------------------------------
-class i2c_master_driver_proxy extends uvm_driver;
+class i2c_master_driver_proxy extends uvm_driver#(i2c_master_tx);
   `uvm_component_utils(i2c_master_driver_proxy)
  
   i2c_master_tx tx;
@@ -20,7 +20,7 @@ class i2c_master_driver_proxy extends uvm_driver;
   extern virtual function void build_phase(uvm_phase phase);
   // extern virtual function void connect_phase(uvm_phase phase);
   // extern virtual function void end_of_elaboration_phase(uvm_phase phase);
-  // extern virtual task run_phase(uvm_phase phase);
+   extern virtual task run_phase(uvm_phase phase);
   // extern virtual task drive_to_bfm(inout i2c_bits_transfer_s, input i2c_transfer_cfg_s);
 
 endclass : i2c_master_driver_proxy
@@ -81,8 +81,8 @@ endfunction : build_phase
 // Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
-//task i2c_master_driver_proxy::run_phase(uvm_phase phase);
-//  super.run_phase(phase);
+task i2c_master_driver_proxy::run_phase(uvm_phase phase);
+  super.run_phase(phase);
 //
 //  i2c_master_driver_bfm_h.wait_for_reset();
 //
@@ -93,7 +93,9 @@ endfunction : build_phase
 //    
 //    i2c_transfer_cfg_s struct_cfg;
 //  
-//    seq_item_port.get_next_item(req);
+    seq_item_port.get_next_item(req);
+    
+    req.print();
 //
 //    i2c_master_driver_bfm_h.wait_for_idle_state();
 //    
@@ -107,10 +109,10 @@ endfunction : build_phase
 //
 //    i2c_master_seq_item_converter::to_class(struct_packet,req);
 //    
-//    seq_item_port.item_done();
+   seq_item_port.item_done();
 //
 //  end
-//endtask : run_phase
+endtask : run_phase
 //
 //task i2c_master_driver_proxy :: drive_to_bfm(inout i2c_bits_transfer_s packet, input i2c_transfer_cfg_s packet1)
 //  i2c_master_driver_bfm_h.drive_data(packet,packet1); 

@@ -21,7 +21,7 @@ class i2c_master_agent extends uvm_component;
   //-------------------------------------------------------
   extern function new(string name = "i2c_master_agent", uvm_component parent = null);
   extern virtual function void build_phase(uvm_phase phase);
-  //extern virtual function void connect_phase(uvm_phase phase);
+  extern virtual function void connect_phase(uvm_phase phase);
 
 endclass : i2c_master_agent
 
@@ -71,7 +71,7 @@ endfunction : build_phase
 // Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
-/*
+
 function void i2c_master_agent::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
   if(i2c_master_agent_cfg_h.is_active==UVM_ACTIVE)begin
@@ -93,7 +93,7 @@ function void i2c_master_agent::connect_phase(uvm_phase phase);
           i2c_master_mon_proxy_h.i2c_master_agent_cfg_h = i2c_master_agent_cfg_h; 
 
 endfunction : connect_phase
-*/
+
 
 `endif
 
