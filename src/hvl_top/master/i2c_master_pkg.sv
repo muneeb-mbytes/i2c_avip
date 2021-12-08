@@ -22,6 +22,7 @@ package i2c_master_pkg;
   `include "i2c_master_agent_config.sv"
   `include "i2c_master_tx.sv"
   `include "i2c_master_seq_item_converter.sv"
+  `include "i2c_master_cfg_converter.sv"
   `include "i2c_master_sequencer.sv"
   `include "i2c_master_driver_proxy.sv"
   `include "i2c_master_monitor_proxy.sv"
