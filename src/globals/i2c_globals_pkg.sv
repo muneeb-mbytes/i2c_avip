@@ -17,7 +17,7 @@ package i2c_globals_pkg;
  parameter int NO_OF_REG = 1;
  
  // The parameter for the data width
- parameter int DATA_WIDTH = 32;
+ parameter int DATA_WIDTH = 8;
  
  // The parameter for the register address width
 // parameter int SLAVE_ADDRESS_WIDTH  = 10;
@@ -35,10 +35,10 @@ package i2c_globals_pkg;
  parameter int MAXIMUM_BYTES = MAXIMUM_BITS/DATA_WIDTH ;
  
   // Slave addresses
-  parameter SLAVE0_ADDRESS = 7'b110_1000;
-  parameter SLAVE1_ADDRESS = 7'b110_1100;
-  parameter SLAVE2_ADDRESS = 7'b111_1100;
-  parameter SLAVE3_ADDRESS = 7'b100_1100;
+  parameter SLAVE0_ADDRESS = 7'b110_1000;  // 7'h68
+  parameter SLAVE1_ADDRESS = 7'b110_1100;  // 7'h6C 
+  parameter SLAVE2_ADDRESS = 7'b111_1100;  // 7'h7C
+  parameter SLAVE3_ADDRESS = 7'b100_1100;  // 7'h4C
 
  // acknowledge bit or no acknowledge
  // parameter bit ACK = 0;

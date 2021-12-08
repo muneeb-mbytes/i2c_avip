@@ -32,11 +32,17 @@ endfunction : new
 
 task i2c_8b_master_seq::body();
 
+  super.body();
+
   req = i2c_master_tx::type_id::create("req"); 
+  req.i2c_master_agent_cfg_h = p_sequencer.i2c_master_agent_cfg_h;
+
+  `uvm_info("DEBUG_MSHA", $sformatf("address = %0x",
+  p_sequencer.i2c_master_agent_cfg_h.slave_address_array[0]), UVM_NONE)
 
   start_item(req);
 
-  if(!req.randomize() ) begin
+  if(!req.randomize() with {read_write == WRITE;}) begin
 
     `uvm_fatal(get_type_name(), "Randomization failed")
 

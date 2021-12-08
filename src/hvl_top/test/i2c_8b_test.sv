@@ -71,7 +71,7 @@ task i2c_8b_test::run_phase(uvm_phase phase);
 
 
   i2c_8b_virtual_seq_h.start(i2c_env_h.i2c_virtual_seqr_h); 
-
+  #20;
 
   // phase.drop_objection(this);
 

@@ -9,7 +9,7 @@
 class i2c_master_tx extends uvm_sequence_item;
   `uvm_object_utils(i2c_master_tx)
 
-  rand bit read_write;
+  rand read_write_e read_write;
   rand bit [SLAVE_ADDRESS_WIDTH-1:0]slave_address;
   rand bit [REGISTER_ADDRESS_WIDTH-1:0]register_address;
   rand bit [DATA_WIDTH-1:0]data[];
@@ -26,15 +26,19 @@ class i2c_master_tx extends uvm_sequence_item;
   //The register_address_arrayis of the mode of 4 because data width is 32bit 
 
   constraint register_addr_c{register_address%4 == 0;} 
-  constraint s_addr_index_c{index inside {[0:NO_OF_SLAVES]};}
-  //constraint s_addr_c{slave_address == i2c_master_agent_cfg_h.slave_address_array[index];}
-  constraint s_sb_c{solve index before slave_address;}
+  constraint s_addr_index_c{index inside {[0:NO_OF_SLAVES-1]};}
+  //constraint s_addr_c{slave_address == i2c_master_agent_cfg_h.slave_address_array[index];solve index before slave_address;}
+  //constraint s_sb_c{solve index before slave_address;}
  
   constraint r_addr_size_c{raddr inside {[0:7]};}
   //constraint r_addr_c{register_address == i2c_master_agent_cfg_h.slave_register_address_array[raddr];}
   constraint r_sb_c{solve raddr before register_address;}
   
-  
+  // Write Data
+  constraint write_data_c {soft data.size() %4 == 0;
+                                data.size() != 0; 
+                                data.size() == 4;
+                                data.size() <= MAXIMUM_BYTES; }
   
   
   
@@ -68,7 +72,7 @@ class i2c_master_tx extends uvm_sequence_item;
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
   extern function new(string name = "i2c_master_tx");
-  //extern function void post_randomize();
+  extern function void post_randomize();
   extern function void do_copy(uvm_object rhs);
   extern function bit do_compare(uvm_object rhs, uvm_comparer comparer); 
   extern function void do_print(uvm_printer printer);
@@ -128,13 +132,23 @@ endfunction : do_compare
 //--------------------------------------------------------------------------------------------
 function void i2c_master_tx::do_print(uvm_printer printer);
   super.do_print(printer);
-    printer.print_field($sformatf("register_address"),this.register_address,8,UVM_HEX);
+
+  printer.print_field($sformatf("slave_address"),this.slave_address,$bits(slave_address),UVM_HEX);
+  printer.print_field($sformatf("register_address"),this.register_address,8,UVM_HEX);
+  printer.print_string($sformatf("read_write"),read_write.name());
   
   foreach(data[i]) begin
     printer.print_field($sformatf("data[%0d]",i),this.data[i],8,UVM_HEX);
   end
-  printer.print_field($sformatf("slave_address"),this.slave_address,$bits(slave_address),UVM_BIN);
 
 endfunction : do_print
 
+//--------------------------------------------------------------------------------------------
+// Function: post_randomize
+// Used for setting slave address value based on the configurations value
+//--------------------------------------------------------------------------------------------
+function void i2c_master_tx::post_randomize();
+  slave_address = i2c_master_agent_cfg_h.slave_address_array[index];
+  `uvm_info("DEBUG_MSHA", $sformatf("index = %0d and slave_address = %0x", index, slave_address), UVM_NONE)
+endfunction: post_randomize
 `endif
