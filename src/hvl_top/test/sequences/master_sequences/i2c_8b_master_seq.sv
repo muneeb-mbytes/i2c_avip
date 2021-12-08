@@ -32,7 +32,7 @@ endfunction : new
 
 task i2c_8b_master_seq::body();
 
-  req = i2c_master_tx::type_id::create("req");
+  req = i2c_master_tx::type_id::create("req"); 
 
   start_item(req);
 
@@ -44,6 +44,7 @@ task i2c_8b_master_seq::body();
   
   req.print();
   finish_item(req);
+
 
 endtask:body
   

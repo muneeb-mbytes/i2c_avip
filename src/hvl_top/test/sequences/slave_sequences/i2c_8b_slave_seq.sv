@@ -35,9 +35,10 @@ task i2c_8b_slave_seq::body();
   req=i2c_slave_tx::type_id::create("req");
   repeat(5) begin
     start_item(req);
-    if(!req.randomize()) 
+    if(!req.randomize()) begin 
       `uvm_fatal(get_type_name(),"Randomization FAILED")
-      //req.print();
+    end
+      req.print();
       finish_item(req);
     end
 

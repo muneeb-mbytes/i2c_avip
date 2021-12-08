@@ -10,7 +10,7 @@ class i2c_master_coverage extends uvm_subscriber#(i2c_master_tx);
 
   // Variable: master_agent_cfg_h
   // Declaring handle for master agent configuration class 
-    i2c_master_agent_config master_agent_cfg_h;
+    i2c_master_agent_config i2c_master_agent_cfg_h;
  
   //-------------------------------------------------------
   // Covergroup
@@ -63,7 +63,7 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void i2c_master_coverage::write(i2c_master_tx t);
 //  // TODO(mshariff): 
-   master_covergroup.sample(master_agent_cfg_h,t);     
+   master_covergroup.sample(i2c_master_agent_cfg_h,t);     
 //   `uvm_info(get_type_name(),$sformatf("master_cg=%0d",master_cg),UVM_LOW);
 //
 //   `uvm_info(get_type_name(),$sformatf(master_cg),UVM_LOW);

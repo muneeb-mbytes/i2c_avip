@@ -41,18 +41,19 @@ task i2c_8b_virtual_seq::body();
    i2c_8b_master_seq_h=i2c_8b_master_seq::type_id::create("i2c_8b_master_seq_h");
    i2c_8b_slave_seq_h=i2c_8b_slave_seq::type_id::create("i2c_8b_slave_seq_h");
 
-   fork 
-
-      forever begin : SLAVE_SEQ_START
-        i2c_8b_slave_seq_h.start(p_sequencer.i2c_slave_seqr_h);
-      end
-
-    join_none
-  
-
       repeat(5) begin : MASTER_SEQ_START
         i2c_8b_master_seq_h.start(p_sequencer.i2c_master_seqr_h);
       end
+   
+      //fork 
+
+      repeat(5) begin : SLAVE_SEQ_START
+        i2c_8b_slave_seq_h.start(p_sequencer.i2c_slave_seqr_h);
+      end
+
+    //join_none
+  
+
 
 endtask: body
 
