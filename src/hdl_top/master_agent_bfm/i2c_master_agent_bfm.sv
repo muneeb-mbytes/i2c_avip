@@ -8,27 +8,61 @@
 //-------------------------------------------------------
 module i2c_master_agent_bfm(i2c_if intf);
 
-   initial  begin
-      $display("I2C Master Agent BFM");
-   end
-//-------------------------------------------------------
-//master driver bfm instantiation
-//-------------------------------------------------------
-   i2c_master_driver_bfm i2c_master_drv_bfm_h(intf);
+ //-------------------------------------------------------
+ // Package : Importing Uvm Pakckage and Test Package
+ //-------------------------------------------------------
+ import uvm_pkg::*;
+ `include "uvm_macros.svh"
+  //-------------------------------------------------------
+  // Package : Importing SPI Global Package 
+  //-------------------------------------------------------
+  import i2c_globals_pkg::*;
+ //-------------------------------------------------------
+ //master driver bfm instantiation
+ //-------------------------------------------------------
+ i2c_master_driver_bfm i2c_master_drv_bfm_h(.pclk(intf.pclk), 
+                                            .areset(intf.areset),
+                                            .scl_i(intf.scl_i),
+                                            .scl_o(intf.scl_o),
+                                            .scl_oen(intf.scl_oen),
+                                            .sda_i(sda_i),
+                                            .sda_o(sda_o),
+                                            .sda_oen(sda_oen)
+                                            //.scl(intf.scl),
+                                            //.sda(intf.sda)
+                                           );
 
-//-------------------------------------------------------
-//master monitor bfm instatiation
-//-------------------------------------------------------
+ //-------------------------------------------------------
+ //master monitor bfm instatiation
+ //-------------------------------------------------------
 
 
-   i2c_master_monitor_bfm i2c_master_mon_bfm_h(intf);
-//
-//  initial begin
-//    uvm_config_db#(virtual i2c_master_driver_bfm)::set(null,"*","i2c_master_driver_bfm",i2c_master_driver_bfm_h);
-//
-//    uvm_config_db#(virtual i2c_master_monitor_bfm)::set(null,"*","i2c_master_monitor_bfm",i2c_master_monitor_bfm_h);
-//  end
-//
+ i2c_master_monitor_bfm i2c_master_mon_bfm_h(.pclk(intf.pclk), 
+                                            .areset(intf.areset),
+                                            .scl_i(intf.scl_i),
+                                            .scl_o(intf.scl_o),
+                                            .scl_oen(intf.scl_oen),
+                                            .sda_i(sda_i),
+                                            .sda_o(sda_o),
+                                            .sda_oen(sda_oen)
+                                            );
+
+ //-------------------------------------------------------
+ // Setting the virtual handle of BMFs into config_db
+ //-------------------------------------------------------
+ 
+ initial begin
+  uvm_config_db#(virtual i2c_master_driver_bfm)::set(null,"*","i2c_master_driver_bfm",
+                                                              i2c_master_drv_bfm_h);
+
+  uvm_config_db#(virtual i2c_master_monitor_bfm)::set(null,"*","i2c_master_monitor_bfm",
+                                                              i2c_master_mon_bfm_h);
+  end
+
+ initial begin
+   $display("Master Agent BFM");
+ end
+
 endmodule : i2c_master_agent_bfm
 
 `endif

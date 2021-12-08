@@ -18,7 +18,7 @@ class i2c_env extends uvm_env;
 
   // Variable: i2c_virtual_seqr_h
   // declaring handle for virtual sequencer
-  i2c_virtual_sequencer i2c_virtual_seqr_h;
+  i2c_virtual_sequencer i2c_virtual_seqr_h; 
   
   // Variable: i2c_env_cfg_h
   // Declaring environment configuration handle

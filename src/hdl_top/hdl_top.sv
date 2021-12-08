@@ -5,38 +5,57 @@
 // Description : hdl top has a interface and master and slave agent bfm
 //--------------------------------------------------------------------------------------------
 module hdl_top;
-import uvm_pkg::*;
-`include "uvm_macros.svh"
+ //-------------------------------------------------------
+ // Clock Reset Initialization
+ //-------------------------------------------------------
+ bit clk;
+ bit rst;
 
-//-------------------------------------------------------
-//Clock  Initialization 
-//-------------------------------------------------------
-// bit scl;
-//-------------------------------------------------------
-// Display statement for HDL_TOP
-//-------------------------------------------------------
+ //-------------------------------------------------------
+ // Display statement for HDL_TOP
+ //-------------------------------------------------------
+ initial begin
+ $display("HDL TOP");
+ end
 
-  initial begin
-   `uvm_info("UVM_INFO","HDL_TOP",UVM_LOW);
-  $display("HDL TOP");
-  end
+ //-------------------------------------------------------
+ // System Clock Generation
+ //-------------------------------------------------------
+ initial begin
+   clk = 1'b0;
+   forever #10 clk = ~clk;
+ end
 
-//-------------------------------------------------------
-//I2C Interface Instantiation
-//
-//-------------------------------------------------------
+ //-------------------------------------------------------
+ // System Reset Generation
+ // Active low reset
+ //-------------------------------------------------------
+ initial begin
+   rst = 1'b1;
 
-  i2c_if intf();
+   repeat (2) begin
+     @(posedge clk);
+   end
+   rst = 1'b0;
 
-//-------------------------------------------------------
-// i2c Master BFM Agent Instantiation
-//-------------------------------------------------------
-  i2c_master_agent_bfm i2c_master_agent_bfm_h(intf); 
+   repeat (2) begin
+     @(posedge clk);
+   end
+   rst = 1'b1;
+ end
 
-//-------------------------------------------------------
-//i2c Slave BFM Agent Instantiation
-//-------------------------------------------------------
-  i2c_slave_agent_bfm i2c_slave_agent_bfm_h(intf);
+ // Variable : intf
+ // SPI Interface Instantiation
+ i2c_if intf(.pclk(clk),
+             .areset(rst));
+
+ // Variable : master_agent_bfm_h
+ // I2c Master BFM Agent Instantiation 
+ i2c_master_agent_bfm i2c_master_agent_bfm_h(intf); 
+ 
+ // Variable : slave_agent_bfm_h
+ // SPI Slave BFM Agent Instantiation
+ i2c_slave_agent_bfm i2c_slave_agent_bfm_h(intf);
 
 endmodule : hdl_top
 
