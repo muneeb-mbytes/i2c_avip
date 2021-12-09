@@ -17,6 +17,7 @@ module i2c_master_agent_bfm(i2c_if intf);
   // Package : Importing SPI Global Package 
   //-------------------------------------------------------
   import i2c_globals_pkg::*;
+
  //-------------------------------------------------------
  //master driver bfm instantiation
  //-------------------------------------------------------
@@ -25,26 +26,22 @@ module i2c_master_agent_bfm(i2c_if intf);
                                             .scl_i(intf.scl_i),
                                             .scl_o(intf.scl_o),
                                             .scl_oen(intf.scl_oen),
-                                            .sda_i(sda_i),
-                                            .sda_o(sda_o),
-                                            .sda_oen(sda_oen)
-                                            //.scl(intf.scl),
-                                            //.sda(intf.sda)
+                                            .sda_i(intf.sda_i),
+                                            .sda_o(intf.sda_o),
+                                            .sda_oen(intf.sda_oen)
                                            );
 
  //-------------------------------------------------------
  //master monitor bfm instatiation
  //-------------------------------------------------------
-
-
  i2c_master_monitor_bfm i2c_master_mon_bfm_h(.pclk(intf.pclk), 
                                             .areset(intf.areset),
                                             .scl_i(intf.scl_i),
                                             .scl_o(intf.scl_o),
                                             .scl_oen(intf.scl_oen),
-                                            .sda_i(sda_i),
-                                            .sda_o(sda_o),
-                                            .sda_oen(sda_oen)
+                                            .sda_i(intf.sda_i),
+                                            .sda_o(intf.sda_o),
+                                            .sda_oen(intf.sda_oen)
                                             );
 
  //-------------------------------------------------------

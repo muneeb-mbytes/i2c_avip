@@ -26,7 +26,7 @@ package i2c_globals_pkg;
  parameter int SLAVE_ADDRESS_WIDTH  = 7;
  
  // The parameter for the register address width
- parameter int REGISTER_ADDRESS_WIDTH  = 32;
+ parameter int REGISTER_ADDRESS_WIDTH  = 8;
  
  // The parameter for MAXIMUM_BITS supported per transfer
  parameter int MAXIMUM_BITS = 1024;
@@ -39,6 +39,11 @@ package i2c_globals_pkg;
   parameter SLAVE1_ADDRESS = 7'b110_1100;  // 7'h6C 
   parameter SLAVE2_ADDRESS = 7'b111_1100;  // 7'h7C
   parameter SLAVE3_ADDRESS = 7'b100_1100;  // 7'h4C
+
+  // TODO(mshariff): 
+  parameter bit TRISTATE_BUF_ON  = 1;
+  parameter bit TRISTATE_BUF_OFF = 0;
+
 
  // acknowledge bit or no acknowledge
  // parameter bit ACK = 0;
@@ -66,8 +71,8 @@ package i2c_globals_pkg;
  // MSB_FIRST - MSB is shifted out first
  //
  typedef enum bit {
-   MSB_FIRST = 1'b0,
-   LSB_FIRST = 1'b1
+   MSB_FIRST = 1'b1,
+   LSB_FIRST = 1'b0
  } shift_direction_e;
  
  
@@ -89,12 +94,15 @@ package i2c_globals_pkg;
  //
 
  typedef struct {
-  // bit[SLAVE_ADDRESS_WIDTH-1:0]slave_address;
+   bit[SLAVE_ADDRESS_WIDTH-1:0]slave_address;
+   bit read_write;
    bit[REGISTER_ADDRESS_WIDTH-1:0]register_address;
- 
-   bit[MAXIMUM_BYTES-1][DATA_WIDTH-1:0] data;
-   int no_of_register_address_bits_transfer; 
-  } i2c_register_address_s;
+   bit[MAXIMUM_BYTES-1:0][DATA_WIDTH-1:0] data;
+   int no_of_i2c_bits_transfer; 
+   bit slave_add_ack;
+   bit reg_add_ack;
+   bit [MAXIMUM_BYTES-1:0] wr_data_ack;
+  } i2c_transfer_bits_s;
 
  
  // struct: i2c_transfer_cfg_s

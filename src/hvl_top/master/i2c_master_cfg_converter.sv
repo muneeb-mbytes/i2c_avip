@@ -18,7 +18,7 @@ class i2c_master_cfg_converter extends uvm_object;
   //-------------------------------------------------------
   extern function new(string name = "i2c_master_cfg_converter");
   extern static function void from_class(input i2c_master_agent_config input_conv_h,
-                                          output i2c_bits_transfer_s output_conv);
+                                          output i2c_transfer_cfg_s output_conv);
 
   extern function void do_print(uvm_printer printer);
 
@@ -39,7 +39,7 @@ endfunction : new
 // converting seq_item transactions into struct data items
 //--------------------------------------------------------------------------------------------
 function void i2c_master_cfg_converter::from_class(input i2c_master_agent_config input_conv_h,
-                                                    output i2c_cfg_transfer_s output_conv);
+                                                    output i2c_transfer_cfg_s output_conv);
 
 
   bit slave_address_width;
@@ -59,7 +59,7 @@ endfunction: from_class
 //--------------------------------------------------------------------------------------------
 function void i2c_master_cfg_converter::do_print(uvm_printer printer);
 
-  i2c_bits_transfer_s i2c_st;
+  i2c_transfer_cfg_s i2c_st;
 
   super.do_print(printer);
 

@@ -9,11 +9,11 @@ interface i2c_if(input pclk, input areset);
   
   // Variable: scl
   // i2c serial clock signal
-  logic scl;
+  wire scl;
 
   // Variable: sda
   // i2c serial data signal
-  logic sda;
+  wire sda;
   
   // Variable: scl_i
   // i2c serial input clocl signal
@@ -39,13 +39,17 @@ interface i2c_if(input pclk, input areset);
   // i2c serial output enable signal
 	logic sda_oen; 
   
-  // Implementing week0 and week1 concept
-  assign scl=(scl_oen) ? scl_o:1'bz;
-  assign (weak0,weak1)scl=1'b1;
-  assign scl_i = scl;
+  // Tri-state buffer implementation 
+  assign scl = (scl_oen) ? scl_o : 1'bz;
+  assign sda = (sda_oen) ? sda_o : 1'bz;
 
-  assign sda=(sda_oen) ? sda_o:1'bz;
-  assign (weak0,weak1)sda=1'b1;
+  // Implementing week0 and week1 concept
+  // Logic for Pull-up registers using opne-drain concept
+  assign (weak0,weak1) scl = 1'b1;
+  assign (weak0,weak1) sda = 1'b1;
+
+  // Used for sampling the I2C interface signals
+  assign scl_i = scl;
   assign sda_i = sda;
 
 

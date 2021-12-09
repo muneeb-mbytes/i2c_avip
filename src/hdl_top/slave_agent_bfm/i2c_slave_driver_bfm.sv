@@ -7,13 +7,12 @@
 import i2c_globals_pkg::*;
 interface i2c_slave_driver_bfm(input pclk, 
                                input areset,
-                               output scl_i,
-                               input scl_o,
-                               input scl_oen,
-                               output sda_i,
-                               input sda_o,
-                               input sda_oen);
-
+                               input scl_i,
+                               output reg scl_o,
+                               output reg scl_oen,
+                               input sda_i,
+                               output reg sda_o,
+                               output reg sda_oen);
 
   //-------------------------------------------------------
   // Importing UVM Package 

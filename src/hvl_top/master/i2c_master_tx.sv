@@ -18,6 +18,11 @@ class i2c_master_tx extends uvm_sequence_item;
   rand bit [NO_OF_SLAVES-1:0] index; 
   rand bit [7:0] raddr; 
   
+  // Receiving data fields
+  bit slave_add_ack;
+  bit reg_add_ack;
+  bit wr_data_ack[$];
+
   i2c_master_agent_config i2c_master_agent_cfg_h;
   //-------------------------------------------------------
   // Constraints for I2C
@@ -141,6 +146,8 @@ function void i2c_master_tx::do_print(uvm_printer printer);
     printer.print_field($sformatf("data[%0d]",i),this.data[i],8,UVM_HEX);
   end
 
+  printer.print_field($sformatf("slave_add_ack"),this.slave_add_ack,1,UVM_BIN);
+  printer.print_field($sformatf("reg_add_ack"),this.reg_add_ack,1,UVM_BIN);
 endfunction : do_print
 
 //--------------------------------------------------------------------------------------------
