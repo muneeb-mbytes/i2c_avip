@@ -20,10 +20,10 @@ package i2c_slave_pkg;
   // Include all other files
   //-------------------------------------------------------
   `include "i2c_slave_tx.sv"
-  // `include "i2c_slave_spi_seq_item_converter.sv"
+  // `include "i2c_slave_seq_item_converter.sv"
+  // `include "i2c_slave_cfg_converter.sv"
   `include "i2c_slave_agent_config.sv"
   `include "i2c_slave_sequencer.sv"
-  // `include "i2c_slave_sequence.sv"
   `include "i2c_slave_driver_proxy.sv"
   `include "i2c_slave_monitor_proxy.sv"
   `include "i2c_slave_coverage.sv"

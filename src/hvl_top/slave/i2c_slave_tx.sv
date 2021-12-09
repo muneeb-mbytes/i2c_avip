@@ -8,6 +8,17 @@
 class i2c_slave_tx extends uvm_sequence_item;
   `uvm_object_utils(i2c_slave_tx)
 
+ // bit [SLAVE_ADDRESS_WIDTH-1:0]slave_address;
+ // bit [REGISTER_ADDRESS_WIDTH-1:0]register_address;
+ // bit [DATA_WIDTH-1:0]data[];
+ // bit ack;
+ // 
+ // 
+ // // Receiving data fields
+ // bit slave_add_ack;
+ // bit reg_add_ack;
+ // bit wr_data_ack[$];
+  
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
