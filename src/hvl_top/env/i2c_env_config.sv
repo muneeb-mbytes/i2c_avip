@@ -55,6 +55,9 @@ function void i2c_env_config::do_print(uvm_printer printer);
   super.do_print(printer);
   printer.print_field ("has_scoreboard",has_scoreboard,1, UVM_DEC);
   printer.print_field ("has_virtual_sequencer",has_virtual_sequencer,1, UVM_DEC);
+  printer.print_field ("no_of_masters",no_of_masters,$bits(no_of_masters), UVM_DEC);
+  printer.print_field ("no_of_slaves",no_of_slaves,$bits(no_of_slaves), UVM_DEC);
+  
 endfunction : do_print
 
 `endif
