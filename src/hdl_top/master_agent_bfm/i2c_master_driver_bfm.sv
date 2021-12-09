@@ -195,6 +195,37 @@ interface i2c_master_driver_bfm(input pclk,
   // 3) Logic for driving the write_data + sampling ACK
   //-------------------------------------------------------
 
+  for (int i=0; i<MAXIMUM_BYTES;i++) begin
+
+    for (int j=0;j<DATA_WIDTH;j++) begin
+
+      `uvm_info("data",$sformatf("driving the write data"),UVM_NONE);
+
+      @(posedge pclk);
+      scl_oen <= TRISTATE_BUF_ON;
+      scl_o   <= 0;
+
+      sda_oen <= data_packet.data[i][j] ? TRISTATE_BUF_OFF : TRISTATE_BUF_ON;
+      sda_o   <= data_packet.data[i][j];
+      //`uvm_info("sent the data on to the sda",$sformatf("data=%0b %0b",data_packet.data[i][j]),UVM_NONE);
+
+    end
+
+  end
+
+  // b) Leave the bus free for receiving the ACK from slave
+    @(posedge pclk);
+    scl_oen <= TRISTATE_BUF_ON;
+    scl_o   <= 0;
+
+    sda_oen <= TRISTATE_BUF_OFF;
+    sda_o   <= 1;
+
+    @(posedge pclk);
+    scl_oen <= TRISTATE_BUF_OFF;
+    scl_o   <= 1;
+    data_packet.slave_add_ack = sda_i;
+
   //-------------------------------------------------------
   // 4) Logic for sampling the read_data + driving ACK
   //-------------------------------------------------------
