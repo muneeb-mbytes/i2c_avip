@@ -156,6 +156,34 @@ interface i2c_master_driver_bfm(input pclk,
   // 2) Logic for register_address + sampling ACK
   //-------------------------------------------------------
 
+  for(int i=0,bit_no=0;i<REGISTER_ADDRESS_WIDTH ;i++) begin
+    `uvm_info("from register address",$sformatf("driving register address"),UVM_NONE);
+    bit_no=((REGISTER_ADDRESS_WIDTH -1)-i);
+    
+    @(posedge pclk);
+    scl_oen <= TRISTATE_BUF_ON;
+    scl_o   <= 0;
+     
+    sda_oen <= data_packet.register_address[bit_no] ? TRISTATE_BUF_OFF : TRISTATE_BUF_ON;
+    sda_o <= data_packet.register_address[bit_no];
+    `uvm_info("Drived register_address on to sda",$sformatf("register_address=%0b,bit_no=%0d, data in register address=%0b",data_packet.register_address,bit_no,data_packet.register_address[bit_no]),UVM_NONE)
+
+    end
+
+    // b) Leave the bus free for receiving the ACK from slave
+    @(posedge pclk);
+    scl_oen <= TRISTATE_BUF_ON;
+    scl_o   <= 0;
+
+    sda_oen <= TRISTATE_BUF_OFF;
+    sda_o   <= 1;
+
+    @(posedge pclk);
+    scl_oen <= TRISTATE_BUF_OFF;
+    scl_o   <= 1;
+    data_packet.slave_add_ack = sda_i;
+
+
   //-------------------------------------------------------
   // 3) Logic for driving the write_data + sampling ACK
   //-------------------------------------------------------
