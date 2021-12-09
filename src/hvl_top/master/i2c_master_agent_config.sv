@@ -17,10 +17,6 @@ class i2c_master_agent_config extends uvm_object;
   // this master over i2c interface
   int no_of_slaves;
   
-  // MSHA:// Variable:read_write_e
-  // MSHA:// Enables read or write operation 
-  //read_write_e read_write;
-
   // Variable: shift_dir
   // Tells the direction of data to be shifted
   // MSB first or LSB first
@@ -123,7 +119,6 @@ function void i2c_master_agent_config::do_print(uvm_printer printer);
   printer.print_field ("primary_prescalar",primary_prescalar, 3, UVM_DEC);
   printer.print_field ("secondary_prescalar",secondary_prescalar, 3, UVM_DEC);
   printer.print_field ("baudrate_divisor",baudrate_divisor, 32, UVM_DEC);
-  //printer.print_string ("read_write",read_write.name());
   printer.print_field ("has_coverage",has_coverage, 1, UVM_DEC);
   
 endfunction : do_print

@@ -3,7 +3,7 @@
 
 //--------------------------------------------------------------------------------------------
 // Class: i2c_master_tx
-// <Description_here>
+// 
 //--------------------------------------------------------------------------------------------
 
 class i2c_master_tx extends uvm_sequence_item;
@@ -12,7 +12,9 @@ class i2c_master_tx extends uvm_sequence_item;
   rand read_write_e read_write;
   rand bit [SLAVE_ADDRESS_WIDTH-1:0]slave_address;
   rand bit [REGISTER_ADDRESS_WIDTH-1:0]register_address;
-  rand bit [DATA_WIDTH-1:0]data[];
+  rand bit [DATA_WIDTH-1:0]wr_data[];
+  rand bit [DATA_WIDTH-1:0]rd_data[$];
+
   bit ack;
   
   rand bit [NO_OF_SLAVES-1:0] index; 
@@ -40,10 +42,10 @@ class i2c_master_tx extends uvm_sequence_item;
   constraint r_sb_c{solve raddr before register_address;}
   
   // Write Data
-  constraint write_data_c {soft data.size() %4 == 0;
-                                data.size() != 0; 
-                                data.size() == 4;
-                                data.size() <= MAXIMUM_BYTES; }
+  constraint write_data_c {soft wr_data.size() %4 == 0;
+                                wr_data.size() != 0; 
+                                wr_data.size() == 4;
+                                wr_data.size() <= MAXIMUM_BYTES; }
   
   
   
@@ -110,7 +112,7 @@ function void i2c_master_tx::do_copy (uvm_object rhs);
 
   slave_address= rhs_.slave_address;
   register_address= rhs_.register_address;
-  data = rhs_.data;
+  wr_data = rhs_.wr_data;
 
 endfunction : do_copy
 
@@ -129,7 +131,7 @@ function bit  i2c_master_tx::do_compare (uvm_object rhs,uvm_comparer comparer);
   return super.do_compare(rhs,comparer) &&
   slave_address == rhs_.slave_address &&
   register_address == rhs_.register_address &&
-  data == rhs_.data;
+  wr_data == rhs_.wr_data;
 endfunction : do_compare 
 //--------------------------------------------------------------------------------------------
 // Function: do_print method
@@ -142,8 +144,8 @@ function void i2c_master_tx::do_print(uvm_printer printer);
   printer.print_field($sformatf("register_address"),this.register_address,8,UVM_HEX);
   printer.print_string($sformatf("read_write"),read_write.name());
   
-  foreach(data[i]) begin
-    printer.print_field($sformatf("data[%0d]",i),this.data[i],8,UVM_HEX);
+  foreach(wr_data[i]) begin
+    printer.print_field($sformatf("wr_data[%0d]",i),this.wr_data[i],8,UVM_HEX);
   end
 
   printer.print_field($sformatf("slave_add_ack"),this.slave_add_ack,1,UVM_BIN);

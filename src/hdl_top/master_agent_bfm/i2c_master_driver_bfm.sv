@@ -6,6 +6,7 @@
 //It connects with the HVL driver_proxy for driving the stimulus
 //--------------------------------------------------------------------------------------------
 import i2c_globals_pkg::*;
+
 interface i2c_master_driver_bfm(input pclk, 
                                 input areset,
                                 input scl_i,
@@ -18,6 +19,7 @@ interface i2c_master_driver_bfm(input pclk,
                                 //inout scl,
                                 //inout sda);
                               );
+  i2c_fsm_state_e state;
   //-------------------------------------------------------
   // Importing UVM Package 
   //-------------------------------------------------------
@@ -83,6 +85,7 @@ interface i2c_master_driver_bfm(input pclk,
 
     while(scl_i!=1 && sda_i!=1) begin
       @(posedge pclk);
+     // state=IDEAL;
     end
       
     `uvm_info(name, $sformatf("I2C bus is free state detected"), UVM_HIGH);
@@ -100,6 +103,8 @@ interface i2c_master_driver_bfm(input pclk,
   sda_oen <= TRISTATE_BUF_ON;
   sda_o   <= 0;
   start   <= 1;
+  state = START;
+
 
   //-------------------------------------------------------
   // 1) Logic for slave_address + Rd/Wr + sampling ACK
@@ -118,6 +123,8 @@ interface i2c_master_driver_bfm(input pclk,
 
     sda_oen <= data_packet.slave_address[bit_no] ? TRISTATE_BUF_OFF : TRISTATE_BUF_ON;
     sda_o   <= data_packet.slave_address[bit_no];
+   
+    state = i2c_fsm_state_e'(bit_no);
     `uvm_info("DEBUG_MSHA", $sformatf("address = %0b, bit_no = %0d, data = %0b",
             data_packet.slave_address, bit_no, data_packet.slave_address[bit_no]), UVM_NONE)
 
@@ -133,7 +140,7 @@ interface i2c_master_driver_bfm(input pclk,
 
   sda_oen <= data_packet.read_write ? TRISTATE_BUF_OFF : TRISTATE_BUF_ON;
   sda_o   <= data_packet.read_write;
-
+  state = RD_WR;
   @(posedge pclk);
   scl_oen <= TRISTATE_BUF_OFF;
   scl_o   <= 1;

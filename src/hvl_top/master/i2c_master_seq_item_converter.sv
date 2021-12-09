@@ -56,25 +56,25 @@ function void i2c_master_seq_item_converter::from_class(input i2c_master_tx inpu
 
 
 
-  for(int i=0; i<input_conv_h.data.size();i++) begin
+  for(int i=0; i<input_conv_h.wr_data.size();i++) begin
    // MSHA: `uvm_info("master_seq_item_conv_class",
-   // MSHA: $sformatf("data = \n %p",output_conv.data),UVM_LOW)
-   // MSHA:// output_conv.data = output_conv.data << DATA_LENGTH;
+   // MSHA: $sformatf("wr_data = \n %p",output_conv.wr_data),UVM_LOW)
+   // MSHA:// output_conv.wr_data = output_conv.wr_data << data_LENGTH;
    // MSHA: `uvm_info("master_seq_item_conv_class",
-   // MSHA: $sformatf("After shift data = \n %p",output_conv.data),UVM_LOW)
+   // MSHA: $sformatf("After shift wr_data = \n %p",output_conv.wr_data),UVM_LOW)
    // MSHA: `uvm_info("master_seq_item_conv_class",
-   // MSHA: $sformatf("After shift input_cov_h data = \n %p",
-   // MSHA: input_conv_h.data[i]),UVM_LOW)
+   // MSHA: $sformatf("After shift input_cov_h wr_data = \n %p",
+   // MSHA: input_conv_h.wr_data[i]),UVM_LOW)
 
-    output_conv.data[i][DATA_WIDTH-1:0] = input_conv_h.data[i];    
+    output_conv.wr_data[i][DATA_WIDTH-1:0] = input_conv_h.wr_data[i];    
 
    // MSHA: `uvm_info("master_seq_item_conv_class",
-   // MSHA: $sformatf("After shift input_cov_h data = \n %p",
-   // MSHA: input_conv_h.data[i]),UVM_LOW)
-   // MSHA: //output_conv.data[i*8 +: 8]= input_conv_h.data[i];    
+   // MSHA: $sformatf("After shift input_cov_h wr_data = \n %p",
+   // MSHA: input_conv_h.wr_data[i]),UVM_LOW)
+   // MSHA: //output_conv.wr_data[i*8 +: 8]= input_conv_h.wr_data[i];    
    // MSHA: 
    // MSHA: `uvm_info("master_seq_item_conv_class",
-   // MSHA: $sformatf("data = \n %p",output_conv.data),UVM_LOW)
+   // MSHA: $sformatf("wr_data = \n %p",output_conv.wr_data),UVM_LOW)
   end
 
   // Be default the ACK should be 1
@@ -95,7 +95,7 @@ function void i2c_master_seq_item_converter::to_class(input i2c_transfer_bits_s 
   output_conv = new();
 
   // Defining the size of arrays
-  output_conv.data = new[input_conv_h.no_of_i2c_bits_transfer/DATA_WIDTH];
+  output_conv.wr_data = new[input_conv_h.no_of_i2c_bits_transfer/DATA_WIDTH];
 
   // Storing the values in the respective arrays
   //converting back the slave address 
@@ -111,9 +111,9 @@ function void i2c_master_seq_item_converter::to_class(input i2c_transfer_bits_s 
  
   //converting back the data
   for(int i=0; i<input_conv_h.no_of_i2c_bits_transfer/DATA_WIDTH; i++) begin
-  output_conv.data[i] = input_conv_h.data[i][DATA_WIDTH-1:0];
+  output_conv.wr_data[i] = input_conv_h.wr_data[i][DATA_WIDTH-1:0];
   `uvm_info("master_seq_item_conv_class",
-  $sformatf("To class data = \n %p",output_conv.data[i]),UVM_LOW)
+  $sformatf("To class wr_data = \n %p",output_conv.wr_data[i]),UVM_LOW)
   end
 
   // Acknowledgement bits
@@ -142,8 +142,8 @@ function void i2c_master_seq_item_converter::do_print(uvm_printer printer);
     printer.print_field($sformatf("register_address"),i2c_st.register_address,8,UVM_HEX);
   end
 
-  foreach(i2c_st.data[i]) begin
-    printer.print_field($sformatf("data[%0d]",i),i2c_st.data[i],8,UVM_HEX);
+  foreach(i2c_st.wr_data[i]) begin
+    printer.print_field($sformatf("wr_data[%0d]",i),i2c_st.wr_data[i],8,UVM_HEX);
   end
 
 endfunction : do_print
