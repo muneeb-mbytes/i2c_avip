@@ -9,9 +9,6 @@
 
 class i2c_master_cfg_converter extends uvm_object;
   
-  //static int c2t;
-  //static int t2c;
-  //static int baudrate_divisor;
   
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -48,8 +45,9 @@ function void i2c_master_cfg_converter::from_class(input i2c_master_agent_config
  // slave_address_width=slave_address_width_e'(input_conv_h.slave_address_width);
   
  output_conv.msb_first = shift_direction_e'(input_conv_h.shift_dir);
-  
+ output_conv.baudrate_divisor = input_conv_h.get_baudrate_divisor();
 
+ `uvm_info("conv_bd",$sformatf("bd = \n %p",output_conv.baudrate_divisor),UVM_LOW)
 
 endfunction: from_class 
 
@@ -61,9 +59,13 @@ function void i2c_master_cfg_converter::do_print(uvm_printer printer);
 
   i2c_transfer_cfg_s i2c_st;
 
+
   super.do_print(printer);
-
-
+ // foreach (i2c_master_agent_cfg_h[i])begin
+  printer.print_field ("baudrate_divisor",i2c_st.baudrate_divisor, 
+                            $bits(i2c_st.baudrate_divisor), UVM_DEC);
+                          
+ // end
 endfunction : do_print
 
 `endif
