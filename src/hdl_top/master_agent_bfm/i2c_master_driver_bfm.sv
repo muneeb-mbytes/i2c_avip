@@ -39,10 +39,9 @@ interface i2c_master_driver_bfm(input pclk,
   // Stores the name for this module
   string name = "I2C_MASTER_DRIVER_BFM";
 
-
- initial begin
+  initial begin
    $display(name);
- end
+  end
 
   //-------------------------------------------------------
   // Task: wait_for_reset
@@ -79,15 +78,14 @@ interface i2c_master_driver_bfm(input pclk,
   //-------------------------------------------------------
   task wait_for_idle_state();
     @(posedge pclk);
-
     while(scl_i!=1 && sda_i!=1) begin
       @(posedge pclk);
      // state=IDLE;
-    end
-      
+    end     
     `uvm_info(name, $sformatf("I2C bus is free state detected"), UVM_HIGH);
   endtask: wait_for_idle_state
 
+ 
  //-------------------------------------------------------
  // Task: drive_data
  //-------------------------------------------------------
@@ -96,9 +94,7 @@ interface i2c_master_driver_bfm(input pclk,
 
   // Driving the start condition
   // put it into a task
-  @(posedge pclk);
-  sda_oen <= TRISTATE_BUF_ON;
-  sda_o   <= 0;
+  tristate_buf_on();
   state = START;
 
   //-------------------------------------------------------
@@ -109,12 +105,8 @@ interface i2c_master_driver_bfm(input pclk,
   for(int k=0, bit_no=0; k<SLAVE_ADDRESS_WIDTH; k++) begin
     // Logic for MSB first or LSB first 
     `uvm_info("DEBUG_MSHA", $sformatf("cfg_pkt.msb_first"), UVM_NONE)
-    bit_no = cfg_pkt.msb_first ? ((SLAVE_ADDRESS_WIDTH - 1) - k) : k;
-    
-    @(posedge pclk);
-    scl_oen <= TRISTATE_BUF_ON;
-    scl_o   <= 0;
-
+    bit_no = cfg_pkt.msb_first ? ((SLAVE_ADDRESS_WIDTH - 1) - k) : k; 
+    tristate_buf_on();
     sda_oen <= data_packet.slave_address[bit_no] ? TRISTATE_BUF_OFF : TRISTATE_BUF_ON;
     sda_o   <= data_packet.slave_address[bit_no];
     state = i2c_fsm_state_e'(bit_no+10);
@@ -122,37 +114,21 @@ interface i2c_master_driver_bfm(input pclk,
     `uvm_info("DEBUG_MSHA", $sformatf("address = %0b, bit_no = %0d, data = %0b",
             data_packet.slave_address, bit_no, data_packet.slave_address[bit_no]), UVM_NONE)
 
-    @(posedge pclk);
-    scl_oen <= TRISTATE_BUF_OFF;
-    scl_o   <= 1;
+    tristate_buf_off();
   end
 
   // b) Driving the Read/write bit
-  @(posedge pclk);
-  scl_oen <= TRISTATE_BUF_ON;
-  scl_o   <= 0;
-
+  tristate_buf_on();
   sda_oen <= data_packet.read_write ? TRISTATE_BUF_OFF : TRISTATE_BUF_ON;
   sda_o   <= data_packet.read_write;
   state    = RD_WR;
-
-  @(posedge pclk);
-  scl_oen <= TRISTATE_BUF_OFF;
-  scl_o   <= 1;
+  tristate_buf_off();
 
   // c) Leave the bus free for receiving the ACK from slave
-  @(posedge pclk);
-  scl_oen <= TRISTATE_BUF_ON;
-  scl_o   <= 0;
-
-  sda_oen <= TRISTATE_BUF_OFF;
-  sda_o   <= 1;
-  state    = SLAVE_ADDR_ACK;
-
-  @(posedge pclk);
-  scl_oen <= TRISTATE_BUF_OFF;
-  scl_o   <= 1;
-  data_packet.slave_add_ack = sda_i;
+    receive_ack_from_slave();
+    state = SLAVE_ADDR_ACK;
+    tristate_buf_off();
+    data_packet.slave_add_ack = sda_i;
 
   //-------------------------------------------------------
   // 2) Logic for register_address + sampling ACK
@@ -164,34 +140,20 @@ interface i2c_master_driver_bfm(input pclk,
     // Logic for MSB first or LSB first 
     bit_no = cfg_pkt.msb_first ? ((REGISTER_ADDRESS_WIDTH - 1) - i) : i;
     
-    @(posedge pclk);
-    scl_oen <= TRISTATE_BUF_ON;
-    scl_o   <= 0;
-     
+    tristate_buf_on(); 
     sda_oen <= data_packet.register_address[bit_no] ? TRISTATE_BUF_OFF : TRISTATE_BUF_ON;
     sda_o <= data_packet.register_address[bit_no];
     state = i2c_fsm_state_e'(bit_no+20);
 
     `uvm_info("Drived register_address on to sda",$sformatf("register_address=%0b,bit_no=%0d, data in register address=%0b",data_packet.register_address,bit_no,data_packet.register_address[bit_no]),UVM_NONE)
 
-    @(posedge pclk);
-    scl_oen <= TRISTATE_BUF_OFF;
-    scl_o   <= 1;
-
+  tristate_buf_off();
   end
 
   // b) Leave the bus free for receiving the ACK from slave
-  @(posedge pclk);
-  scl_oen <= TRISTATE_BUF_ON;
-  scl_o   <= 0;
-
-  sda_oen <= TRISTATE_BUF_OFF;
-  sda_o   <= 1;
-  state    = REG_ADDR_ACK;
-
-  @(posedge pclk);
-  scl_oen <= TRISTATE_BUF_OFF;
-  scl_o   <= 1;
+  receive_ack_from_slave();
+  state = REG_ADDR_ACK;
+  tristate_buf_off();
   data_packet.reg_add_ack = sda_i;
 
   //-------------------------------------------------------
@@ -207,33 +169,19 @@ interface i2c_master_driver_bfm(input pclk,
       // Logic for MSB first or LSB first 
       bit_no = cfg_pkt.msb_first ? ((DATA_WIDTH - 1) - j) : j;
 
-      @(posedge pclk);
-      scl_oen <= TRISTATE_BUF_ON;
-      scl_o   <= 0;
-
+      tristate_buf_on();
       sda_oen <= data_packet.wr_data[i][bit_no] ? TRISTATE_BUF_OFF : TRISTATE_BUF_ON;
       sda_o   <= data_packet.wr_data[i][bit_no];
       state    = i2c_fsm_state_e'(bit_no+30);
       //`uvm_info("sent the data on to the sda",$sformatf("data=%0b %0b",data_packet.data[i][bit_no]),UVM_NONE);
 
-      @(posedge pclk);
-      scl_oen <= TRISTATE_BUF_OFF;
-      scl_o   <= 1;
-
+  tristate_buf_off();
     end
 
     // b) Leave the bus free for receiving the ACK from slave
-    @(posedge pclk);
-    scl_oen <= TRISTATE_BUF_ON;
-    scl_o   <= 0;
-
-    sda_oen <= TRISTATE_BUF_OFF;
-    sda_o   <= 1;
-    state    = DATA_ACK;
-
-    @(posedge pclk);
-    scl_oen <= TRISTATE_BUF_OFF;
-    scl_o   <= 1;
+    receive_ack_from_slave();
+    state = DATA_ACK;
+    tristate_buf_off();
     data_packet.wr_data_ack[i] = sda_i;
 
   end
@@ -241,8 +189,6 @@ interface i2c_master_driver_bfm(input pclk,
   //-------------------------------------------------------
   // 4) Logic for sampling the read_data + driving ACK
   //-------------------------------------------------------
-
-
 
   // MSHA: for(int row_no=0; row_no<data_packet.no_of_mosi_bits_transfer/CHAR_LENGTH; row_no++) begin
 
@@ -260,15 +206,11 @@ interface i2c_master_driver_bfm(input pclk,
   //-------------------------------------------------------
   // 5) Logic for driving the STOP bit 
   //-------------------------------------------------------
-  @(posedge pclk);
-  sda_oen <= TRISTATE_BUF_ON;
-  sda_o   <= 0;
+  tristate_buf_on();
   state = STOP;
 
-  @(posedge pclk);
-  sda_oen <= TRISTATE_BUF_OFF;
-  sda_o   <= 1;
-    
+  tristate_buf_off(); 
+
   // Checking for IDLE state
   @(posedge pclk);
   if(scl_i && sda_i) begin
@@ -277,6 +219,34 @@ interface i2c_master_driver_bfm(input pclk,
 
  endtask: drive_data
 
+//--------------------------------------------------------------------------------------------
+// Tasks for Code optimization
+//--------------------------------------------------------------------------------------------
+   
+  // task used for receiving the acknowledgement from slave 
+  task receive_ack_from_slave();
+    @(posedge pclk);
+    scl_oen <= TRISTATE_BUF_ON;
+    scl_o   <= 0;
+
+    sda_oen <= TRISTATE_BUF_OFF;
+    sda_o   <= 1;
+  endtask
+
+  // task used for driving the tristate buffer to high state
+  task tristate_buf_on();
+    @(posedge pclk);
+    sda_oen <= TRISTATE_BUF_ON;
+    sda_o   <= 0;
+  endtask
+
+  // task used for driving the tristate buffer to low state
+   task tristate_buf_off();
+    @(posedge pclk);
+    scl_oen <= TRISTATE_BUF_OFF;
+    scl_o   <= 1;
+  endtask
+  
 endinterface : i2c_master_driver_bfm
 
 `endif
