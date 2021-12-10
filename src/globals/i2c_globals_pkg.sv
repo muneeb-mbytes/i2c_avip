@@ -101,10 +101,11 @@ package i2c_globals_pkg;
     bit read_write;
   } i2c_transfer_cfg_s;
   
-  typedef enum bit [4:0]{
-    IDEAL,
+  // TODO(mshariff): Comments 
+  typedef enum int{
+    IDLE,
     START, 
-    SLAVE_ADDR_0,
+    SLAVE_ADDR_0 = 10,
     SLAVE_ADDR_1,
     SLAVE_ADDR_2,
     SLAVE_ADDR_3,
@@ -112,26 +113,26 @@ package i2c_globals_pkg;
     SLAVE_ADDR_5,
     SLAVE_ADDR_6,
     RD_WR,
-    SLAVE_ACK
-    //REG_ADDR_0,
-    //REG_ADDR_1,
-    //REG_ADDR_2,
-    //REG_ADDR_3,
-    //REG_ADDR_4,
-    //REG_ADDR_5,
-    //REG_ADDR_6,
-    //REG_ADDR_7,
-    //REG_ACK,
-    //DATA_0,
-    //DATA_1,
-    //DATA_2,
-    //DATA_3,
-    //DATA_4,
-    //DATA_5,
-    //DATA_6,
-    //DATA_7,
-    //DATA_ACK,
-    //STOP
+    SLAVE_ADDR_ACK,
+    REG_ADDR_0 = 20,
+    REG_ADDR_1,
+    REG_ADDR_2,
+    REG_ADDR_3,
+    REG_ADDR_4,
+    REG_ADDR_5,
+    REG_ADDR_6,
+    REG_ADDR_7,
+    REG_ADDR_ACK,
+    DATA_0 = 30,
+    DATA_1,
+    DATA_2,
+    DATA_3,
+    DATA_4,
+    DATA_5,
+    DATA_6,
+    DATA_7,
+    DATA_ACK,
+    STOP
   }i2c_fsm_state_e;
 
 endpackage : i2c_globals_pkg 

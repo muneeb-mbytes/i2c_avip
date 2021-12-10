@@ -39,10 +39,6 @@ interface i2c_master_driver_bfm(input pclk,
   // Stores the name for this module
   string name = "I2C_MASTER_DRIVER_BFM";
 
-  // Signals for debugging purpose
-  bit start;
-  bit stop;
-  bit repeated_start;
 
  initial begin
    $display(name);
@@ -73,6 +69,7 @@ interface i2c_master_driver_bfm(input pclk,
     sda_oen <= TRISTATE_BUF_OFF;
     sda_o   <= 1;
 
+    state=IDLE;
     `uvm_info(name, $sformatf("Successfully drove the IDLE state"), UVM_HIGH);
   endtask: drive_idle_state
 
@@ -85,7 +82,7 @@ interface i2c_master_driver_bfm(input pclk,
 
     while(scl_i!=1 && sda_i!=1) begin
       @(posedge pclk);
-     // state=IDEAL;
+     // state=IDLE;
     end
       
     `uvm_info(name, $sformatf("I2C bus is free state detected"), UVM_HIGH);
@@ -102,9 +99,7 @@ interface i2c_master_driver_bfm(input pclk,
   @(posedge pclk);
   sda_oen <= TRISTATE_BUF_ON;
   sda_o   <= 0;
-  start   <= 1;
   state = START;
-
 
   //-------------------------------------------------------
   // 1) Logic for slave_address + Rd/Wr + sampling ACK
@@ -119,12 +114,11 @@ interface i2c_master_driver_bfm(input pclk,
     @(posedge pclk);
     scl_oen <= TRISTATE_BUF_ON;
     scl_o   <= 0;
-    start   <= 0;
 
     sda_oen <= data_packet.slave_address[bit_no] ? TRISTATE_BUF_OFF : TRISTATE_BUF_ON;
     sda_o   <= data_packet.slave_address[bit_no];
-   
-    state = i2c_fsm_state_e'(bit_no);
+    state = i2c_fsm_state_e'(bit_no+10);
+
     `uvm_info("DEBUG_MSHA", $sformatf("address = %0b, bit_no = %0d, data = %0b",
             data_packet.slave_address, bit_no, data_packet.slave_address[bit_no]), UVM_NONE)
 
@@ -140,7 +134,8 @@ interface i2c_master_driver_bfm(input pclk,
 
   sda_oen <= data_packet.read_write ? TRISTATE_BUF_OFF : TRISTATE_BUF_ON;
   sda_o   <= data_packet.read_write;
-  state = RD_WR;
+  state    = RD_WR;
+
   @(posedge pclk);
   scl_oen <= TRISTATE_BUF_OFF;
   scl_o   <= 1;
@@ -152,20 +147,22 @@ interface i2c_master_driver_bfm(input pclk,
 
   sda_oen <= TRISTATE_BUF_OFF;
   sda_o   <= 1;
+  state    = SLAVE_ADDR_ACK;
 
   @(posedge pclk);
   scl_oen <= TRISTATE_BUF_OFF;
   scl_o   <= 1;
   data_packet.slave_add_ack = sda_i;
 
-
   //-------------------------------------------------------
   // 2) Logic for register_address + sampling ACK
   //-------------------------------------------------------
 
-  for(int i=0,bit_no=0;i<REGISTER_ADDRESS_WIDTH ;i++) begin
+  for(int i=0,bit_no=0; i<REGISTER_ADDRESS_WIDTH; i++) begin
     `uvm_info("from register address",$sformatf("driving register address"),UVM_NONE);
-    bit_no=((REGISTER_ADDRESS_WIDTH -1)-i);
+
+    // Logic for MSB first or LSB first 
+    bit_no = cfg_pkt.msb_first ? ((REGISTER_ADDRESS_WIDTH - 1) - i) : i;
     
     @(posedge pclk);
     scl_oen <= TRISTATE_BUF_ON;
@@ -173,7 +170,55 @@ interface i2c_master_driver_bfm(input pclk,
      
     sda_oen <= data_packet.register_address[bit_no] ? TRISTATE_BUF_OFF : TRISTATE_BUF_ON;
     sda_o <= data_packet.register_address[bit_no];
+    state = i2c_fsm_state_e'(bit_no+20);
+
     `uvm_info("Drived register_address on to sda",$sformatf("register_address=%0b,bit_no=%0d, data in register address=%0b",data_packet.register_address,bit_no,data_packet.register_address[bit_no]),UVM_NONE)
+
+    @(posedge pclk);
+    scl_oen <= TRISTATE_BUF_OFF;
+    scl_o   <= 1;
+
+  end
+
+  // b) Leave the bus free for receiving the ACK from slave
+  @(posedge pclk);
+  scl_oen <= TRISTATE_BUF_ON;
+  scl_o   <= 0;
+
+  sda_oen <= TRISTATE_BUF_OFF;
+  sda_o   <= 1;
+  state    = REG_ADDR_ACK;
+
+  @(posedge pclk);
+  scl_oen <= TRISTATE_BUF_OFF;
+  scl_o   <= 1;
+  data_packet.reg_add_ack = sda_i;
+
+  //-------------------------------------------------------
+  // 3) Logic for driving the write_data + sampling ACK
+  //-------------------------------------------------------
+  // TODO(mshariff): Use if condition for WRITE
+  for (int i=0, bit_no=0; i<data_packet.no_of_i2c_bits_transfer/DATA_WIDTH; i++) begin
+
+    for (int j=0;j<DATA_WIDTH;j++) begin
+
+      `uvm_info("data",$sformatf("driving the write data"),UVM_NONE);
+
+      // Logic for MSB first or LSB first 
+      bit_no = cfg_pkt.msb_first ? ((DATA_WIDTH - 1) - j) : j;
+
+      @(posedge pclk);
+      scl_oen <= TRISTATE_BUF_ON;
+      scl_o   <= 0;
+
+      sda_oen <= data_packet.wr_data[i][bit_no] ? TRISTATE_BUF_OFF : TRISTATE_BUF_ON;
+      sda_o   <= data_packet.wr_data[i][bit_no];
+      state    = i2c_fsm_state_e'(bit_no+30);
+      //`uvm_info("sent the data on to the sda",$sformatf("data=%0b %0b",data_packet.data[i][bit_no]),UVM_NONE);
+
+      @(posedge pclk);
+      scl_oen <= TRISTATE_BUF_OFF;
+      scl_o   <= 1;
 
     end
 
@@ -184,51 +229,14 @@ interface i2c_master_driver_bfm(input pclk,
 
     sda_oen <= TRISTATE_BUF_OFF;
     sda_o   <= 1;
+    state    = DATA_ACK;
 
     @(posedge pclk);
     scl_oen <= TRISTATE_BUF_OFF;
     scl_o   <= 1;
-    data_packet.slave_add_ack = sda_i;
-
-
-  //-------------------------------------------------------
-  // 3) Logic for driving the write_data + sampling ACK
-  //-------------------------------------------------------
-
-  for (int i=0; i<MAXIMUM_BYTES;i++) begin
-
-    for (int j=0;j<DATA_WIDTH;j++) begin
-
-      `uvm_info("data",$sformatf("driving the write data"),UVM_NONE);
-
-      @(posedge pclk);
-      scl_oen <= TRISTATE_BUF_ON;
-      scl_o   <= 0;
-
-      sda_oen <= data_packet.wr_data[i][j] ? TRISTATE_BUF_OFF : TRISTATE_BUF_ON;
-      sda_o   <= data_packet.wr_data[i][j];
-      //`uvm_info("sent the data on to the sda",$sformatf("data=%0b %0b",data_packet.data[i][j]),UVM_NONE);
-
-      @(posedge pclk);
-      scl_oen <= TRISTATE_BUF_OFF;
-      scl_o   <= 1;
-
-    end
+    data_packet.wr_data_ack[i] = sda_i;
 
   end
-
-  // b) Leave the bus free for receiving the ACK from slave
-    @(posedge pclk);
-    scl_oen <= TRISTATE_BUF_ON;
-    scl_o   <= 0;
-
-    sda_oen <= TRISTATE_BUF_OFF;
-    sda_o   <= 1;
-
-    @(posedge pclk);
-    scl_oen <= TRISTATE_BUF_OFF;
-    scl_o   <= 1;
-    data_packet.slave_add_ack = sda_i;
 
   //-------------------------------------------------------
   // 4) Logic for sampling the read_data + driving ACK
@@ -249,8 +257,24 @@ interface i2c_master_driver_bfm(input pclk,
   // MSHA:   end
   // MSHA: end
 
+  //-------------------------------------------------------
+  // 5) Logic for driving the STOP bit 
+  //-------------------------------------------------------
+  @(posedge pclk);
+  sda_oen <= TRISTATE_BUF_ON;
+  sda_o   <= 0;
+  state = STOP;
 
+  @(posedge pclk);
+  sda_oen <= TRISTATE_BUF_OFF;
+  sda_o   <= 1;
     
+  // Checking for IDLE state
+  @(posedge pclk);
+  if(scl_i && sda_i) begin
+    state = IDLE;
+  end
+
  endtask: drive_data
 
 endinterface : i2c_master_driver_bfm

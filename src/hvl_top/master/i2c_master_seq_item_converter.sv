@@ -54,7 +54,7 @@ function void i2c_master_seq_item_converter::from_class(input i2c_master_tx inpu
   output_conv.register_address = input_conv_h.register_address;
   `uvm_info("DEBUG_MSHA", $sformatf("input_conv_h.register_address = %0x and output_conv.register_address = %0x", input_conv_h.register_address, output_conv.register_address ), UVM_NONE)
 
-
+  output_conv.no_of_i2c_bits_transfer = input_conv_h.wr_data.size() * DATA_WIDTH;
 
   for(int i=0; i<input_conv_h.wr_data.size();i++) begin
    // MSHA: `uvm_info("master_seq_item_conv_class",
@@ -119,8 +119,9 @@ function void i2c_master_seq_item_converter::to_class(input i2c_transfer_bits_s 
   // Acknowledgement bits
   output_conv.slave_add_ack = input_conv_h.slave_add_ack;
   output_conv.reg_add_ack = input_conv_h.reg_add_ack;
-  // MSHA: for(int i=0nput_conv_h.wr_data_ack[i]) begin
-  // MSHA:   output_conv.wr_data_ack= '1;
+  for(int i=0; i<input_conv_h.no_of_i2c_bits_transfer/DATA_WIDTH; i++) begin
+    output_conv.wr_data_ack.push_back(input_conv_h.wr_data_ack[i]);
+  end
   
 endfunction: to_class
 
