@@ -154,9 +154,23 @@ interface i2c_master_driver_bfm(input pclk,
   scl_o   <= 1;
   data_packet.slave_add_ack = sda_i;
 
+  // d) if ACK from slave  = 1 drive stop bit and drive idle state  
+
+    if(data_packet.slave_add_ack == 1'b1)begin
+      stop();
+      `uvm_info("SLAVE_ADDR_ACK", $sformatf("Received ACK as 1 and stop condition is triggered"), UVM_HIGH);
+      `uvm_info("SK_DEBUG", $sformatf("Received ACK as 1 and stop condition is triggered"), UVM_HIGH);
+    end
+
+    else begin
+      `uvm_info("SLAVE_ADDR_ACK", $sformatf("Received ACK as 0"), UVM_HIGH);
+    end
+
   //-------------------------------------------------------
   // 2) Logic for register_address + sampling ACK
   //-------------------------------------------------------
+
+  if(data_packet.slave_add_ack == 1'b0)begin
 
   for(int i=0,bit_no=0; i<REGISTER_ADDRESS_WIDTH; i++) begin
     `uvm_info("from register address",$sformatf("driving register address"),UVM_NONE);
@@ -194,13 +208,29 @@ interface i2c_master_driver_bfm(input pclk,
   scl_o   <= 1;
   data_packet.reg_add_ack = sda_i;
 
+  // c) if ACK from slave  = 1 drive stop bit and drive idle state  
+
+    if(data_packet.reg_add_ack == 1'b1)begin
+      stop();
+      `uvm_info("REG_ADDR_ACK", $sformatf("Received ACK as 1 and stop condition is triggered"), UVM_HIGH);
+    end
+
+    else begin
+      `uvm_info("REG_ADDR_ACK", $sformatf("Received ACK as 0"), UVM_HIGH);
+    end
+end
+
   //-------------------------------------------------------
   // 3) Logic for driving the write_data + sampling ACK
   //-------------------------------------------------------
   // TODO(mshariff): Use if condition for WRITE
-  for (int i=0, bit_no=0; i<data_packet.no_of_i2c_bits_transfer/DATA_WIDTH; i++) begin
 
-    for (int j=0;j<DATA_WIDTH;j++) begin
+    if(data_packet.reg_add_ack == 1'b0)begin
+
+
+    for (int i=0, bit_no=0; i<data_packet.no_of_i2c_bits_transfer/DATA_WIDTH; i++) begin
+
+      for (int j=0;j<DATA_WIDTH;j++) begin
 
       `uvm_info("data",$sformatf("driving the write data"),UVM_NONE);
 
@@ -237,7 +267,7 @@ interface i2c_master_driver_bfm(input pclk,
     data_packet.wr_data_ack[i] = sda_i;
 
   end
-
+end
   //-------------------------------------------------------
   // 4) Logic for sampling the read_data + driving ACK
   //-------------------------------------------------------
@@ -260,6 +290,17 @@ interface i2c_master_driver_bfm(input pclk,
   //-------------------------------------------------------
   // 5) Logic for driving the STOP bit 
   //-------------------------------------------------------
+
+  if(data_packet.slave_add_ack == 1'b0 &&data_packet.reg_add_ack == 1'b0 && data_packet.wr_data_ack == 1'b0 )begin
+      stop();
+      
+      `uvm_info(name, $sformatf("Successfully drove the slave addr, reg addr and data to the slave"), UVM_HIGH);
+    end
+  
+ endtask: drive_data
+
+ 
+ task stop();
   @(posedge pclk);
   sda_oen <= TRISTATE_BUF_ON;
   sda_o   <= 0;
@@ -274,8 +315,8 @@ interface i2c_master_driver_bfm(input pclk,
   if(scl_i && sda_i) begin
     state = IDLE;
   end
+endtask
 
- endtask: drive_data
 
 endinterface : i2c_master_driver_bfm
 
