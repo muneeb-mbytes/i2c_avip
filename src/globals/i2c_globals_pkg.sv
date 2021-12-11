@@ -99,6 +99,7 @@ package i2c_globals_pkg;
   typedef struct {
     bit msb_first;
     bit read_write;
+    int baudrate_divisor;
   } i2c_transfer_cfg_s;
   
   // TODO(mshariff): Comments 

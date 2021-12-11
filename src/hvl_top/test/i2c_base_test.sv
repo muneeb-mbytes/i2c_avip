@@ -31,8 +31,7 @@ endclass : i2c_base_test
 //  name - i2c_base_test
 //  parent - parent under which this component is created
 //--------------------------------------------------------------------------------------------
-function i2c_base_test::new(string name = "i2c_base_test",
-                                 uvm_component parent = null);
+function i2c_base_test::new(string name = "i2c_base_test",uvm_component parent = null);
   super.new(name, parent);
 endfunction : new
 
@@ -66,13 +65,14 @@ function void i2c_base_test::setup_env_cfg();
   i2c_env_cfg_h.i2c_master_agent_cfg_h = new[i2c_env_cfg_h.no_of_masters];
   foreach (i2c_env_cfg_h.i2c_master_agent_cfg_h[i])begin
     i2c_env_cfg_h.i2c_master_agent_cfg_h[i] = i2c_master_agent_config::type_id::create($sformatf(
-                                                                    "i2c_master_agent_cfg_h[%0d]",i));
+                                                                "i2c_master_agent_cfg_h[%0d]",i));
   end
   setup_master_agent_cfg();
   
   foreach (i2c_env_cfg_h.i2c_master_agent_cfg_h[i])begin
     uvm_config_db
-    #(i2c_master_agent_config)::set(this,$sformatf("*i2c_master_agent_h[%0d]*",i),"i2c_master_agent_config",i2c_env_cfg_h.i2c_master_agent_cfg_h[i]);
+    #(i2c_master_agent_config)::set(this,$sformatf("*i2c_master_agent_h[%0d]*",i),
+                                "i2c_master_agent_config",i2c_env_cfg_h.i2c_master_agent_cfg_h[i]);
 
   // TODO(mshariff): Call the required check functions                                                          
   `uvm_info(get_type_name(),$sformatf("i2c_master_agent_cfg = \n %0p",
@@ -84,7 +84,7 @@ function void i2c_base_test::setup_env_cfg();
   
   foreach (i2c_env_cfg_h.i2c_slave_agent_cfg_h[i])begin
     i2c_env_cfg_h.i2c_slave_agent_cfg_h[i] = i2c_slave_agent_config::type_id::create($sformatf
-                                                                    ("i2c_slave_agent_cfg_h[%0d]",i));
+                                                              ("i2c_slave_agent_cfg_h[%0d]",i));
   end
   setup_slave_agent_cfg();
   
@@ -92,8 +92,9 @@ function void i2c_base_test::setup_env_cfg();
   
   foreach(i2c_env_cfg_h.i2c_slave_agent_cfg_h[i]) begin
     uvm_config_db #(i2c_slave_agent_config)::set(this,$sformatf("*i2c_slave_agent_h[%0d]*",i),
-                                             "i2c_slave_agent_config", i2c_env_cfg_h.i2c_slave_agent_cfg_h[i]);
-    // TODO(mshariff): Call the required check functions                                                          
+                             "i2c_slave_agent_config", i2c_env_cfg_h.i2c_slave_agent_cfg_h[i]);
+    
+  // TODO(mshariff): Call the required check functions                                                          
     `uvm_info(get_type_name(),$sformatf("i2c_slave_agent_cfg = \n %0p",
     i2c_env_cfg_h.i2c_slave_agent_cfg_h[i].sprint()),UVM_NONE)
   end
@@ -112,7 +113,10 @@ function void i2c_base_test::setup_env_cfg();
 function void i2c_base_test::setup_master_agent_cfg();
   
   foreach(i2c_env_cfg_h.i2c_master_agent_cfg_h[i])begin
-    // Configure the Master agent configuration
+
+    i2c_env_cfg_h.i2c_master_agent_cfg_h[i].set_baudrate_divisor(.primary_prescalar(1),
+                                                                  .secondary_prescalar(0));
+     // Configure the Master agent configuration
     i2c_env_cfg_h.i2c_master_agent_cfg_h[i].is_active     = uvm_active_passive_enum'(UVM_ACTIVE);
     i2c_env_cfg_h.i2c_master_agent_cfg_h[i].no_of_slaves  = NO_OF_SLAVES;
     i2c_env_cfg_h.i2c_master_agent_cfg_h[i].shift_dir     = shift_direction_e'(MSB_FIRST);
@@ -153,9 +157,12 @@ endfunction: setup_master_agent_cfg
 // and store the handle into the config_db
 //--------------------------------------------------------------------------------------------
 function void i2c_base_test::setup_slave_agent_cfg();
+
+  foreach(i2c_env_cfg_h.i2c_master_agent_cfg_h[i]) begin    
+  end
+
   // Create slave agent(s) configurations
   // Setting the configuration for each slave
-  
   // Slave 0 
   i2c_env_cfg_h.i2c_slave_agent_cfg_h[0].slave_address = SLAVE0_ADDRESS;
   i2c_env_cfg_h.i2c_slave_agent_cfg_h[0].is_active    = uvm_active_passive_enum'(UVM_ACTIVE);
