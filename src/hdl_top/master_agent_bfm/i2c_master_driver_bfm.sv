@@ -258,5 +258,4 @@ interface i2c_master_driver_bfm(input pclk,
 
 
 endinterface : i2c_master_driver_bfm
-
 `endif
