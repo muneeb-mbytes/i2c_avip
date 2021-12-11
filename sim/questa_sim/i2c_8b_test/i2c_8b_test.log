@@ -1,0 +1,461 @@
+# vsim -vopt work.hvl_top work.hdl_top -voptargs="+acc=npr" -assertdebug "+UVM_TESTNAME=i2c_8b_test" "+UVM_VERBOSITY=UVM_HIGH" "+define+STANDARD_I2C" -l i2c_8b_test/i2c_8b_test.log -sva -coverage -c -do "log -r /*; add wave -r /*; coverage save -onexit -assert -directive -cvg -codeAll i2c_8b_test/i2c_8b_test_coverage.ucdb; run -all; exit" -wlf i2c_8b_test/waveform.wlf 
+# Start time: 05:56:15 on Dec 11,2021
+# ** Note: (vsim-3812) Design is being optimized...
+# //  Questa Sim
+# //  Version 10.6c linux Jul 25 2017
+# //
+# //  Copyright 1991-2017 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.i2c_globals_pkg(fast)
+# Loading mtiUvm.uvm_pkg
+# Loading work.i2c_slave_pkg(fast)
+# Loading work.i2c_master_driver_bfm(fast)
+# Loading work.i2c_master_pkg(fast)
+# Loading work.i2c_env_pkg(fast)
+# Loading work.i2c_slave_seq_pkg(fast)
+# Loading work.i2c_master_seq_pkg(fast)
+# Loading work.i2c_virtual_seq_pkg(fast)
+# Loading work.i2c_test_pkg(fast)
+# Loading work.hvl_top(fast)
+# Loading work.hdl_top(fast)
+# Loading work.i2c_if(fast)
+# Loading work.i2c_master_agent_bfm(fast)
+# Loading work.i2c_master_driver_bfm_sv_unit(fast)
+# Loading work.i2c_master_driver_bfm(fast)
+# Loading work.i2c_master_monitor_bfm_sv_unit(fast)
+# Loading work.i2c_master_monitor_bfm(fast)
+# Loading work.i2c_slave_agent_bfm(fast)
+# Loading work.i2c_slave_driver_bfm_sv_unit(fast)
+# Loading work.i2c_slave_driver_bfm(fast)
+# Loading work.i2c_slave_monitor_bfm(fast)
+# Loading mtiUvm.questa_uvm_pkg(fast)
+# Loading work.i2c_slave_driver_bfm(fast)
+# Loading work.i2c_slave_monitor_bfm(fast)
+# Loading work.i2c_master_monitor_bfm(fast)
+# ** Warning: (vsim-3839) ../../src/hdl_top/slave_agent_bfm/i2c_slave_agent_bfm.sv(20): Variable '/hdl_top/intf/scl_o', driven via a port connection, is multiply driven. See ../../src/hdl_top/master_agent_bfm/i2c_master_agent_bfm.sv(24).
+#    Time: 0 ns  Iteration: 0  Instance: /hdl_top/i2c_slave_agent_bfm_h/i2c_slave_drv_bfm_h File: ../../src/hdl_top/slave_agent_bfm/i2c_slave_driver_bfm.sv
+# ** Warning: (vsim-3839) ../../src/hdl_top/slave_agent_bfm/i2c_slave_agent_bfm.sv(20): Variable '/hdl_top/intf/scl_oen', driven via a port connection, is multiply driven. See ../../src/hdl_top/master_agent_bfm/i2c_master_agent_bfm.sv(24).
+#    Time: 0 ns  Iteration: 0  Instance: /hdl_top/i2c_slave_agent_bfm_h/i2c_slave_drv_bfm_h File: ../../src/hdl_top/slave_agent_bfm/i2c_slave_driver_bfm.sv
+# Loading /tools/mentor/questasim_10.6c/questasim/uvm-1.1d/linux/uvm_dpi.so
+# log -r /*
+#  add wave -r /*
+#  coverage save -onexit -assert -directive -cvg -codeAll i2c_8b_test/i2c_8b_test_coverage.ucdb
+#  run -all
+# ----------------------------------------------------------------
+# UVM-1.1d
+# (C) 2007-2013 Mentor Graphics Corporation
+# (C) 2007-2013 Cadence Design Systems, Inc.
+# (C) 2006-2013 Synopsys, Inc.
+# (C) 2011-2013 Cypress Semiconductor Corp.
+# ----------------------------------------------------------------
+# 
+#   ***********       IMPORTANT RELEASE NOTES         ************
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_NO_DEPRECATED undefined.
+#   See http://www.eda.org/svdb/view.php?id=3313 for more details.
+# 
+#   You are using a version of the UVM library that has been compiled
+#   with `UVM_OBJECT_MUST_HAVE_CONSTRUCTOR undefined.
+#   See http://www.eda.org/svdb/view.php?id=3770 for more details.
+# 
+#       (Specify +UVM_NO_RELNOTES to turn off this notice)
+# 
+# UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(215) @ 0: reporter [Questa UVM] QUESTA_UVM-1.2.3
+# UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(217) @ 0: reporter [Questa UVM]  questa_uvm::init(+struct)
+# UVM_INFO @ 0: reporter [RNTST] Running test i2c_8b_test...
+# HDL TOP
+# I2C_MASTER_DRIVER_BFM
+# i2c Master Monitor BFM
+# Master Agent BFM
+# Slave Driver BFM
+# Slave Monitor BFM
+# Slave Agent BFM
+# UVM_INFO ../../src/hvl_top/test/i2c_base_test.sv(79) @ 0: uvm_test_top [i2c_8b_test] i2c_master_agent_cfg = 
+#  --------------------------------------------------------------------
+# Name                       Type                     Size  Value     
+# --------------------------------------------------------------------
+# i2c_master_agent_cfg_h[0]  i2c_master_agent_config  -     @504      
+#   is_active                string                   10    UVM_ACTIVE
+#   no_of_slaves             integral                 32    'd4       
+#   shift_dir                string                   9     MSB_FIRST 
+#   primary_prescalar        integral                 3     'd0       
+#   secondary_prescalar      integral                 3     'd0       
+#   baudrate_divisor         integral                 32    'd2       
+#   has_coverage             integral                 1     1         
+# --------------------------------------------------------------------
+# 
+# UVM_INFO ../../src/hvl_top/test/i2c_base_test.sv(98) @ 0: uvm_test_top [i2c_8b_test] i2c_slave_agent_cfg = 
+#  ------------------------------------------------------------------
+# Name                      Type                    Size  Value     
+# ------------------------------------------------------------------
+# i2c_slave_agent_cfg_h[0]  i2c_slave_agent_config  -     @509      
+#   is_active               string                  10    UVM_ACTIVE
+#   shift_dir               string                  9     MSB_FIRST 
+#   has_coverage            integral                1     1         
+# ------------------------------------------------------------------
+# 
+# UVM_INFO ../../src/hvl_top/test/i2c_base_test.sv(98) @ 0: uvm_test_top [i2c_8b_test] i2c_slave_agent_cfg = 
+#  ------------------------------------------------------------------
+# Name                      Type                    Size  Value     
+# ------------------------------------------------------------------
+# i2c_slave_agent_cfg_h[1]  i2c_slave_agent_config  -     @510      
+#   is_active               string                  10    UVM_ACTIVE
+#   shift_dir               string                  9     MSB_FIRST 
+#   has_coverage            integral                1     1         
+# ------------------------------------------------------------------
+# 
+# UVM_INFO ../../src/hvl_top/test/i2c_base_test.sv(98) @ 0: uvm_test_top [i2c_8b_test] i2c_slave_agent_cfg = 
+#  ------------------------------------------------------------------
+# Name                      Type                    Size  Value     
+# ------------------------------------------------------------------
+# i2c_slave_agent_cfg_h[2]  i2c_slave_agent_config  -     @511      
+#   is_active               string                  10    UVM_ACTIVE
+#   shift_dir               string                  9     MSB_FIRST 
+#   has_coverage            integral                1     1         
+# ------------------------------------------------------------------
+# 
+# UVM_INFO ../../src/hvl_top/test/i2c_base_test.sv(98) @ 0: uvm_test_top [i2c_8b_test] i2c_slave_agent_cfg = 
+#  ------------------------------------------------------------------
+# Name                      Type                    Size  Value     
+# ------------------------------------------------------------------
+# i2c_slave_agent_cfg_h[3]  i2c_slave_agent_config  -     @512      
+#   is_active               string                  10    UVM_ACTIVE
+#   shift_dir               string                  9     MSB_FIRST 
+#   has_coverage            integral                1     1         
+# ------------------------------------------------------------------
+# 
+# UVM_INFO ../../src/hvl_top/test/i2c_base_test.sv(102) @ 0: uvm_test_top [i2c_8b_test] i2c_env_cfg = 
+#  ----------------------------------------------------
+# Name                     Type            Size  Value
+# ----------------------------------------------------
+# i2c_env_cfg_h            i2c_env_config  -     @496 
+#   has_scoreboard         integral        1     1    
+#   has_virtual_sequencer  integral        1     1    
+#   no_of_masters          integral        32    'd1  
+#   no_of_slaves           integral        32    'd4  
+# ----------------------------------------------------
+# 
+# UVM_INFO @ 0: reporter [UVMTOP] UVM testbench topology:
+# ---------------------------------------------------------------------
+# Name                          Type                        Size  Value
+# ---------------------------------------------------------------------
+# uvm_test_top                  i2c_8b_test                 -     @473 
+#   i2c_env_h                   i2c_env                     -     @497 
+#     i2c_master_agent_h[0]     i2c_master_agent            -     @525 
+#       i2c_master_cov_h        i2c_master_coverage         -     @816 
+#         analysis_imp          uvm_analysis_imp            -     @823 
+#       i2c_master_drv_proxy_h  i2c_master_driver_proxy     -     @684 
+#         rsp_port              uvm_analysis_port           -     @699 
+#         seq_item_port         uvm_seq_item_pull_port      -     @691 
+#       i2c_master_mon_proxy_h  i2c_master_monitor_proxy    -     @677 
+#         master_analysis_port  uvm_analysis_port           -     @833 
+#       i2c_master_seqr_h       i2c_master_sequencer        -     @707 
+#         rsp_export            uvm_analysis_export         -     @714 
+#         seq_item_export       uvm_seq_item_pull_imp       -     @808 
+#         arbitration_queue     array                       0     -    
+#         lock_queue            array                       0     -    
+#         num_last_reqs         integral                    32    'd1  
+#         num_last_rsps         integral                    32    'd1  
+#     i2c_scoreboard_h          i2c_scoreboard              -     @669 
+#       master_analysis_fifo    uvm_tlm_analysis_fifo #(T)  -     @846 
+#         analysis_export       uvm_analysis_imp            -     @885 
+#         get_ap                uvm_analysis_port           -     @877 
+#         get_peek_export       uvm_get_peek_imp            -     @861 
+#         put_ap                uvm_analysis_port           -     @869 
+#         put_export            uvm_put_imp                 -     @853 
+#       slave_analysis_fifo     uvm_tlm_analysis_fifo #(T)  -     @893 
+#         analysis_export       uvm_analysis_imp            -     @932 
+#         get_ap                uvm_analysis_port           -     @924 
+#         get_peek_export       uvm_get_peek_imp            -     @908 
+#         put_ap                uvm_analysis_port           -     @916 
+#         put_export            uvm_put_imp                 -     @900 
+#     i2c_slave_agent_h[0]      i2c_slave_agent             -     @532 
+#       i2c_slave_cov_h         i2c_slave_coverage          -     @1064
+#         analysis_imp          uvm_analysis_imp            -     @1071
+#       i2c_slave_drv_proxy_h   i2c_slave_driver_proxy      -     @948 
+#       i2c_slave_mon_proxy_h   i2c_slave_monitor_proxy     -     @941 
+#         slave_analysis_port   uvm_analysis_port           -     @1080
+#       i2c_slave_seqr_h        i2c_slave_sequencer         -     @955 
+#         rsp_export            uvm_analysis_export         -     @962 
+#         seq_item_export       uvm_seq_item_pull_imp       -     @1056
+#         arbitration_queue     array                       0     -    
+#         lock_queue            array                       0     -    
+#         num_last_reqs         integral                    32    'd1  
+#         num_last_rsps         integral                    32    'd1  
+#     i2c_slave_agent_h[1]      i2c_slave_agent             -     @539 
+#       i2c_slave_cov_h         i2c_slave_coverage          -     @1217
+#         analysis_imp          uvm_analysis_imp            -     @1224
+#       i2c_slave_drv_proxy_h   i2c_slave_driver_proxy      -     @1101
+#       i2c_slave_mon_proxy_h   i2c_slave_monitor_proxy     -     @1094
+#         slave_analysis_port   uvm_analysis_port           -     @1233
+#       i2c_slave_seqr_h        i2c_slave_sequencer         -     @1108
+#         rsp_export            uvm_analysis_export         -     @1115
+#         seq_item_export       uvm_seq_item_pull_imp       -     @1209
+#         arbitration_queue     array                       0     -    
+#         lock_queue            array                       0     -    
+#         num_last_reqs         integral                    32    'd1  
+#         num_last_rsps         integral                    32    'd1  
+#     i2c_slave_agent_h[2]      i2c_slave_agent             -     @546 
+#       i2c_slave_cov_h         i2c_slave_coverage          -     @1370
+#         analysis_imp          uvm_analysis_imp            -     @1377
+#       i2c_slave_drv_proxy_h   i2c_slave_driver_proxy      -     @1254
+#       i2c_slave_mon_proxy_h   i2c_slave_monitor_proxy     -     @1247
+#         slave_analysis_port   uvm_analysis_port           -     @1386
+#       i2c_slave_seqr_h        i2c_slave_sequencer         -     @1261
+#         rsp_export            uvm_analysis_export         -     @1268
+#         seq_item_export       uvm_seq_item_pull_imp       -     @1362
+#         arbitration_queue     array                       0     -    
+#         lock_queue            array                       0     -    
+#         num_last_reqs         integral                    32    'd1  
+#         num_last_rsps         integral                    32    'd1  
+#     i2c_slave_agent_h[3]      i2c_slave_agent             -     @553 
+#       i2c_slave_cov_h         i2c_slave_coverage          -     @1523
+#         analysis_imp          uvm_analysis_imp            -     @1530
+#       i2c_slave_drv_proxy_h   i2c_slave_driver_proxy      -     @1407
+#       i2c_slave_mon_proxy_h   i2c_slave_monitor_proxy     -     @1400
+#         slave_analysis_port   uvm_analysis_port           -     @1539
+#       i2c_slave_seqr_h        i2c_slave_sequencer         -     @1414
+#         rsp_export            uvm_analysis_export         -     @1421
+#         seq_item_export       uvm_seq_item_pull_imp       -     @1515
+#         arbitration_queue     array                       0     -    
+#         lock_queue            array                       0     -    
+#         num_last_reqs         integral                    32    'd1  
+#         num_last_rsps         integral                    32    'd1  
+#     virtual_seqr_h            i2c_virtual_sequencer       -     @560 
+#       i2c_master_seqr_h       i2c_master_sequencer        -     @1558
+#         rsp_export            uvm_analysis_export         -     @1565
+#         seq_item_export       uvm_seq_item_pull_imp       -     @1659
+#         arbitration_queue     array                       0     -    
+#         lock_queue            array                       0     -    
+#         num_last_reqs         integral                    32    'd1  
+#         num_last_rsps         integral                    32    'd1  
+#       i2c_slave_seqr_h        i2c_slave_sequencer         -     @1667
+#         rsp_export            uvm_analysis_export         -     @1674
+#         seq_item_export       uvm_seq_item_pull_imp       -     @1768
+#         arbitration_queue     array                       0     -    
+#         lock_queue            array                       0     -    
+#         num_last_reqs         integral                    32    'd1  
+#         num_last_rsps         integral                    32    'd1  
+#       rsp_export              uvm_analysis_export         -     @567 
+#       seq_item_export         uvm_seq_item_pull_imp       -     @661 
+#       arbitration_queue       array                       0     -    
+#       lock_queue              array                       0     -    
+#       num_last_reqs           integral                    32    'd1  
+#       num_last_rsps           integral                    32    'd1  
+# ---------------------------------------------------------------------
+# 
+# UVM_INFO verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(277) @ 0: reporter [Questa UVM] End Of Elaboration
+# UVM_INFO ../../src/hvl_top/test/sequences/master_sequences//i2c_8b_master_seq.sv(41) @ 0: uvm_test_top.i2c_env_h.i2c_master_agent_h[0].i2c_master_seqr_h@@i2c_8b_master_seq_h [DEBUG_MSHA] address = 68
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(52) @ 30: reporter [I2C_MASTER_DRIVER_BFM] System reset detected
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(54) @ 70: reporter [I2C_MASTER_DRIVER_BFM] System reset deactivated
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(72) @ 90: reporter [I2C_MASTER_DRIVER_BFM] Successfully drove the IDLE state
+# UVM_INFO ../../src/hvl_top/master//i2c_master_driver_proxy.sv(97) @ 90: uvm_test_top.i2c_env_h.i2c_master_agent_h[0].i2c_master_drv_proxy_h [DEBUG_MSHA] Inside i2c_master_driver_proxy
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(86) @ 110: reporter [I2C_MASTER_DRIVER_BFM] I2C bus is free state detected
+# UVM_INFO ../../src/hvl_top/master//i2c_master_tx.sv(166) @ 110: uvm_test_top.i2c_env_h.i2c_master_agent_h[0].i2c_master_seqr_h@@i2c_8b_master_seq_h.req [DEBUG_MSHA] index = 1 and slave_address = 6c
+# --------------------------------------------------------------------------------------------------------------------------------------
+# Name                           Type           Size  Value                                                                             
+# --------------------------------------------------------------------------------------------------------------------------------------
+# req                            i2c_master_tx  -     @1817                                                                             
+#   begin_time                   time           64    110                                                                               
+#   depth                        int            32    'd2                                                                               
+#   parent sequence (name)       string         19    i2c_8b_master_seq_h                                                               
+#   parent sequence (full name)  string         82    uvm_test_top.i2c_env_h.i2c_master_agent_h[0].i2c_master_seqr_h.i2c_8b_master_seq_h
+#   sequencer                    string         62    uvm_test_top.i2c_env_h.i2c_master_agent_h[0].i2c_master_seqr_h                    
+#   slave_address                integral       7     'h6c                                                                              
+#   register_address             integral       8     'he4                                                                              
+#   read_write                   string         5     WRITE                                                                             
+#   wr_data[0]                   integral       8     'h12                                                                              
+#   wr_data[1]                   integral       8     'h42                                                                              
+#   wr_data[2]                   integral       8     'h32                                                                              
+#   wr_data[3]                   integral       8     'h6e                                                                              
+#   slave_add_ack                integral       1     'b1                                                                               
+#   reg_add_ack                  integral       1     'b1                                                                               
+# --------------------------------------------------------------------------------------------------------------------------------------
+# UVM_INFO ../../src/hvl_top/master//i2c_master_driver_proxy.sv(103) @ 110: uvm_test_top.i2c_env_h.i2c_master_agent_h[0].i2c_master_drv_proxy_h [i2c_master_driver_proxy] Received req
+# --------------------------------------------------------------------------------------------------------------------------------------
+# Name                           Type           Size  Value                                                                             
+# --------------------------------------------------------------------------------------------------------------------------------------
+# req                            i2c_master_tx  -     @1817                                                                             
+#   begin_time                   time           64    110                                                                               
+#   depth                        int            32    'd2                                                                               
+#   parent sequence (name)       string         19    i2c_8b_master_seq_h                                                               
+#   parent sequence (full name)  string         82    uvm_test_top.i2c_env_h.i2c_master_agent_h[0].i2c_master_seqr_h.i2c_8b_master_seq_h
+#   sequencer                    string         62    uvm_test_top.i2c_env_h.i2c_master_agent_h[0].i2c_master_seqr_h                    
+#   slave_address                integral       7     'h6c                                                                              
+#   register_address             integral       8     'he4                                                                              
+#   read_write                   string         5     WRITE                                                                             
+#   wr_data[0]                   integral       8     'h12                                                                              
+#   wr_data[1]                   integral       8     'h42                                                                              
+#   wr_data[2]                   integral       8     'h32                                                                              
+#   wr_data[3]                   integral       8     'h6e                                                                              
+#   slave_add_ack                integral       1     'b1                                                                               
+#   reg_add_ack                  integral       1     'b1                                                                               
+# --------------------------------------------------------------------------------------------------------------------------------------
+# 
+# UVM_INFO ../../src/hvl_top/master//i2c_master_seq_item_converter.sv(55) @ 110: reporter [DEBUG_MSHA] input_conv_h.register_address = e4 and output_conv.register_address = e4
+# UVM_INFO ../../src/hvl_top/master//i2c_master_driver_proxy.sv(105) @ 110: uvm_test_top.i2c_env_h.i2c_master_agent_h[0].i2c_master_drv_proxy_h [i2c_master_driver_proxy] Converted req struct
+# '{slave_address:108, read_write:0, register_address:228, wr_data:'{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 110, 50, 66, 18}, no_of_i2c_bits_transfer:32, slave_add_ack:1, reg_add_ack:1, wr_data_ack:340282366920938463463374607431768211455}
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(107) @ 130: reporter [DEBUG_MSHA] cfg_pkt.msb_first
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(116) @ 150: reporter [DEBUG_MSHA] address = 1101100, bit_no = 6, data = 1
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(107) @ 170: reporter [DEBUG_MSHA] cfg_pkt.msb_first
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(116) @ 190: reporter [DEBUG_MSHA] address = 1101100, bit_no = 5, data = 1
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(107) @ 210: reporter [DEBUG_MSHA] cfg_pkt.msb_first
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(116) @ 230: reporter [DEBUG_MSHA] address = 1101100, bit_no = 4, data = 0
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(107) @ 250: reporter [DEBUG_MSHA] cfg_pkt.msb_first
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(116) @ 270: reporter [DEBUG_MSHA] address = 1101100, bit_no = 3, data = 1
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(107) @ 290: reporter [DEBUG_MSHA] cfg_pkt.msb_first
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(116) @ 310: reporter [DEBUG_MSHA] address = 1101100, bit_no = 2, data = 1
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(107) @ 330: reporter [DEBUG_MSHA] cfg_pkt.msb_first
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(116) @ 350: reporter [DEBUG_MSHA] address = 1101100, bit_no = 1, data = 0
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(107) @ 370: reporter [DEBUG_MSHA] cfg_pkt.msb_first
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(116) @ 390: reporter [DEBUG_MSHA] address = 1101100, bit_no = 0, data = 0
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(131) @ 450: reporter [from register address] driving register address
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(139) @ 470: reporter [Drived register_address on to sda] register_address=11100100,bit_no=7, data in register address=1
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(131) @ 490: reporter [from register address] driving register address
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(139) @ 510: reporter [Drived register_address on to sda] register_address=11100100,bit_no=6, data in register address=1
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(131) @ 530: reporter [from register address] driving register address
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(139) @ 550: reporter [Drived register_address on to sda] register_address=11100100,bit_no=5, data in register address=1
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(131) @ 570: reporter [from register address] driving register address
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(139) @ 590: reporter [Drived register_address on to sda] register_address=11100100,bit_no=4, data in register address=0
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(131) @ 610: reporter [from register address] driving register address
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(139) @ 630: reporter [Drived register_address on to sda] register_address=11100100,bit_no=3, data in register address=0
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(131) @ 650: reporter [from register address] driving register address
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(139) @ 670: reporter [Drived register_address on to sda] register_address=11100100,bit_no=2, data in register address=1
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(131) @ 690: reporter [from register address] driving register address
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(139) @ 710: reporter [Drived register_address on to sda] register_address=11100100,bit_no=1, data in register address=0
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(131) @ 730: reporter [from register address] driving register address
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(139) @ 750: reporter [Drived register_address on to sda] register_address=11100100,bit_no=0, data in register address=0
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 810: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 850: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 890: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 930: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 970: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1010: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1050: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1090: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1170: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1210: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1250: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1290: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1330: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1370: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1410: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1450: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1530: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1570: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1610: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1650: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1690: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1730: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1770: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1810: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1890: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1930: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 1970: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 2010: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 2050: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 2090: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 2130: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(173) @ 2170: reporter [data] driving the write data
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(216) @ 2310: reporter [I2C_MASTER_DRIVER_BFM] Successfully drove the slave addr, reg addr and data to the slave
+# UVM_INFO ../../src/hvl_top/master//i2c_master_driver_proxy.sv(123) @ 2310: uvm_test_top.i2c_env_h.i2c_master_agent_h[0].i2c_master_drv_proxy_h [i2c_master_driver_proxy] AFTER STRUCT PACKET : , 
+#  '{msb_first:1, read_write:0}
+# UVM_INFO ../../src/hvl_top/master//i2c_master_seq_item_converter.sv(104) @ 2310: reporter [master_seq_item_conv_class] To class slave_address = 
+#  108
+# UVM_INFO ../../src/hvl_top/master//i2c_master_seq_item_converter.sv(109) @ 2310: reporter [master_seq_item_conv_class] To class register_address = 
+#  228
+# UVM_INFO ../../src/hvl_top/master//i2c_master_seq_item_converter.sv(116) @ 2310: reporter [master_seq_item_conv_class] To class wr_data = 
+#  18
+# UVM_INFO ../../src/hvl_top/master//i2c_master_seq_item_converter.sv(116) @ 2310: reporter [master_seq_item_conv_class] To class wr_data = 
+#  66
+# UVM_INFO ../../src/hvl_top/master//i2c_master_seq_item_converter.sv(116) @ 2310: reporter [master_seq_item_conv_class] To class wr_data = 
+#  50
+# UVM_INFO ../../src/hvl_top/master//i2c_master_seq_item_converter.sv(116) @ 2310: reporter [master_seq_item_conv_class] To class wr_data = 
+#  110
+# UVM_INFO ../../src/hvl_top/master//i2c_master_driver_proxy.sv(112) @ 2310: uvm_test_top.i2c_env_h.i2c_master_agent_h[0].i2c_master_drv_proxy_h [i2c_master_driver_proxy] After :: Received req
+# ----------------------------------------------
+# Name                Type           Size  Value
+# ----------------------------------------------
+# i2c_master_tx       i2c_master_tx  -     @2013
+#   slave_address     integral       7     'h6c 
+#   register_address  integral       8     'he4 
+#   read_write        string         5     WRITE
+#   wr_data[0]        integral       8     'h12 
+#   wr_data[1]        integral       8     'h42 
+#   wr_data[2]        integral       8     'h32 
+#   wr_data[3]        integral       8     'h6e 
+#   slave_add_ack     integral       1     'b1  
+#   reg_add_ack       integral       1     'b1  
+#   wr_data_ack[0]    integral       1     'h1  
+#   wr_data_ack[1]    integral       1     'h1  
+#   wr_data_ack[2]    integral       1     'h1  
+#   wr_data_ack[3]    integral       1     'h1  
+# ----------------------------------------------
+# 
+# UVM_INFO ../../src/hvl_top/master//i2c_master_driver_proxy.sv(97) @ 2310: uvm_test_top.i2c_env_h.i2c_master_agent_h[0].i2c_master_drv_proxy_h [DEBUG_MSHA] Inside i2c_master_driver_proxy
+# UVM_INFO ../../src/hdl_top/master_agent_bfm/i2c_master_driver_bfm.sv(86) @ 2330: reporter [I2C_MASTER_DRIVER_BFM] I2C bus is free state detected
+# UVM_INFO verilog_src/uvm-1.1d/src/base/uvm_objection.svh(1268) @ 2330: reporter [TEST_DONE] 'run' phase is ready to proceed to the 'extract' phase
+# UVM_INFO ../../src/hvl_top/master//i2c_master_coverage.sv(78) @ 2330: uvm_test_top.i2c_env_h.i2c_master_agent_h[0].i2c_master_cov_h [i2c_master_coverage] Master Agent Coverage = 0.00 %
+# 
+# --------------------------------------
+# SLAVE COVERAGE
+# --------------------------------------
+# 
+# UVM_INFO ../../src/hvl_top/slave/i2c_slave_coverage.sv(75) @ 2330: uvm_test_top.i2c_env_h.i2c_slave_agent_h[0].i2c_slave_cov_h [i2c_slave_coverage] Slave Agent Coverage = 0.00 %
+# 
+# --------------------------------------
+# SLAVE COVERAGE
+# --------------------------------------
+# 
+# UVM_INFO ../../src/hvl_top/slave/i2c_slave_coverage.sv(75) @ 2330: uvm_test_top.i2c_env_h.i2c_slave_agent_h[1].i2c_slave_cov_h [i2c_slave_coverage] Slave Agent Coverage = 0.00 %
+# 
+# --------------------------------------
+# SLAVE COVERAGE
+# --------------------------------------
+# 
+# UVM_INFO ../../src/hvl_top/slave/i2c_slave_coverage.sv(75) @ 2330: uvm_test_top.i2c_env_h.i2c_slave_agent_h[2].i2c_slave_cov_h [i2c_slave_coverage] Slave Agent Coverage = 0.00 %
+# 
+# --------------------------------------
+# SLAVE COVERAGE
+# --------------------------------------
+# 
+# UVM_INFO ../../src/hvl_top/slave/i2c_slave_coverage.sv(75) @ 2330: uvm_test_top.i2c_env_h.i2c_slave_agent_h[3].i2c_slave_cov_h [i2c_slave_coverage] Slave Agent Coverage = 0.00 %
+# 
+# --- UVM Report Summary ---
+# 
+# ** Report counts by severity
+# UVM_INFO :  100
+# UVM_WARNING :    0
+# UVM_ERROR :    0
+# UVM_FATAL :    0
+# ** Report counts by id
+# [DEBUG_MSHA]    19
+# [Drived register_address on to sda]     8
+# [I2C_MASTER_DRIVER_BFM]     6
+# [Questa UVM]     3
+# [RNTST]     1
+# [TEST_DONE]     1
+# [UVMTOP]     1
+# [data]    32
+# [from register address]     8
+# [i2c_8b_test]     6
+# [i2c_master_coverage]     1
+# [i2c_master_driver_proxy]     4
+# [i2c_slave_coverage]     4
+# [master_seq_item_conv_class]     6
+# ** Note: $finish    : /tools/mentor/questasim_10.6c/questasim/linux/../verilog_src/uvm-1.1d/src/base/uvm_root.svh(430)
+#    Time: 2330 ns  Iteration: 54  Instance: /hvl_top
+# Saving coverage database on exit...
+# End time: 05:56:20 on Dec 11,2021, Elapsed time: 0:00:05
+# Errors: 0, Warnings: 2
