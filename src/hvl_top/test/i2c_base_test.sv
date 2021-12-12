@@ -158,9 +158,6 @@ endfunction: setup_master_agent_cfg
 //--------------------------------------------------------------------------------------------
 function void i2c_base_test::setup_slave_agent_cfg();
 
-  foreach(i2c_env_cfg_h.i2c_master_agent_cfg_h[i]) begin    
-  end
-
   // Create slave agent(s) configurations
   // Setting the configuration for each slave
   
