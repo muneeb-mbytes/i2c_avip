@@ -38,6 +38,16 @@ interface i2c_master_monitor_bfm(input pclk,
  initial begin
    $display("i2c Master Monitor BFM");
  end
+//--------------------------------------------------------------------------------------------
+// Task: wait for the system reset 
+//--------------------------------------------------------------------------------------------
+
+  task wait_for_reset();
+    @(negedge areset);
+    `uvm_info("I2C_MASTER_MONITOR_BFM", $sformatf("System reset detected"), UVM_HIGH);
+    @(posedge areset);
+    `uvm_info("I2C_MASTER_MONITOR_BFM", $sformatf("System reset deactivated"), UVM_HIGH);
+  endtask: wait_for_reset
 
 endinterface : i2c_master_monitor_bfm
 
