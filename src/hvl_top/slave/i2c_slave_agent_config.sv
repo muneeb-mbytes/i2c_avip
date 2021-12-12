@@ -12,6 +12,8 @@ class i2c_slave_agent_config extends uvm_object;
   // Used for creating the agent in either passive or active mode
   uvm_active_passive_enum is_active=UVM_ACTIVE;
   
+  // variable: set Slave ID 
+  int slave_id;
   // Variable: shift_dir
   // Shifts the data, LSB first or MSB first
   shift_direction_e shift_dir;
@@ -51,7 +53,7 @@ function void i2c_slave_agent_config::do_print(uvm_printer printer);
 
 
   printer.print_string ("is_active",is_active.name());
-  //printer.print_field ("no_of_slaves",no_of_slaves,$bits(no_of_slaves), UVM_DEC);
+  printer.print_field ("slave_id",slave_id,$bits(slave_id), UVM_DEC);
   printer.print_string ("shift_dir",shift_dir.name());
   //printer.print_string ("read_write",read_write.name());
   //printer.print_string ("slave_address_width",slave_address_width.name());
