@@ -15,10 +15,7 @@ interface i2c_master_driver_bfm(input pclk,
                                 input sda_i,
                                 output reg sda_o,
                                 output reg sda_oen
-                                //Illegal inout port connection
-                                //inout scl,
-                                //inout sda);
-                              );
+                               );
   i2c_fsm_state_e state;
   //-------------------------------------------------------
   // Importing UVM Package 
