@@ -1,0 +1,9 @@
+# vsim -vopt work.hvl_top work.hdl_top -voptargs="+acc=npr" -assertdebug "+UVM_TESTNAME=i2c" "+UVM_VERBOSITY=UVM_HIGH" "+define+STANDARD_I2C" -l i2c/i2c.log -sva -coverage -c -do "log -r /*; add wave -r /*; coverage save -onexit -assert -directive -cvg -codeAll i2c/i2c_coverage.ucdb; run -all; exit" -wlf i2c/waveform.wlf 
+# Start time: 05:44:36 on Dec 11,2021
+# ** Note: (vsim-3812) Design is being optimized...
+# Break key hit
+# ** Fatal: (SIGINT) Compile interrupted.
+# ** Error: verilog_src/questa_uvm_pkg-1.2/src/questa_uvm_pkg.sv(1): Vopt Compiler exiting
+# Error loading design
+# End time: 05:44:37 on Dec 11,2021, Elapsed time: 0:00:01
+# Errors: 2, Warnings: 0

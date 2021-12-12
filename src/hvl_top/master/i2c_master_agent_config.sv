@@ -35,13 +35,14 @@ class i2c_master_agent_config extends uvm_object;
   // Variable: has_coverage
   // Used for enabling the master agent coverage
   bit has_coverage;
+  
   // Variable: primary_prescalar
   // Used for setting the primary prescalar value for baudrate_divisor
-  protected bit[2:0] primary_prescalar;
+  rand protected bit[2:0] primary_prescalar;
 
   // Variable: secondary_prescalar
   // Used for setting the secondary prescalar value for baudrate_divisor
-  protected bit[2:0] secondary_prescalar;
+  rand protected bit[2:0] secondary_prescalar;
 
   // Variable: baudrate_divisor_divisor
   // Defines the date rate 
@@ -50,7 +51,7 @@ class i2c_master_agent_config extends uvm_object;
   // baudrate = busclock / baudrate_divisor_divisor;
   //
   // Default value is 2
-  int baudrate_divisor = 2;
+  protected int baudrate_divisor;
 
   // MSHA: //-------------------------------------------------------
   // MSHA: // Constraints 
@@ -91,6 +92,8 @@ class i2c_master_agent_config extends uvm_object;
   extern function new(string name = "i2c_master_agent_config");
   extern function void do_print(uvm_printer printer);
   extern function void set_baudrate_divisor(int primary_prescalar, int secondary_prescalar);
+  extern function int get_baudrate_divisor();
+  extern function void post_randomize();
 endclass : i2c_master_agent_config
 
 //--------------------------------------------------------------------------------------------
@@ -118,7 +121,7 @@ function void i2c_master_agent_config::do_print(uvm_printer printer);
   printer.print_string ("shift_dir",shift_dir.name());
   printer.print_field ("primary_prescalar",primary_prescalar, 3, UVM_DEC);
   printer.print_field ("secondary_prescalar",secondary_prescalar, 3, UVM_DEC);
-  printer.print_field ("baudrate_divisor",baudrate_divisor, 32, UVM_DEC);
+  printer.print_field ("baudrate_divisor",baudrate_divisor, $bits(baudrate_divisor), UVM_DEC);
   printer.print_field ("has_coverage",has_coverage, 1, UVM_DEC);
   
 endfunction : do_print
@@ -130,7 +133,7 @@ endfunction : do_print
   //--------------------------------------------------------------------------------------------
   // Function: set_baudrate_divisor
   // Sets the baudrate divisor value from primary_prescalar and secondary_prescalar
-  
+  //
   // baudrate_divisor_divisor = (secondary_prescalar+1) * (2 ** (primary_prescalar+1))
   // baudrate = busclock / baudrate_divisor_divisor;
   //
@@ -145,4 +148,24 @@ endfunction : do_print
     baudrate_divisor = (this.secondary_prescalar + 1) * (2 ** (this.primary_prescalar + 1));
  
   endfunction : set_baudrate_divisor
+
+  //--------------------------------------------------------------------------------------------
+  // Function: post_randomize
+  //
+  // Parameters:
+  //  primary_prescalar - Primary prescalar value for baudrate calculation
+  //  secondary_prescalar - Secondary prescalar value for baudrate calculation
+  //--------------------------------------------------------------------------------------------
+  function void i2c_master_agent_config::post_randomize();
+    set_baudrate_divisor(this.primary_prescalar,this.secondary_prescalar);
+  endfunction: post_randomize
+  
+  //--------------------------------------------------------------------------------------------
+  // Function: get_baudrate_divisor
+  // Return the baudrate_divisor
+  //--------------------------------------------------------------------------------------------
+  function int i2c_master_agent_config::get_baudrate_divisor();
+    return(this.baudrate_divisor);
+  endfunction: get_baudrate_divisor
+
 `endif

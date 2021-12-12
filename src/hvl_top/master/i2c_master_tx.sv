@@ -21,8 +21,9 @@ class i2c_master_tx extends uvm_sequence_item;
   rand bit [7:0] raddr; 
   
   // Receiving data fields
-  bit slave_add_ack;
-  bit reg_add_ack;
+  bit slave_add_ack = 1;
+  bit reg_add_ack = 1;
+  // TODO(mshariff): 
   bit wr_data_ack[$];
 
   i2c_master_agent_config i2c_master_agent_cfg_h;
@@ -44,7 +45,7 @@ class i2c_master_tx extends uvm_sequence_item;
   // Write Data
   constraint write_data_c {soft wr_data.size() %4 == 0;
                                 wr_data.size() != 0; 
-                                wr_data.size() == 4;
+                           soft wr_data.size() == 4;
                                 wr_data.size() <= MAXIMUM_BYTES; }
   
   
@@ -150,6 +151,10 @@ function void i2c_master_tx::do_print(uvm_printer printer);
 
   printer.print_field($sformatf("slave_add_ack"),this.slave_add_ack,1,UVM_BIN);
   printer.print_field($sformatf("reg_add_ack"),this.reg_add_ack,1,UVM_BIN);
+  foreach(wr_data_ack[i]) begin
+    printer.print_field($sformatf("wr_data_ack[%0d]",i),this.wr_data_ack[i],1,UVM_HEX);
+  end
+
 endfunction : do_print
 
 //--------------------------------------------------------------------------------------------
