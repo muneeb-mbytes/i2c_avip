@@ -105,15 +105,19 @@ task i2c_master_monitor_proxy::run_phase(uvm_phase phase);
 
   i2c_master_mon_bfm_h.wait_for_reset();
 
-  //i2c_master_mon_bfm_h.wait_for_ideal_state();
+  i2c_master_mon_bfm_h.wait_for_idle_state();
 
-  // phase.raise_objection(this, "i2c_master_monitor_proxy");
+//  forever begin
+//    i2c_transfer_bits_s struct_packet;
+//    i2c_transfer_cfg_s struct_cfg;
+//
+//    i2c_master_cfg_converter::from_class(i2c_master_agent_cfg_h, struct_cfg);
+//
+//    i2c_master_mon_bfm_h.sample_data(struct_packet,struct_cfg);
+//
+//    i2c_master_seq_item_converter::to_class(struct_packet,req);
+//    `uvm_info(get_type_name(), $sformatf("Received packet from BFM : \n%s",i2c_master_packet.sprint()), UVM_HIGH)
 
-
-  // Work here
-  // ...
-
-  //phase.drop_objection(this);
 
 endtask : run_phase
 

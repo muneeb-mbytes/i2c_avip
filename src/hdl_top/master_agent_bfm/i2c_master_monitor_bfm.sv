@@ -49,6 +49,20 @@ interface i2c_master_monitor_bfm(input pclk,
     `uvm_info("I2C_MASTER_MONITOR_BFM", $sformatf("System reset deactivated"), UVM_HIGH);
   endtask: wait_for_reset
 
+  //-------------------------------------------------------
+  // Task: wait_for_idle_state
+  // Waits for I2C bus to be in IDLe state (SCL=1 and SDA=1)
+  //-------------------------------------------------------
+  task wait_for_idle_state();
+    @(posedge pclk);
+
+    while(scl_i!=1 && sda_i!=1) begin
+      @(posedge pclk);
+    end
+      
+    `uvm_info("I2C_MASTER_MONITOR_BFM", $sformatf("I2C bus is free state detected"), UVM_NONE);
+  endtask: wait_for_idle_state
+
 endinterface : i2c_master_monitor_bfm
 
 `endif
