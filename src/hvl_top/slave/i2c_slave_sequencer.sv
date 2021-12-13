@@ -8,6 +8,8 @@
 class i2c_slave_sequencer extends uvm_sequencer#(i2c_slave_tx);
   `uvm_component_utils(i2c_slave_sequencer)
 
+  i2c_slave_agent_config i2c_slave_agent_cfg_h;
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------

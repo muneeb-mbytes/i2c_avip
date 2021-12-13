@@ -22,9 +22,9 @@ module i2c_slave_agent_bfm(i2c_if intf);
                                             .scl_i(intf.scl_i),
                                             .scl_o(intf.scl_o),
                                             .scl_oen(intf.scl_oen),
-                                            .sda_i(sda_i),
-                                            .sda_o(sda_o),
-                                            .sda_oen(sda_oen)//.scl(intf.scl),
+                                            .sda_i(intf.sda_i),
+                                            .sda_o(intf.sda_o),
+                                            .sda_oen(intf.sda_oen)//.scl(intf.scl),
                                             //.sda(intf.sda)
 );
 
@@ -36,9 +36,9 @@ module i2c_slave_agent_bfm(i2c_if intf);
                                             .scl_i(intf.scl_i),
                                             .scl_o(intf.scl_o),
                                             .scl_oen(intf.scl_oen),
-                                            .sda_i(sda_i),
-                                            .sda_o(sda_o),
-                                            .sda_oen(sda_oen)
+                                            .sda_i(intf.sda_i),
+                                            .sda_o(intf.sda_o),
+                                            .sda_oen(intf.sda_oen)
                                           );
  //-------------------------------------------------------
  // Setting the virtual handle of BMFs into config_db

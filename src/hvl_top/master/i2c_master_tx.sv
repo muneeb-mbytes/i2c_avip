@@ -13,7 +13,9 @@ class i2c_master_tx extends uvm_sequence_item;
   rand bit [SLAVE_ADDRESS_WIDTH-1:0]slave_address;
   rand bit [REGISTER_ADDRESS_WIDTH-1:0]register_address;
   rand bit [DATA_WIDTH-1:0]wr_data[];
-  rand bit [DATA_WIDTH-1:0]rd_data[$];
+
+  bit [DATA_WIDTH-1:0]rd_data[$];
+  rand bit [MAXIMUM_BYTES-1:0] rd_data_ack;
 
   bit ack;
   
@@ -48,6 +50,7 @@ class i2c_master_tx extends uvm_sequence_item;
                            soft wr_data.size() == 4;
                                 wr_data.size() <= MAXIMUM_BYTES; }
   
+  constraint rd_data_ack_c {soft $countones(rd_data_ack) == 0;}
   
   
   //constraint slave_addr_0{slave_address==i2c_master_agent_cfg_h.slave_address_array[0];}

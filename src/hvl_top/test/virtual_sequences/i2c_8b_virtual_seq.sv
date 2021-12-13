@@ -35,25 +35,38 @@ endfunction : new
 //-------------------------------------------------------
 
 task i2c_8b_virtual_seq::body();
- super.body(); //Sets up the sub-sequencer pointer
+  super.body(); //Sets up the sub-sequencer pointer
 
-   //crearions master and slave sequence handles here  
-   i2c_8b_master_seq_h=i2c_8b_master_seq::type_id::create("i2c_8b_master_seq_h");
-   i2c_8b_slave_seq_h=i2c_8b_slave_seq::type_id::create("i2c_8b_slave_seq_h");
+  //crearions master and slave sequence handles here  
+  i2c_8b_master_seq_h=i2c_8b_master_seq::type_id::create("i2c_8b_master_seq_h");
 
-      repeat(1) begin : MASTER_SEQ_START
-        i2c_8b_master_seq_h.start(p_sequencer.i2c_master_seqr_h);
-      end
-   
-      // MSHA: //fork 
+  //-------------------------------------------------------
+  // Starting slave sequences in parallel and
+  // each slave sequence must be running forever and respond to 
+  // master's request
+  //-------------------------------------------------------
+  for(int i=0; i<NO_OF_SLAVES ; i++) begin : SLAVES_SEQ_START
+     automatic int id=i;
+     fork
+       begin
+         forever begin
+            i2c_8b_slave_seq_h=i2c_8b_slave_seq::type_id::create($sformatf("i2c_8b_slave_seq_h[%0d]",id));
+            i2c_8b_slave_seq_h.start(p_sequencer.i2c_slave_seqr_h[id]);
+          end
+       end
+     join_none
+  end
 
-      // MSHA: repeat(5) begin : SLAVE_SEQ_START
-      // MSHA:   i2c_8b_slave_seq_h.start(p_sequencer.i2c_slave_seqr_h);
-      // MSHA: end
+  //-------------------------------------------------------
+  // Starting the master sequences
+  //-------------------------------------------------------
+  repeat(1) begin : MASTER_WR_SEQ_START
+    i2c_8b_master_seq_h.start(p_sequencer.i2c_master_seqr_h[0]);
+  end
 
-    //join_none
-  
-
+  repeat(1) begin : MASTER_RD_SEQ_START
+    i2c_8b_master_seq_h.start(p_sequencer.i2c_master_seqr_h[0]);
+  end
 
 endtask: body
 

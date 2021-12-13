@@ -51,7 +51,7 @@ function void i2c_slave_driver_proxy::build_phase(uvm_phase phase);
   super.build_phase(phase);
 
   if(!uvm_config_db #(virtual i2c_slave_driver_bfm)::get(this,"","i2c_slave_driver_bfm",i2c_slave_drv_bfm_h))begin
-    `uvm_fatal("FATAL_SDP_CANNOT_GET_SLAVE_DRIVER_BFM","cannot get i2c_slave_agent_cfg_h from the uvm_config_db. Have you set it?");
+    `uvm_fatal("FATAL_SDP_CANNOT_GET_SLAVE_DRIVER_BFM","cannot get i2c_slave_driver_bfm from the uvm_config_db. Have you set it?");
   end
 endfunction : build_phase
 
@@ -83,31 +83,44 @@ task i2c_slave_driver_proxy::run_phase(uvm_phase phase);
   // Wait for the IDLE state of i2c interface
   i2c_slave_drv_bfm_h.wait_for_idle_state();
 
-  //wait for the statrt condition
-  i2c_slave_drv_bfm_h.wait_for_start_condition();
-
   // Driving logic
-//  forever begin
-//    i2c_transfer_bits_s struct_packet;
-//    i2c_transfer_cfg_s struct_cfg;
-//    
-//    seq_item_port.get_next_item(req);
-//    `uvm_info(get_type_name(),$sformatf("Received packet from i2c slave sequencer : , \n %s",
-//                                        req.sprint()),UVM_HIGH)
-//
-//    i2c_slave_seq_item_converter::from_class(req, struct_packet); 
-//    i2c_slave_cfg_converter::from_class(i2c_slave_agent_cfg_h, struct_cfg); 
-//
-//    drive_to_bfm(struct_packet, struct_cfg);
-//
-//    i2c_slave_seq_item_converter::to_class(struct_packet, req);
-//    `uvm_info(get_type_name(),$sformatf("Received packet from SLAVE DRIVER BFM : , \n %s",
-//                                        req.sprint()),UVM_HIGH)
-//
-//    seq_item_port.item_done();
+  forever begin
+    i2c_transfer_bits_s struct_packet;
+    i2c_transfer_cfg_s struct_cfg;
+    acknowledge_e ack;
+
+    // Converting the config object to struct
+    i2c_slave_cfg_converter::from_class(i2c_slave_agent_cfg_h, struct_cfg); 
+    `uvm_info("DEBUG_MSHA", $sformatf("CFG :: struct_cfg = %p",struct_cfg), UVM_NONE); 
+
+    //wait for the statrt condition
+    i2c_slave_drv_bfm_h.detect_start();
+
+    // Sample the slave address from I2C bus
+    i2c_slave_drv_bfm_h.sample_slave_address(struct_cfg, ack);
+    `uvm_info("DEBUG_MSHA", $sformatf("Slave %0d :: Received ACK %0s", 
+                                       struct_cfg.slave_address, ack.name()), UVM_NONE); 
+
+    // MSHA: // Proceed further only if the I2C packet is addressed to this slave                                       
+    // MSHA: if(ack == POS_ACK) begin
+
+    // MSHA:   seq_item_port.get_next_item(req);
+    // MSHA:   `uvm_info(get_type_name(),$sformatf("Received packet from i2c slave sequencer : , \n %s",
+    // MSHA:                                       req.sprint()),UVM_HIGH)
+
+    // MSHA:   i2c_slave_seq_item_converter::from_class(req, struct_packet); 
+
+    // MSHA:   drive_to_bfm(struct_packet, struct_cfg);
+
+    // MSHA:   i2c_slave_seq_item_converter::to_class(struct_packet, req);
+    // MSHA:   `uvm_info(get_type_name(),$sformatf("Received packet from SLAVE DRIVER BFM : , \n %s",
+    // MSHA:                                       req.sprint()),UVM_HIGH)
+
+    // MSHA:   seq_item_port.item_done();
+    // MSHA: end
 
 
-//  end
+  end
   
 endtask : run_phase
 

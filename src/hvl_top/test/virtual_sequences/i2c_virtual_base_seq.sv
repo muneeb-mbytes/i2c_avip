@@ -64,8 +64,8 @@ task i2c_virtual_base_seq::body();
                                              
   //connecting master sequencer and slave sequencer present in p_sequencer to
   // local master sequencer and slave sequencer 
-  i2c_master_seqr_h=p_sequencer.i2c_master_seqr_h;
-  i2c_slave_seqr_h=p_sequencer.i2c_slave_seqr_h;
+  // MSHA: i2c_master_seqr_h=p_sequencer.i2c_master_seqr_h;
+  // MSHA: i2c_slave_seqr_h=p_sequencer.i2c_slave_seqr_h;
 
 endtask:body
 

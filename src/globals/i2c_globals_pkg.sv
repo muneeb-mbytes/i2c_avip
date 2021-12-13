@@ -45,6 +45,18 @@ package i2c_globals_pkg;
   // The parameter for disaling tristate buffer
   parameter bit TRISTATE_BUF_OFF = 0;
   
+  // Enum: edge_detect_e
+  //
+  // Used for detecting the edge on the signal
+  //
+  // POSEDGE - posedge on the signal, the transition from 0->1
+  // NEGEDGE - negedge on the signal, the transition from 0->1
+  //
+  typedef enum bit[1:0] {
+    POSEDGE = 2'b01,
+    NEGEDGE = 2'b10
+  } edge_detect_e;
+
   // Enum: shift_direction_e
   // 
   // Specifies the shift direction
@@ -57,7 +69,17 @@ package i2c_globals_pkg;
     LSB_FIRST = 1'b0
   } shift_direction_e;
   
-  
+  // Enum: acknowledge_e
+  //
+  // Specifies the acknowledgement type
+  //
+  // POS_ACK - positive acknowledgement 
+  // NEG_ACK - negative acknowledgement
+  typedef enum bit {
+    POS_ACK = 1'b0,
+    NEG_ACK = 1'b1
+  } acknowledge_e;
+
   // Enum: read_write_e
   // 
   // Specifies the read or write request
@@ -98,8 +120,8 @@ package i2c_globals_pkg;
   //
   typedef struct {
     bit msb_first;
-    bit read_write;
     int baudrate_divisor;
+    bit[SLAVE_ADDRESS_WIDTH-1:0] slave_address;
   } i2c_transfer_cfg_s;
   
   // TODO(mshariff): Comments 
