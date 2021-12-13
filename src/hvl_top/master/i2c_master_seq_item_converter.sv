@@ -9,9 +9,6 @@
 
 class i2c_master_seq_item_converter extends uvm_object;
   
-  //static int c2t;
-  //static int t2c;
-  //static int baudrate_divisor;
   
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
