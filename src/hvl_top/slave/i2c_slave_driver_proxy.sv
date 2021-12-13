@@ -49,11 +49,10 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void i2c_slave_driver_proxy::build_phase(uvm_phase phase);
   super.build_phase(phase);
-//  if(!uvm_config_db #(virtual
-//    i2c_slave_driver_bfm)::get(this,"","i2c_slave_driver_bfm",i2c_slave_drv_bfm_h))begin
-//    `uvm_fatal("FATAL_SDP_CANNOT_GET_SLAVE_DRIVER_BFM","cannot get i2c_slave_drv_bfm_h from the
-//    uvm_config_db")
-//  end
+
+  if(!uvm_config_db #(virtual i2c_slave_driver_bfm)::get(this,"","i2c_slave_driver_bfm",i2c_slave_drv_bfm_h))begin
+    `uvm_fatal("FATAL_SDP_CANNOT_GET_SLAVE_DRIVER_BFM","cannot get i2c_slave_agent_cfg_h from the uvm_config_db. Have you set it?");
+  end
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------
