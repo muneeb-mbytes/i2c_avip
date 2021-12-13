@@ -31,38 +31,38 @@ interface i2c_slave_driver_bfm(input pclk,
   
   
   initial begin
-    $display("Slave Driver BFM");
+    $display("I2C Slave Driver BFM");
   end
   
   //-------------------------------------------------------
   // Task: wait_for_system_reset
   // Waiting for system reset to be active
   //-------------------------------------------------------
-  // task wait_for_system_reset();
-  //   @(negedge areset);
-  //   `uvm_info("SLAVE_DRIVER_BFM", $sformatf("System reset detected"), UVM_HIGH);
-  //   @(posedge areset);
-  //   `uvm_info("SLAVE_DRIVER_BFM", $sformatf("System reset deactivated"), UVM_HIGH);
-  // endtask: wait_for_system_reset
+   task wait_for_system_reset();
+     @(negedge areset);
+     `uvm_info("I2C_SLAVE_DRIVER_BFM", $sformatf("System reset detected"), UVM_HIGH);
+     @(posedge areset);
+     `uvm_info("I2C_SLAVE_DRIVER_BFM", $sformatf("System reset deactivated"), UVM_HIGH);
+   endtask: wait_for_system_reset
   //-------------------------------------------------------
   // Task: wait_for_idle_state
   // Waits for I2C bus to be in IDLe state (SCL=1 and SDA=1)
   //-------------------------------------------------------
-  //task wait_for_idle_state();
-  //  @(posedge pclk);
-  //
-  //  while(scl_i!=1 && sda_i!=1) begin
-  //    @(posedge pclk);
-  //  end
-  //    
-  //  `uvm_info(name, $sformatf("I2C bus is free state detected"), UVM_HIGH);
-  //endtask: wait_for_idle_state
+  task wait_for_idle_state();
+    @(posedge pclk);
+  
+    while(scl_i!=1 && sda_i!=1) begin
+      @(posedge pclk);
+    end
+      
+    `uvm_info("I2C_SLAVE_DRIVER_BFM", $sformatf("I2C bus is free state detected"), UVM_HIGH);
+  endtask: wait_for_idle_state
   
   
   
-  //task wait_for_start_condition();
-  //
-  //endtask: wait_for_start_condition
+  task wait_for_start_condition();
+  
+  endtask: wait_for_start_condition
   
 `endif
 endinterface : i2c_slave_driver_bfm

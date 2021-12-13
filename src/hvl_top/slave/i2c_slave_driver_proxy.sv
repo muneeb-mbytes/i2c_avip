@@ -5,7 +5,7 @@
 // Class: i2c_slave_driver_proxy
 // <Description_here>
 //--------------------------------------------------------------------------------------------
-class i2c_slave_driver_proxy extends uvm_component;
+class i2c_slave_driver_proxy extends uvm_driver#(i2c_slave_tx);
   `uvm_component_utils(i2c_slave_driver_proxy)
   
   // Variable: i2c_slave_drv_bfm_h;
@@ -22,8 +22,8 @@ class i2c_slave_driver_proxy extends uvm_component;
   extern virtual function void build_phase(uvm_phase phase);
   extern virtual function void end_of_elaboration_phase(uvm_phase phase);
   extern virtual task run_phase(uvm_phase phase);
-  extern virtual task drive_to_bfm(inout i2c_transfer_bits_s packet, 
-                                   input i2c_transfer_cfg_s struct_cfg);
+//  extern virtual task drive_to_bfm(inout i2c_transfer_bits_s packet, 
+ //                                  input i2c_transfer_cfg_s struct_cfg);
   //extern virtual function void reset_detected(); 
 
 endclass : i2c_slave_driver_proxy
@@ -49,8 +49,11 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void i2c_slave_driver_proxy::build_phase(uvm_phase phase);
   super.build_phase(phase);
-  if(uvm_config_db #(i2c_slave_agent_config)::get(this,"","i2c_slave_agent_config",i2c_slave_agent_cfg_h))
-    `uvm_fatal("FATAL_SDP_CANNOT_GET_SLAVE_DRIVER_BFM","cannot get i2c_slave_agent_cfg_h from the uvm_config_db. Have you set it?")
+//  if(!uvm_config_db #(virtual
+//    i2c_slave_driver_bfm)::get(this,"","i2c_slave_driver_bfm",i2c_slave_drv_bfm_h))begin
+//    `uvm_fatal("FATAL_SDP_CANNOT_GET_SLAVE_DRIVER_BFM","cannot get i2c_slave_drv_bfm_h from the
+//    uvm_config_db")
+//  end
 endfunction : build_phase
 
 //--------------------------------------------------------------------------------------------
@@ -75,16 +78,16 @@ task i2c_slave_driver_proxy::run_phase(uvm_phase phase);
 
   super.run_phase(phase);
   
-//  // Wait for system reset
-//  i2c_slave_drv_bfm_h.wait_for_system_reset();
-//
-//  // Wait for the IDLE state of i2c interface
-//  i2c_slave_drv_bfm_h.wait_for_idle_state();
-//
-//  //wait for the statrt condition
-//  i2c_slave_drv_bfm_h.wait_for_start_condition();
-//
-//  // Driving logic
+  // Wait for system reset
+  i2c_slave_drv_bfm_h.wait_for_system_reset();
+
+  // Wait for the IDLE state of i2c interface
+  i2c_slave_drv_bfm_h.wait_for_idle_state();
+
+  //wait for the statrt condition
+  i2c_slave_drv_bfm_h.wait_for_start_condition();
+
+  // Driving logic
 //  forever begin
 //    i2c_transfer_bits_s struct_packet;
 //    i2c_transfer_cfg_s struct_cfg;
@@ -98,21 +101,21 @@ task i2c_slave_driver_proxy::run_phase(uvm_phase phase);
 //
 //    drive_to_bfm(struct_packet, struct_cfg);
 //
-//    slave_i2c_seq_item_converter::to_class(struct_packet, req);
+//    i2c_slave_seq_item_converter::to_class(struct_packet, req);
 //    `uvm_info(get_type_name(),$sformatf("Received packet from SLAVE DRIVER BFM : , \n %s",
 //                                        req.sprint()),UVM_HIGH)
 //
 //    seq_item_port.item_done();
-//
-//
+
+
 //  end
-//  
+  
 endtask : run_phase
 
-task i2c_slave_driver_proxy::drive_to_bfm(inout i2c_transfer_bits_s packet, 
-                                          input i2c_transfer_cfg_s struct_cfg);
-
-endtask: drive_to_bfm
+//task i2c_slave_driver_proxy::drive_to_bfm(inout i2c_transfer_bits_s packet, 
+//                                          input i2c_transfer_cfg_s struct_cfg);
+//
+//endtask: drive_to_bfm
 
 `endif
 
