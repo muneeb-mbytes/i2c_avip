@@ -16,11 +16,11 @@ class i2c_virtual_sequencer extends uvm_sequencer #(uvm_sequence_item);
 
   // Variable: master_seqr_h
   // Declaring master sequencer handle
-  i2c_master_sequencer i2c_master_seqr_h;
+  i2c_master_sequencer i2c_master_seqr_h[];
 
   // Variable: slave_seqr_h
   // Declaring slave sequencer handle
-  i2c_slave_sequencer  i2c_slave_seqr_h;
+  i2c_slave_sequencer  i2c_slave_seqr_h[];
 
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
@@ -56,9 +56,9 @@ function void i2c_virtual_sequencer::build_phase(uvm_phase phase);
   `uvm_error("VSEQR","COULDNT GET")
   
   //slave_seqr_h = new[env_cfg_h.no_of_sagent];
-  i2c_master_seqr_h = i2c_master_sequencer::type_id::create("i2c_master_seqr_h",this);
-  i2c_slave_seqr_h = i2c_slave_sequencer::type_id::create("i2c_slave_seqr_h",this);
-  
+  i2c_master_seqr_h = new[NO_OF_MASTERS];
+  i2c_slave_seqr_h  = new[NO_OF_SLAVES];
+
 endfunction : build_phase
 
 

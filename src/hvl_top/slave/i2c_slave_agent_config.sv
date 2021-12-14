@@ -14,6 +14,7 @@ class i2c_slave_agent_config extends uvm_object;
   
   // variable: set Slave ID 
   int slave_id;
+
   // Variable: shift_dir
   // Shifts the data, LSB first or MSB first
   shift_direction_e shift_dir;

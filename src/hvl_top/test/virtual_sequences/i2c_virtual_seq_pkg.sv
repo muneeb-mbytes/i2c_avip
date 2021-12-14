@@ -17,12 +17,12 @@ package i2c_virtual_seq_pkg;
   //-------------------------------------------------------
   // Importing the required packages
   //-------------------------------------------------------
+  import i2c_globals_pkg::*;
   import i2c_master_pkg::*;
   import i2c_slave_pkg::*;
   import i2c_master_seq_pkg::*;
   import i2c_slave_seq_pkg::*;
   import i2c_env_pkg::*;
-
  //including base_test for testing
  `include "i2c_virtual_base_seq.sv"
 

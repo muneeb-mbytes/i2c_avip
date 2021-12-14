@@ -47,7 +47,7 @@ function void i2c_master_cfg_converter::from_class(input i2c_master_agent_config
  output_conv.msb_first = shift_direction_e'(input_conv_h.shift_dir);
  output_conv.baudrate_divisor = input_conv_h.get_baudrate_divisor();
 
- `uvm_info("conv_bd",$sformatf("bd = \n %p",output_conv.baudrate_divisor),UVM_LOW)
+ `uvm_info("conv_bd",$sformatf("bd = %p",output_conv.baudrate_divisor),UVM_LOW)
 
 endfunction: from_class 
 

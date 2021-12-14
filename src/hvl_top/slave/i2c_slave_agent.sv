@@ -20,7 +20,7 @@ class i2c_slave_agent extends uvm_component;
   //-------------------------------------------------------
   extern function new(string name = "i2c_slave_agent",uvm_component parent = null);
   extern virtual function void build_phase(uvm_phase phase);
-  //extern virtual function void connect_phase(uvm_phase phase);
+  extern virtual function void connect_phase(uvm_phase phase);
 
 endclass : i2c_slave_agent
 
@@ -70,15 +70,18 @@ endfunction : build_phase
 // Parameters:
 //  phase - uvm phase
 //--------------------------------------------------------------------------------------------
-/*
 function void i2c_slave_agent::connect_phase(uvm_phase phase);
 
-  if(s_cfg.is_active==UVM_ACTIVE)
+  if(i2c_slave_agent_cfg_h.is_active==UVM_ACTIVE)
   begin
+    i2c_slave_drv_proxy_h.i2c_slave_agent_cfg_h=i2c_slave_agent_cfg_h;
+    i2c_slave_seqr_h.i2c_slave_agent_cfg_h=i2c_slave_agent_cfg_h;
+
     i2c_slave_drv_proxy_h.seq_item_port.connect(i2c_slave_seqr_h.seq_item_export);
   end
+
+  // TODO(mshariff): Add the required connections for coverage
 endfunction : connect_phase
-*/
 
 `endif
 

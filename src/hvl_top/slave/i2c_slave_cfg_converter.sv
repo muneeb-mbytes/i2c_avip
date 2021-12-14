@@ -41,15 +41,8 @@ endfunction : new
 function void i2c_slave_cfg_converter::from_class(input i2c_slave_agent_config input_conv_h,
                                                     output i2c_transfer_cfg_s output_conv);
 
-
-  bit slave_address_width;
-  
-  //slave address is configurable so for it we do casting 
- // slave_address_width=slave_address_width_e'(input_conv_h.slave_address_width);
-  
- output_conv.msb_first = shift_direction_e'(input_conv_h.shift_dir);
-  
-
+  output_conv.msb_first = input_conv_h.shift_dir;
+  output_conv.slave_address = input_conv_h.slave_address; 
 
 endfunction: from_class 
 

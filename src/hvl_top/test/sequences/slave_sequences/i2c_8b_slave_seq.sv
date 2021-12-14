@@ -33,14 +33,13 @@ endfunction : new
 //-----------------------------------------------------------------------------
 task i2c_8b_slave_seq::body(); 
   req=i2c_slave_tx::type_id::create("req");
-  repeat(5) begin
-    start_item(req);
-    if(!req.randomize()) begin 
-      `uvm_fatal(get_type_name(),"Randomization FAILED")
-    end
-      req.print();
-      finish_item(req);
-    end
+
+  start_item(req);
+  if(!req.randomize()) begin 
+    `uvm_fatal(get_type_name(),"Randomization FAILED")
+  end
+  req.print();
+  finish_item(req);
 
 endtask : body
 

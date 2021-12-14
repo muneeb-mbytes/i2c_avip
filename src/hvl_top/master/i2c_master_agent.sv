@@ -73,9 +73,9 @@ endfunction : build_phase
 function void i2c_master_agent::connect_phase(uvm_phase phase);
   super.connect_phase(phase);
   if(i2c_master_agent_cfg_h.is_active==UVM_ACTIVE)begin
-    
       i2c_master_drv_proxy_h.i2c_master_agent_cfg_h=i2c_master_agent_cfg_h;
       i2c_master_seqr_h.i2c_master_agent_cfg_h=i2c_master_agent_cfg_h;
+
       i2c_master_drv_proxy_h.seq_item_port.connect(i2c_master_seqr_h.seq_item_export);                        
    end                                                                                               
                                                                                                        
