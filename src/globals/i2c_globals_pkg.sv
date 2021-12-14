@@ -104,6 +104,7 @@ package i2c_globals_pkg;
   
   // TODO(mshariff): Comments 
   typedef enum int{
+    RESET,
     IDLE,
     START, 
     SLAVE_ADDR_0 = 10,

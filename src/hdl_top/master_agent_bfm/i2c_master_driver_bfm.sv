@@ -45,6 +45,7 @@ interface i2c_master_driver_bfm(input pclk,
   // Waiting for system reset to be active
   //-------------------------------------------------------
   task wait_for_reset();
+    state=RESET;
     @(negedge areset);
     `uvm_info(name, $sformatf("System reset detected"), UVM_HIGH);
     @(posedge areset);
@@ -57,8 +58,12 @@ interface i2c_master_driver_bfm(input pclk,
   // TODO(mshariff): Put more comments for logic pf SCL and SDA
   //-------------------------------------------------------
   task drive_idle_state();
-    @(posedge pclk);
+     i2c_transfer_cfg_s cfg_pkt;
+    //@(posedge pclk);
 
+   //repeat(cfg_pkt.baudrate_divisor)begin
+   //  @(posedge pclk);
+   //end
     scl_oen <= TRISTATE_BUF_OFF;
     scl_o   <= 1;
 
@@ -88,12 +93,14 @@ interface i2c_master_driver_bfm(input pclk,
  //-------------------------------------------------------
  task drive_data(inout i2c_transfer_bits_s data_packet, 
                  input i2c_transfer_cfg_s cfg_pkt); ;
-
+ @(posedge pclk); 
   // Driving the start condition
   // put it into a task
    sda_tristate_buf_on();
    state = START;
-
+   repeat(cfg_pkt.baudrate_divisor-1)begin
+     @(posedge pclk);
+   end
   //-------------------------------------------------------
   // 1) Logic for slave_address + Rd/Wr + sampling ACK
   //-------------------------------------------------------
@@ -113,6 +120,12 @@ interface i2c_master_driver_bfm(input pclk,
             data_packet.slave_address, bit_no, data_packet.slave_address[bit_no]), UVM_NONE)
     
     scl_tristate_buf_off();
+   repeat(cfg_pkt.baudrate_divisor-1)begin
+     @(posedge pclk);
+   end
+   repeat(cfg_pkt.baudrate_divisor-1)begin
+     @(posedge pclk);
+   end
   end
 
   // b) Driving the Read/write bit
