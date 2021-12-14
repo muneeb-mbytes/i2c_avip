@@ -91,7 +91,6 @@ interface i2c_master_driver_bfm(input pclk,
                  input i2c_transfer_cfg_s cfg_pkt); ;
 
 
-    @(posedge pclk);
   // Driving the start condition
   // put it into a task
    drive_start(cfg_pkt); 
@@ -303,14 +302,12 @@ end
 
   task drive_start(i2c_transfer_cfg_s cfg_pkt);
     
-    @(posedge pclk);
-   repeat(cfg_pkt.baudrate_divisor-1)begin
+   repeat(cfg_pkt.baudrate_divisor)begin
     @(posedge pclk);
   end
     scl_oen <= TRISTATE_BUF_OFF;
     scl_o   <= 1;
 
-    @(posedge pclk);
    repeat(cfg_pkt.baudrate_divisor)begin
     @(posedge pclk);
   end
@@ -321,8 +318,7 @@ end
   // task for driving the sda_oen as high and sda as low
    task sda_tristate_buf_on(i2c_transfer_cfg_s cfg_pkt);
 
-    @(posedge pclk);
-   repeat(cfg_pkt.baudrate_divisor-1)begin
+   repeat(cfg_pkt.baudrate_divisor)begin
     @(posedge pclk);
   end
     sda_oen <= TRISTATE_BUF_ON;
@@ -333,8 +329,7 @@ end
   // task for driving the scl_oen as high and scl as low
   task scl_tristate_buf_on(i2c_transfer_cfg_s cfg_pkt);
 
-    @(posedge pclk);
-   repeat(cfg_pkt.baudrate_divisor-1)begin
+   repeat(cfg_pkt.baudrate_divisor)begin
     @(posedge pclk);
   end
     scl_oen <= TRISTATE_BUF_ON;
@@ -345,9 +340,6 @@ end
   task scl_tristate_buf_off(i2c_transfer_cfg_s cfg_pkt);
 
     @(posedge pclk);
-   repeat(cfg_pkt.baudrate_divisor-1)begin
-    @(posedge pclk);
-  end
     scl_oen <= TRISTATE_BUF_OFF;
     scl_o   <= 1;
   endtask
