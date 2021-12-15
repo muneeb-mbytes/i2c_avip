@@ -10,6 +10,7 @@ class i2c_slave_monitor_proxy extends uvm_component;
 
   i2c_slave_agent_config i2c_slave_agent_cfg_h;
 
+  virtual i2c_slave_monitor_bfm i2c_slave_monitor_bfm_h;
 
   uvm_analysis_port #(i2c_slave_tx)slave_analysis_port;
   //-------------------------------------------------------
@@ -49,7 +50,8 @@ function void i2c_slave_monitor_proxy::build_phase(uvm_phase phase);
   // TODO(mshariff): get the BFM here
   //
   // MSHA: if(!uvm_config_db #(i2c_slave_agent_config)::get(this,"","i2c_slave_agent_config",i2c_slave_agent_cfg_h))begin
-  // MSHA:   `uvm_fatal("CONFIG","cannot get() the m_cfg from uvm_config_db. Have you set it?")
+  // MSHA:   `uvm_fatal("FATAL_SMP_MON_BFM",$sformatf("cannot get() the m_cfg from uvm_config_db.
+  // Have you set it?"))
   // MSHA: end
 
     slave_analysis_port=new("slave_analysis_port",this);

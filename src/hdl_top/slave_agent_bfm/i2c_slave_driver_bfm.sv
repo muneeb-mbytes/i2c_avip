@@ -68,8 +68,6 @@ interface i2c_slave_driver_bfm #(parameter string NAME = "I2C_SLAVE_DRIVER_BFM")
     `uvm_info(name, $sformatf("I2C bus is free state detected"), UVM_HIGH);
   endtask: wait_for_idle_state
   
-  Task: detect_start
-  Detects the START condition over I2C bus
   //-------------------------------------------------------
   // Task: detect_start
   // Detects the START condition over I2C bus
