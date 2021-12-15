@@ -6,13 +6,26 @@
 //Description : Instaniate driver and monitor
 //
 //-------------------------------------------------------
-module i2c_master_agent_bfm(i2c_if intf);
+module i2c_master_agent_bfm#(parameter int MASTER_ID=0)
+                              (input pclk, 
+                               input areset,
+                               i2c_if intf);
+//module i2c_master_agent_bfm #(parameter int MASTER_ID=0)
+//                             (input pclk, 
+//                              input areset,
+//                              input scl_i,
+//                              output reg scl_o,
+//                              output reg scl_oen,
+//                              input sda_i,
+//                              output reg sda_o,
+//                              output reg sda_oen);
 
  //-------------------------------------------------------
  // Package : Importing Uvm Pakckage and Test Package
  //-------------------------------------------------------
  import uvm_pkg::*;
  `include "uvm_macros.svh"
+
   //-------------------------------------------------------
   // Package : Importing SPI Global Package 
   //-------------------------------------------------------
@@ -21,8 +34,8 @@ module i2c_master_agent_bfm(i2c_if intf);
  //-------------------------------------------------------
  //master driver bfm instantiation
  //-------------------------------------------------------
- i2c_master_driver_bfm i2c_master_drv_bfm_h(.pclk(intf.pclk), 
-                                            .areset(intf.areset),
+ i2c_master_driver_bfm i2c_master_drv_bfm_h(.pclk(pclk), 
+                                            .areset(areset),
                                             .scl_i(intf.scl_i),
                                             .scl_o(intf.scl_o),
                                             .scl_oen(intf.scl_oen),
@@ -34,8 +47,8 @@ module i2c_master_agent_bfm(i2c_if intf);
  //-------------------------------------------------------
  //master monitor bfm instatiation
  //-------------------------------------------------------
- i2c_master_monitor_bfm i2c_master_mon_bfm_h(.pclk(intf.pclk), 
-                                            .areset(intf.areset),
+ i2c_master_monitor_bfm i2c_master_mon_bfm_h(.pclk(pclk), 
+                                            .areset(areset),
                                             .scl_i(intf.scl_i),
                                             .scl_o(intf.scl_o),
                                             .scl_oen(intf.scl_oen),

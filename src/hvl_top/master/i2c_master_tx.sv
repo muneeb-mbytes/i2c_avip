@@ -23,8 +23,8 @@ class i2c_master_tx extends uvm_sequence_item;
   rand bit [7:0] raddr; 
   
   // Receiving data fields
-  bit slave_add_ack = 1;
-  bit reg_add_ack = 1;
+  bit slave_addr_ack = 1;
+  bit reg_addr_ack = 1;
   // TODO(mshariff): 
   bit wr_data_ack[$];
 
@@ -152,8 +152,8 @@ function void i2c_master_tx::do_print(uvm_printer printer);
     printer.print_field($sformatf("wr_data[%0d]",i),this.wr_data[i],8,UVM_HEX);
   end
 
-  printer.print_field($sformatf("slave_add_ack"),this.slave_add_ack,1,UVM_BIN);
-  printer.print_field($sformatf("reg_add_ack"),this.reg_add_ack,1,UVM_BIN);
+  printer.print_field($sformatf("slave_addr_ack"),this.slave_addr_ack,1,UVM_BIN);
+  printer.print_field($sformatf("reg_addr_ack"),this.reg_addr_ack,1,UVM_BIN);
   foreach(wr_data_ack[i]) begin
     printer.print_field($sformatf("wr_data_ack[%0d]",i),this.wr_data_ack[i],1,UVM_HEX);
   end

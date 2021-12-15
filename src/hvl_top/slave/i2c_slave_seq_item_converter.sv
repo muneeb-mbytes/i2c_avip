@@ -25,6 +25,11 @@ class i2c_slave_seq_item_converter extends uvm_object;
  // //extern function void from_class_msb_first(input i2c_slave_tx input_conv_h, 
  // //                                           output i2c_transfer_bits_s output_conv);
  // extern function void do_print(uvm_printer printer);
+  extern static function void from_class(input i2c_slave_tx input_conv_h,
+                                         output i2c_transfer_bits_s output_conv);
+
+  extern static function void to_class(input i2c_transfer_bits_s input_conv_h,     
+                                       output i2c_slave_tx output_conv);
 
 endclass : i2c_slave_seq_item_converter
 
@@ -37,6 +42,73 @@ endclass : i2c_slave_seq_item_converter
 function i2c_slave_seq_item_converter::new(string name = "i2c_slave_seq_item_converter");
   super.new(name);
 endfunction : new
+
+//--------------------------------------------------------------------------------------------
+// function: from_class
+// converting seq_item transactions into struct data items
+//--------------------------------------------------------------------------------------------
+function void i2c_slave_seq_item_converter::from_class(input i2c_slave_tx input_conv_h,
+                                                        output i2c_transfer_bits_s output_conv);
+  
+  output_conv.reg_addr_ack = input_conv_h.reg_addr_ack;
+  output_conv.wr_data_ack = input_conv_h.wr_data_ack;
+  
+  output_conv.no_of_i2c_bits_transfer = input_conv_h.rd_data.size() * DATA_WIDTH;
+
+  for(int i=0; i<input_conv_h.wr_data.size();i++) begin
+    output_conv.rd_data[i][DATA_WIDTH-1:0] = input_conv_h.rd_data[i];    
+  end
+
+endfunction: from_class 
+
+//--------------------------------------------------------------------------------------------
+// function:to_class
+// converting struct data items into seq_item transactions
+//--------------------------------------------------------------------------------------------
+function void i2c_slave_seq_item_converter::to_class(input i2c_transfer_bits_s input_conv_h,
+                                                      output i2c_slave_tx output_conv);
+  output_conv = new();
+
+  // Defining the size of arrays
+  output_conv.wr_data = new[input_conv_h.no_of_i2c_bits_transfer/DATA_WIDTH];
+
+  // Storing the values in the respective arrays
+  //converting back the slave address 
+  output_conv.slave_address = input_conv_h.slave_address;    
+  `uvm_info("slave_seq_item_conv_class",
+  $sformatf("To class slave_address = \n %p",output_conv.slave_address),UVM_LOW)
+
+  //converting back the register_address 
+  output_conv.register_address = input_conv_h.register_address;
+  `uvm_info("slave_seq_item_conv_class",
+  $sformatf("To class register_address = \n %p",output_conv.register_address),UVM_LOW)
+
+ 
+  //converting back the data
+  for(int i=0; i<input_conv_h.no_of_i2c_bits_transfer/DATA_WIDTH; i++) begin
+  output_conv.wr_data[i] = input_conv_h.wr_data[i][DATA_WIDTH-1:0];
+  `uvm_info("slave_seq_item_conv_class",
+  $sformatf("To class wr_data = \n %p",output_conv.wr_data[i]),UVM_LOW)
+  end
+
+  //converting back the data
+  for(int i=0; i<input_conv_h.no_of_i2c_bits_transfer/DATA_WIDTH; i++) begin
+  output_conv.rd_data[i] = input_conv_h.rd_data[i][DATA_WIDTH-1:0];
+  `uvm_info("slave_seq_item_conv_class",
+  $sformatf("To class rd_data = \n %p",output_conv.rd_data[i]),UVM_LOW)
+  end
+
+  // Acknowledgement bits
+  output_conv.slave_addr_ack = input_conv_h.slave_addr_ack;
+  output_conv.reg_addr_ack = input_conv_h.reg_addr_ack;
+  //for(int i=0; i<input_conv_h.no_of_i2c_bits_transfer/DATA_WIDTH; i++) begin
+  //  output_conv.wr_data_ack.push_back(input_conv_h.wr_data_ack[i]);
+  //end
+  //for(int i=0; i<input_conv_h.no_of_i2c_bits_transfer/DATA_WIDTH; i++) begin
+  //  output_conv.rd_data_ack.push_back(input_conv_h.rd_data_ack[i]);
+  //end
+  
+endfunction: to_class
 
 //--------------------------------------------------------------------------------------------
 // function: from_class

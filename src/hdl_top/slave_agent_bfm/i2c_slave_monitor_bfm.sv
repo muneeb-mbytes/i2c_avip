@@ -13,6 +13,8 @@ interface i2c_slave_monitor_bfm(input pclk,
                                 input sda_i,
                                 input sda_o,
                                 input sda_oen);
+  int slave_id;
+
  //-------------------------------------------------------
  // Package : Importing Uvm Pakckage and Test Package
  //-------------------------------------------------------

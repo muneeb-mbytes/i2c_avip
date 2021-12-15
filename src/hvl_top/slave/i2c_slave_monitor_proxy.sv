@@ -45,9 +45,12 @@ endfunction : new
 //--------------------------------------------------------------------------------------------
 function void i2c_slave_monitor_proxy::build_phase(uvm_phase phase);
   super.build_phase(phase);
-  if(!uvm_config_db #(i2c_slave_agent_config)::get(this,"","i2c_slave_agent_config",i2c_slave_agent_cfg_h))begin
-    `uvm_fatal("CONFIG","cannot get() the m_cfg from uvm_config_db. Have you set it?")
-  end
+
+  // TODO(mshariff): get the BFM here
+  //
+  // MSHA: if(!uvm_config_db #(i2c_slave_agent_config)::get(this,"","i2c_slave_agent_config",i2c_slave_agent_cfg_h))begin
+  // MSHA:   `uvm_fatal("CONFIG","cannot get() the m_cfg from uvm_config_db. Have you set it?")
+  // MSHA: end
 
     slave_analysis_port=new("slave_analysis_port",this);
 endfunction : build_phase

@@ -172,26 +172,26 @@ end
   i2c_env_cfg_h.i2c_slave_agent_cfg_h[0].has_coverage = 1;
   //i2c_env_cfg_h.i2c_slave_agent_cfg_h[0].slave_id = 0;
 
-  // Slave 1
-  i2c_env_cfg_h.i2c_slave_agent_cfg_h[1].slave_address = SLAVE1_ADDRESS;
-  i2c_env_cfg_h.i2c_slave_agent_cfg_h[1].is_active    = uvm_active_passive_enum'(UVM_ACTIVE);
-  i2c_env_cfg_h.i2c_slave_agent_cfg_h[1].shift_dir    = shift_direction_e'(MSB_FIRST);
-  i2c_env_cfg_h.i2c_slave_agent_cfg_h[1].has_coverage = 1;
- // i2c_env_cfg_h.i2c_slave_agent_cfg_h[1].slave_id = 1;
+ // MSHA:  // Slave 1
+ // MSHA:  i2c_env_cfg_h.i2c_slave_agent_cfg_h[1].slave_address = SLAVE1_ADDRESS;
+ // MSHA:  i2c_env_cfg_h.i2c_slave_agent_cfg_h[1].is_active    = uvm_active_passive_enum'(UVM_ACTIVE);
+ // MSHA:  i2c_env_cfg_h.i2c_slave_agent_cfg_h[1].shift_dir    = shift_direction_e'(MSB_FIRST);
+ // MSHA:  i2c_env_cfg_h.i2c_slave_agent_cfg_h[1].has_coverage = 1;
+ // MSHA: // i2c_env_cfg_h.i2c_slave_agent_cfg_h[1].slave_id = 1;
 
-  // Slave 2
-  i2c_env_cfg_h.i2c_slave_agent_cfg_h[2].slave_address = SLAVE2_ADDRESS;
-  i2c_env_cfg_h.i2c_slave_agent_cfg_h[2].is_active    = uvm_active_passive_enum'(UVM_ACTIVE);
-  i2c_env_cfg_h.i2c_slave_agent_cfg_h[2].shift_dir    = shift_direction_e'(MSB_FIRST);
-  i2c_env_cfg_h.i2c_slave_agent_cfg_h[2].has_coverage = 1;
- // i2c_env_cfg_h.i2c_slave_agent_cfg_h[2].slave_id = 2;
-  
-  // Slave 3
-  i2c_env_cfg_h.i2c_slave_agent_cfg_h[3].slave_address = SLAVE3_ADDRESS;
-  i2c_env_cfg_h.i2c_slave_agent_cfg_h[3].is_active    = uvm_active_passive_enum'(UVM_ACTIVE);
-  i2c_env_cfg_h.i2c_slave_agent_cfg_h[3].shift_dir    = shift_direction_e'(MSB_FIRST);
-  i2c_env_cfg_h.i2c_slave_agent_cfg_h[3].has_coverage = 1;
- // i2c_env_cfg_h.i2c_slave_agent_cfg_h[3].slave_id = 3;
+ // MSHA:  // Slave 2
+ // MSHA:  i2c_env_cfg_h.i2c_slave_agent_cfg_h[2].slave_address = SLAVE2_ADDRESS;
+ // MSHA:  i2c_env_cfg_h.i2c_slave_agent_cfg_h[2].is_active    = uvm_active_passive_enum'(UVM_ACTIVE);
+ // MSHA:  i2c_env_cfg_h.i2c_slave_agent_cfg_h[2].shift_dir    = shift_direction_e'(MSB_FIRST);
+ // MSHA:  i2c_env_cfg_h.i2c_slave_agent_cfg_h[2].has_coverage = 1;
+ // MSHA: // i2c_env_cfg_h.i2c_slave_agent_cfg_h[2].slave_id = 2;
+ // MSHA:  
+ // MSHA:  // Slave 3
+ // MSHA:  i2c_env_cfg_h.i2c_slave_agent_cfg_h[3].slave_address = SLAVE3_ADDRESS;
+ // MSHA:  i2c_env_cfg_h.i2c_slave_agent_cfg_h[3].is_active    = uvm_active_passive_enum'(UVM_ACTIVE);
+ // MSHA:  i2c_env_cfg_h.i2c_slave_agent_cfg_h[3].shift_dir    = shift_direction_e'(MSB_FIRST);
+ // MSHA:  i2c_env_cfg_h.i2c_slave_agent_cfg_h[3].has_coverage = 1;
+ // MSHA: // i2c_env_cfg_h.i2c_slave_agent_cfg_h[3].slave_id = 3;
 
   // TODO(mshariff): 
 

@@ -12,6 +12,7 @@ class i2c_slave_tx extends uvm_sequence_item;
   bit [SLAVE_ADDRESS_WIDTH-1:0]slave_address;
   bit [REGISTER_ADDRESS_WIDTH-1:0]register_address;
   bit [DATA_WIDTH-1:0]wr_data[];
+  read_write_e read_write;
 
   // Receiving data fields
   // This is derived from the config slave_address value
@@ -31,13 +32,14 @@ class i2c_slave_tx extends uvm_sequence_item;
   // TODO(mshariff): For randomily selecting the NEG_ACK for write_data elements 
   // constraint wr_data_ack_c2 {$countones(wr_data_ack) == 1; 
   //                            wr_data_ack == 2 ** (no_of_wr_data_elements);  }
-  // The no_of_wr_data_elements should be assignes in vseqence and pass it to both master and
+  // The no_of_wr_data_elements should be assignes in vseqence and pass it to both slave and
   // slave sequences for this to work
   
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
   extern function new(string name = "i2c_slave_tx");
+  extern function void do_print(uvm_printer printer);
 
 endclass : i2c_slave_tx
 
@@ -53,5 +55,27 @@ function i2c_slave_tx::new(string name = "i2c_slave_tx");
   super.new(name);
 endfunction : new
 
+//--------------------------------------------------------------------------------------------
+// Function: do_print method
+// Print method can be added to display the data members values
+//--------------------------------------------------------------------------------------------
+function void i2c_slave_tx::do_print(uvm_printer printer);
+  super.do_print(printer);
+
+  printer.print_field($sformatf("slave_address"),this.slave_address,$bits(slave_address),UVM_HEX);
+  printer.print_field($sformatf("register_address"),this.register_address,8,UVM_HEX);
+  printer.print_string($sformatf("read_write"),read_write.name());
+  
+  //foreach(wr_data[i]) begin
+  //  printer.print_field($sformatf("wr_data[%0d]",i),this.wr_data[i],8,UVM_HEX);
+  //end
+
+  printer.print_field($sformatf("slave_addr_ack"),this.slave_addr_ack,1,UVM_BIN);
+  printer.print_field($sformatf("reg_addr_ack"),this.reg_addr_ack,1,UVM_BIN);
+  //foreach(wr_data_ack[i]) begin
+  //  printer.print_field($sformatf("wr_data_ack[%0d]",i),this.wr_data_ack[i],1,UVM_HEX);
+  //end
+
+endfunction : do_print
 `endif
 

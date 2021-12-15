@@ -76,8 +76,8 @@ function void i2c_master_seq_item_converter::from_class(input i2c_master_tx inpu
 
   // Be default the ACK should be 1
   // so that the slave ACK value can be stored
-  output_conv.slave_add_ack = 1;
-  output_conv.reg_add_ack = 1;
+  output_conv.slave_addr_ack = 1;
+  output_conv.reg_addr_ack = 1;
   output_conv.wr_data_ack= '1;
 
 endfunction: from_class 
@@ -114,8 +114,8 @@ function void i2c_master_seq_item_converter::to_class(input i2c_transfer_bits_s 
   end
 
   // Acknowledgement bits
-  output_conv.slave_add_ack = input_conv_h.slave_add_ack;
-  output_conv.reg_add_ack = input_conv_h.reg_add_ack;
+  output_conv.slave_addr_ack = input_conv_h.slave_addr_ack;
+  output_conv.reg_addr_ack = input_conv_h.reg_addr_ack;
   for(int i=0; i<input_conv_h.no_of_i2c_bits_transfer/DATA_WIDTH; i++) begin
     output_conv.wr_data_ack.push_back(input_conv_h.wr_data_ack[i]);
   end
