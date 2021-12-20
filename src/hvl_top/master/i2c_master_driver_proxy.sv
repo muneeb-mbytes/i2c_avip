@@ -18,7 +18,6 @@ class i2c_master_driver_proxy extends uvm_driver#(i2c_master_tx);
   //-------------------------------------------------------
   extern function new(string name = "i2c_master_driver_proxy", uvm_component parent = null);
   extern virtual function void build_phase(uvm_phase phase);
-  extern virtual function void connect_phase(uvm_phase phase);
   extern virtual function void end_of_elaboration_phase(uvm_phase phase);
   extern virtual task run_phase(uvm_phase phase);
   extern virtual task drive_to_bfm(inout i2c_transfer_bits_s packet, 
@@ -50,18 +49,6 @@ function void i2c_master_driver_proxy::build_phase(uvm_phase phase);
   if(!uvm_config_db#(virtual i2c_master_driver_bfm)::get(this,"","i2c_master_driver_bfm",i2c_master_drv_bfm_h))
   `uvm_fatal("FATAL_MDP_CANNOT_GET_MASTER_DRIVER_BFM","cannot get () i2c_master_driver_bfm from uvm_config_db")
 endfunction : build_phase
-
-//--------------------------------------------------------------------------------------------
-// Function: connect_phase
-// <Description_here>
-//
-// Parameters:
-//  phase - uvm phase
-//--------------------------------------------------------------------------------------------
-
- function void i2c_master_driver_proxy::connect_phase(uvm_phase phase);
-  super.connect_phase(phase);
- endfunction : connect_phase
 
 //--------------------------------------------------------------------------------------------
 // Function: end_of_elaboration_phase

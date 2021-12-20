@@ -131,10 +131,5 @@ task i2c_slave_driver_proxy::run_phase(uvm_phase phase);
   
 endtask : run_phase
 
-//task i2c_slave_driver_proxy::drive_to_bfm(inout i2c_transfer_bits_s packet, 
-//                                          input i2c_transfer_cfg_s struct_cfg);
-//
-//endtask: drive_to_bfm
-
 `endif
 

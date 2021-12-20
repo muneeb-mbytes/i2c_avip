@@ -9,7 +9,7 @@
 
 class i2c_master_cfg_converter extends uvm_object;
   
-  
+  `uvm_object_utils(i2c_master_cfg_converter)
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
