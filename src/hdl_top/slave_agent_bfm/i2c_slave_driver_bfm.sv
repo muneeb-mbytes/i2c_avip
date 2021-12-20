@@ -61,18 +61,17 @@ interface i2c_slave_driver_bfm #(parameter string NAME = "I2C_SLAVE_DRIVER_BFM")
   //-------------------------------------------------------
   task wait_for_idle_state();
     @(posedge pclk);
-  
-    while(scl_i!=1 && sda_i!=1) begin
+      while(scl_i!=1 && sda_i!=1) begin
       @(posedge pclk);
     end
       
     `uvm_info(name, $sformatf("I2C bus is free state detected"), UVM_HIGH);
   endtask: wait_for_idle_state
   
-  //--------------------------------------------------------------------------------------------
+  //-------------------------------------------------------
   // Task: detect_start
   // Detects the START condition over I2C bus
-  //--------------------------------------------------------------------------------------------
+  //-------------------------------------------------------
   task detect_start();
     // 2bit shift register to check the edge on sda and stability on scl
     bit [1:0] scl_local;
@@ -80,13 +79,10 @@ interface i2c_slave_driver_bfm #(parameter string NAME = "I2C_SLAVE_DRIVER_BFM")
 
     // Detect the edge on scl
     do begin
-
       @(negedge pclk);
       scl_local = {scl_local[0], scl_i};
       sda_local = {sda_local[0], sda_i};
-
     end while(!(sda_local == NEGEDGE && scl_local == 2'b11) );
-
     state = START;
     `uvm_info(name, $sformatf("Start condition is detected"), UVM_HIGH);
   endtask: detect_start
