@@ -80,6 +80,7 @@ function void i2c_slave_agent::connect_phase(uvm_phase phase);
     i2c_slave_drv_proxy_h.seq_item_port.connect(i2c_slave_seqr_h.seq_item_export);
   end
 
+    i2c_slave_mon_proxy_h.i2c_slave_agent_cfg_h=i2c_slave_agent_cfg_h;
   // TODO(mshariff): Add the required connections for coverage
 endfunction : connect_phase
 

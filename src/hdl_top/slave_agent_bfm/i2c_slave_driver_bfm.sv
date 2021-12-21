@@ -188,7 +188,7 @@ interface i2c_slave_driver_bfm #(parameter string NAME = "I2C_SLAVE_DRIVER_BFM")
   //--------------------------------------------------------------------------------------------
   // Task: sample_data
   //--------------------------------------------------------------------------------------------
-  task sample_data(inout i2c_transfer_bits_s data_packet, input i2c_transfer_cfg_s cfg_pkt);
+  task sample_reg_address(inout i2c_transfer_bits_s data_packet, input i2c_transfer_cfg_s cfg_pkt);
     for(int i=0, bit_no=0; i<REGISTER_ADDRESS_WIDTH; i++) begin 
       // Logic for MSB first or LSB first 
       bit_no = cfg_pkt.msb_first ? ((REGISTER_ADDRESS_WIDTH - 1) - i) : i;
@@ -217,7 +217,7 @@ interface i2c_slave_driver_bfm #(parameter string NAME = "I2C_SLAVE_DRIVER_BFM")
 
     detect_posedge_scl();
       
-  endtask: sample_data
+  endtask: sample_reg_address
 
   //--------------------------------------------------------------------------------------------
   // Task: drive_sda 

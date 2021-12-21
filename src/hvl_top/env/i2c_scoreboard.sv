@@ -8,17 +8,26 @@
 class i2c_scoreboard extends uvm_component;
   `uvm_component_utils(i2c_scoreboard)
 
+  //Variable : i2c_master_tx_h
+  //declaring master transaction handle
   i2c_master_tx i2c_master_tx_h;
 
+  //Variable : i2c_salve_tx_h
+  //declaring slave transaction handle
   i2c_slave_tx i2c_slave_tx_h;
-  
+
+  //Variable : i2c_env_cfg_h
+  //declaring environment configuration handle
   i2c_env_config i2c_env_cfg_h;
 
-
-
+  //Variable : master_analysis_fifo
+  //declaring analysis fifo
   uvm_tlm_analysis_fifo#(i2c_master_tx)master_analysis_fifo;
-
+  
+  //Variable : slave_analysis_fifo
+  //declaring analysis fifo
   uvm_tlm_analysis_fifo#(i2c_slave_tx)slave_analysis_fifo;
+
   //-------------------------------------------------------
   // Externally defined Tasks and Functions
   //-------------------------------------------------------

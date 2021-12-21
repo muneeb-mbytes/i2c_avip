@@ -74,10 +74,10 @@ module i2c_slave_agent_bfm #(parameter int SLAVE_ID=0)
   // MSHA:                                                             i2c_slave_mon_bfm_h);
 
   static string drv_str, mon_str;
-  drv_str = {"i2c_slave_driver_bfm_",$sformatf("%0d",SLAVE_ID),"*"};
+  drv_str = {"i2c_slave_driver_bfm_",$sformatf("%0d",SLAVE_ID)};
   $display("DEBUG_MSHA :: drv_str = %0s", drv_str);
 
-  mon_str = {"i2c_slave_monitor_bfm_",$sformatf("%0d",SLAVE_ID),"*"};
+  mon_str = {"i2c_slave_monitor_bfm_",$sformatf("%0d",SLAVE_ID)};
   $display("DEBUG_MSHA :: mon_str = %0s", mon_str);
 
   uvm_config_db#(virtual i2c_slave_driver_bfm)::set(null,"*",drv_str,

@@ -70,9 +70,6 @@ endfunction  : end_of_elaboration_phase
 //
 //--------------------------------------------------------------------------------------------
 function void i2c_master_monitor_proxy::reset_detected();
-  `uvm_info(get_type_name(), $sformatf("System reset is detected"), UVM_NONE);
-
-
 endfunction : reset_detected
 
 //--------------------------------------------------------------------------------------------
@@ -105,13 +102,10 @@ task i2c_master_monitor_proxy::run_phase(uvm_phase phase);
 
     i2c_master_tx i2c_master_clone_packet;
 
-    //wait for the statrt condition
+    // wait for the start condition
     i2c_master_mon_bfm_h.detect_start();
 
-    
-    
-   // i2c_master_mon_bfm_h.wait_for_transfer_start();
-    
+    // i2c_master_mon_bfm_h.wait_for_transfer_start();
     i2c_master_cfg_converter::from_class(i2c_master_agent_cfg_h, struct_cfg);
 
     // Sample the slave address from I2C bus
@@ -122,7 +116,8 @@ task i2c_master_monitor_proxy::run_phase(uvm_phase phase);
     i2c_master_mon_bfm_h.sample_reg_address(struct_packet,struct_cfg);
 
     i2c_master_seq_item_converter::to_class(struct_packet,i2c_master_packet);
-    `uvm_info(get_type_name(), $sformatf("Received packet from BFM : \n%s",i2c_master_packet.sprint()),                                                                                 UVM_HIGH)
+    `uvm_info(get_type_name(), $sformatf("Received packet from BFM : \n%s",i2c_master_packet.sprint()),                                                                                
+    UVM_HIGH)
     
     // Clone and publish the cloned item to the subscribers
     $cast(i2c_master_clone_packet, i2c_master_packet.clone());

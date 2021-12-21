@@ -117,7 +117,7 @@ task i2c_slave_driver_proxy::run_phase(uvm_phase phase);
       struct_packet.read_write = rd_wr; 
       struct_packet.slave_addr_ack = ack;
 
-      i2c_slave_drv_bfm_h.sample_data(struct_packet, struct_cfg);
+      i2c_slave_drv_bfm_h.sample_reg_address(struct_packet, struct_cfg);
 
       i2c_slave_seq_item_converter::to_class(struct_packet, req);
       `uvm_info(get_type_name(),$sformatf("Received packet from SLAVE DRIVER BFM : , \n %s",
