@@ -119,7 +119,7 @@ interface i2c_master_driver_bfm(input pclk,
     sda_o   <= data_packet.slave_address[bit_no];
     state = i2c_fsm_state_e'(bit_no+10);
 
-    `uvm_info("DEBUG_MSHA", $sformatf("address = %0b, bit_no = %0d, data = %0b",
+    `uvm_info("DEBUG_MSHA", $sformatf("slave_address = %0d, bit_no = %0d, data = %0b",
             data_packet.slave_address, bit_no, data_packet.slave_address[bit_no]), UVM_NONE)
     
     scl_tristate_buf_off();
