@@ -109,7 +109,7 @@ task i2c_master_monitor_proxy::run_phase(uvm_phase phase);
     i2c_master_cfg_converter::from_class(i2c_master_agent_cfg_h, struct_cfg);
 
     // Sample the slave address from I2C bus
-    i2c_master_mon_bfm_h.sample_slave_address(struct_cfg, ack, rd_wr);
+    i2c_master_mon_bfm_h.sample_slave_address(struct_packet,struct_cfg, ack, rd_wr);
     
     `uvm_info("DEBUG_MSHA", $sformatf("Slave address %0x :: Received ACK %0s", 
                                        struct_cfg.slave_address, ack.name()), UVM_NONE);

@@ -144,7 +144,7 @@ interface i2c_master_monitor_bfm //#(parameter string NAME = "I2C_MASTER_MONITOR
   //  ack - Returns positive ack when the address matches with its slave address, otherwise 
   //  returns negative ack
   //--------------------------------------------------------------------------------------------
-  task sample_slave_address(input i2c_transfer_cfg_s cfg_pkt, output acknowledge_e ack, output read_write_e rd_wr);
+  task sample_slave_address(inout i2c_transfer_bits_s data_pkt,i2c_transfer_cfg_s cfg_pkt, output acknowledge_e ack, output read_write_e rd_wr);
     bit [SLAVE_ADDRESS_WIDTH-1:0] local_addr;
 
     for(int i=0, bit_no=0; i<SLAVE_ADDRESS_WIDTH; i++) begin 
@@ -155,9 +155,9 @@ interface i2c_master_monitor_bfm //#(parameter string NAME = "I2C_MASTER_MONITOR
       local_addr[bit_no] = sda_i;
       state = i2c_fsm_state_e'(bit_no+10);
     end
-
+      data_pkt.slave_address=local_addr;
     `uvm_info(name, $sformatf("DEBUG_MSHA :: Value of local_addr = %0x", local_addr), UVM_NONE); 
-    `uvm_info(name, $sformatf("DEBUG_MSHA :: Value of slave_address = %0x", cfg_pkt.slave_address), UVM_NONE); 
+    `uvm_info(name, $sformatf("DEBUG_MSHA11 :: Value of slave_address = %0h", cfg_pkt.slave_address), UVM_NONE); 
    
     // Check if the sampled address belongs to this slave
     if(local_addr != cfg_pkt.slave_address) begin

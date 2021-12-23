@@ -70,7 +70,7 @@ task i2c_scoreboard::run_phase(uvm_phase phase);
     master_analysis_fifo.get(i2c_master_tx_h);
     master_counter++;
     `uvm_info(get_type_name(),$sformatf("after calling master analysis fifo get method"),UVM_HIGH)
-    `uvm_info(get_type_name(),$sformatf("printing i2c_master_tx_h, \n %s",i2c_master_tx_h.sprint()),UVM_HIGH)
+    `uvm_info(get_type_name(),$sformatf("nadeem30 printing i2c_master_tx_h, \n %s",i2c_master_tx_h.sprint()),UVM_HIGH)
     `uvm_info(get_type_name(),$sformatf("printing i2c_master_tx_h, \n %p,%d",i2c_master_tx_h,master_counter),UVM_HIGH)
 
     `uvm_info(get_type_name(),$sformatf("before calling slave analysis fifo get method"),UVM_HIGH)
@@ -80,12 +80,10 @@ task i2c_scoreboard::run_phase(uvm_phase phase);
     `uvm_info(get_type_name(),$sformatf("printing i2c_slave_tx_h, \n %s",i2c_slave_tx_h.sprint()),UVM_HIGH)
     `uvm_info(get_type_name(),$sformatf("CHETAN printing i2c_slave_tx_h, \n %p,%d",i2c_slave_tx_h,slave_counter),UVM_HIGH)
   
-    foreach(i2c_master_tx_h.slave_address[i])
-    begin
-      if(i2c_master_tx_h.slave_address[i]==i2c_slave_tx_h.slave_address[i])
+      if(i2c_master_tx_h.slave_address==i2c_slave_tx_h.slave_address)
         begin
         `uvm_info(get_type_name(),$sformatf("address matched"),UVM_HIGH)
-        `uvm_info("SB_SLAVE_ADDR_MATCHED", $sformatf("Master SLAVE_ADDR = %0d and Slave SLAVE_ADDR = %0d",i,i2c_master_tx_h.slave_address[i],i,i2c_slave_tx_h.slave_address[i]), UVM_HIGH); 
+        `uvm_info("SB_SLAVE_ADDR_MATCHED", $sformatf("Master SLAVE_ADDR = %0d and Slave SLAVE_ADDR = %0d",i2c_master_tx_h.slave_address,i2c_slave_tx_h.slave_address), UVM_HIGH); 
 
         byte_data_cmp_verified_master_reg_addr_count++;
 
@@ -94,7 +92,6 @@ task i2c_scoreboard::run_phase(uvm_phase phase);
         begin
         `uvm_info(get_type_name(),$sformatf("address mismatch"),UVM_HIGH)
         end
-      end
   
   end
 

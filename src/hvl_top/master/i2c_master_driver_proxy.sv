@@ -100,6 +100,7 @@ task i2c_master_driver_proxy::run_phase(uvm_phase phase);
     // MSHA: `uvm_info(get_type_name(), $sformatf("After :: Converted req struct\n%p",struct_packet), UVM_HIGH)
     
    seq_item_port.item_done();
+   `uvm_info(get_type_name(), $sformatf("Completed Item Done\n%s",req.sprint()), UVM_HIGH)
 
   end
 endtask : run_phase
