@@ -100,15 +100,15 @@ task i2c_slave_monitor_proxy::run_phase(uvm_phase phase);
     i2c_slave_cfg_converter::from_class(i2c_slave_agent_cfg_h, struct_cfg);
 
     // Sample the slave address from I2C bus
-    i2c_slave_mon_bfm_h.sample_slave_address(struct_cfg, ack, rd_wr);
+    i2c_slave_mon_bfm_h.sample_slave_address(struct_cfg, struct_packet, ack, rd_wr);
     
     `uvm_info("DEBUG_MSHA", $sformatf("Slave address %0x :: Received ACK %0s", 
                                        struct_cfg.slave_address, ack.name()), UVM_NONE);
+    i2c_slave_seq_item_converter::to_class(struct_packet,i2c_slave_packet);
+    `uvm_info(get_type_name(), $sformatf("Received packet from BFM : \n%s",i2c_slave_packet.sprint()),UVM_HIGH)
+
     i2c_slave_mon_bfm_h.sample_reg_address(struct_packet,struct_cfg);
 
-    i2c_slave_seq_item_converter::to_class(struct_packet,i2c_slave_packet);
-    `uvm_info(get_type_name(), $sformatf("Received packet from BFM : \n%s",i2c_slave_packet.sprint()),                                                                                
-    UVM_HIGH)
     
     // Clone and publish the cloned item to the subscribers
     $cast(i2c_slave_clone_packet, i2c_slave_packet.clone());

@@ -145,17 +145,22 @@ interface i2c_slave_monitor_bfm(input pclk,
   //  ack - Returns positive ack when the address matches with its slave address, otherwise 
   //  returns negative ack
   //--------------------------------------------------------------------------------------------
-  task sample_slave_address(input i2c_transfer_cfg_s cfg_pkt, output acknowledge_e ack, output read_write_e rd_wr);
+  task sample_slave_address(input i2c_transfer_cfg_s cfg_pkt,i2c_transfer_bits_s data_pkt,
+    output acknowledge_e ack, output read_write_e rd_wr);
     bit [SLAVE_ADDRESS_WIDTH-1:0] local_addr;
+    @(posedge scl_i);
 
     for(int i=0, bit_no=0; i<SLAVE_ADDRESS_WIDTH; i++) begin 
       // Logic for MSB first or LSB first 
       bit_no = cfg_pkt.msb_first ? ((SLAVE_ADDRESS_WIDTH - 1) - i) : i;
 
       detect_negedge_scl();
+      `uvm_info("venkat",$sformatf("sda = \n %0p",sda_i),UVM_HIGH)
       local_addr[bit_no] = sda_i;
       state = i2c_fsm_state_e'(bit_no+10);
     end
+      data_pkt.slave_address = local_addr;
+      `uvm_info("venkat",$sformatf("strtuct = \n %0p",data_pkt.slave_address),UVM_HIGH)
 
     `uvm_info(name, $sformatf("DEBUG_MSHA :: Value of local_addr = %0x", local_addr), UVM_NONE); 
     `uvm_info(name, $sformatf("DEBUG_MSHA :: Value of slave_address = %0x", cfg_pkt.slave_address), UVM_NONE); 
@@ -188,7 +193,7 @@ interface i2c_slave_monitor_bfm(input pclk,
       state = i2c_fsm_state_e'(bit_no+20);
     end
 
-    `uvm_info(name, $sformatf("DEBUG_MSHA :: Value of register_address = %0x", data_packet.register_address), UVM_NONE); 
+    `uvm_info(name, $sformatf("DEBUG_MSH :: Value of register_address = %0b", data_packet.register_address), UVM_NONE); 
     
   endtask: sample_reg_address
 

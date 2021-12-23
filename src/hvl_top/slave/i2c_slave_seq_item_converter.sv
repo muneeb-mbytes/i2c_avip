@@ -52,6 +52,9 @@ function void i2c_slave_seq_item_converter::from_class(input i2c_slave_tx input_
   
   output_conv.reg_addr_ack = input_conv_h.reg_addr_ack;
   output_conv.wr_data_ack = input_conv_h.wr_data_ack;
+  //`uvm_info("chethan",$sformatf("strtuct = \n %0p",input_conv_h.slave_address),UVM_HIGH)
+  //output_conv.slave_address = input_conv_h.slave_address;
+  //`uvm_info("chethan",$sformatf("strtuct = \n %0p",output_conv.slave_address),UVM_HIGH)
   
   output_conv.no_of_i2c_bits_transfer = input_conv_h.rd_data.size() * DATA_WIDTH;
 
@@ -74,6 +77,7 @@ function void i2c_slave_seq_item_converter::to_class(input i2c_transfer_bits_s i
 
   // Storing the values in the respective arrays
   //converting back the slave address 
+  `uvm_info("chethan",$sformatf("strtuct = \n %0p",input_conv_h.slave_address),UVM_HIGH)
   output_conv.slave_address = input_conv_h.slave_address;    
   `uvm_info("slave_seq_item_conv_class",
   $sformatf("To class slave_address = \n %p",output_conv.slave_address),UVM_LOW)
