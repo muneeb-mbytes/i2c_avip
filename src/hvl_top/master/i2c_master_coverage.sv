@@ -22,6 +22,72 @@ class i2c_master_coverage extends uvm_subscriber#(i2c_master_tx);
 
     // Mode of the operation
     
+    //this coverpoint is to check the slave address width
+    SLAVE_ADDRESS_WID_CP : coverpoint cfg.slave_address_array.size()*SLAVE_ADDRESS_WIDTH{
+      option.comment = "Width of the the slave address";
+
+      bins SLAVE_ADDRESS_WIDTH_7 = {7};
+      bins SLAVE_ADDRESS_WIDTH_10 = {10};
+    }
+
+    //this coverpoint is to check the slave register address width
+    SLAVE_REGISTER_ADDRESS_WID_CP : coverpoint cfg.slave_register_address_array.size()*REGISTER_ADDRESS_WIDTH{
+      option.comment = "Width of the the slave register address";
+
+      bins SLAVE_REGISTER_ADDRESS_WIDTH_8 = {8};
+    }
+    
+    //this coverpoint is to check the write data width
+ //   WR_DATA_WID_CP : coverpoint packet.wr_data.size()*DATA_WIDTH{
+ //     option.comment = "Width of the the slave address";
+
+ //     bins WRITE_DATA_WIDTH_8 = {8};
+ //     bins WRITE_DATA_WIDTH_16 = {16};
+ //     bins WRITE_DATA_WIDTH_24 = {24};
+ //     bins WRITE_DATA_WIDTH_32 = {32};
+ //     bins WRITE_DATA_WIDTH_MAX = {[48:MAXIMUM_BITS]};
+ //   }
+    
+ //   //this coverpoint is to check the read data width
+ //   RD_DATA_WID_CP : coverpoint packet.rd_data.size()*DATA_WIDTH{
+ //     option.comment = "Width of the the slave address";
+
+ //     bins READ_DATA_WIDTH_8 = {8};
+ //     bins READ_DATA_WIDTH_16 = {16};
+ //     bins READ_DATA_WIDTH_24 = {24};
+ //     bins READ_DATA_WIDTH_32 = {32};
+ //     bins READ_DATA_WIDTH_MAX = {[48:MAXIMUM_BITS]};
+ //   }
+    //this coverpoint is to check the operation is read or write 
+    OPERATION_READ_WRITE_CP : coverpoint read_write_e'(packet.read_write){
+      option.comment = "operation is read or write";
+
+      bins READ = {1};
+      bins WRITE = {0};
+    }
+
+    //this coverpoint is to check the direction of the data transfer 
+    SHIFT_DIRECTION_CP : coverpoint shift_direction_e'(cfg.shift_dir){
+      option.comment = "shift_direction of i2c MSB or LSB";
+
+      bins LSB_FIRST = {0};
+      bins MSB_FIRST = {1};
+    }
+    
+
+  //  BAUD_RATE_CP : coverpoint cfg.baudrate_divisior {
+  //    option.comment = "it controls the rate of the transfer in the communicaton channel";
+
+  //    bins BAUDRATE_DIVISIOR_2 = {2};
+  //    bins BAUDRATE_DIVISIOR_4 = {4};
+  //    bins BAUDRATE_DIVISIOR_6 = {6};
+  //    bins BAUDRATE_DIVISIOR_ABOVE_8 = {[8:$]};
+
+  //    illegal_bins illegal_bin = {0};
+  //  }
+
+
+
 
   endgroup : master_covergroup
 
@@ -29,11 +95,7 @@ class i2c_master_coverage extends uvm_subscriber#(i2c_master_tx);
   // Externally defined Tasks and Functions
   //-------------------------------------------------------
   extern function new(string name = "i2c_master_coverage", uvm_component parent = null);
-  //extern virtual function void build_phase(uvm_phase phase);
-  //extern virtual function void connect_phase(uvm_phase phase);
-  //extern virtual function void end_of_elaboration_phase(uvm_phase phase);
-  //extern virtual function void start_of_simulation_phase(uvm_phase phase);
-  //extern virtual task run_phase(uvm_phase phase);
+  extern virtual function void display();
   extern virtual function void write(i2c_master_tx t);
   extern virtual function void report_phase(uvm_phase phase);
 
@@ -57,6 +119,17 @@ function i2c_master_coverage::new(string name = "i2c_master_coverage", uvm_compo
 endfunction : new
 
 //--------------------------------------------------------------------------------------------
+// Contains the display statements 
+//--------------------------------------------------------------------------------------------
+function void i2c_master_coverage::display();
+  $display("");
+  $display("--------------------------------------");
+  $display("MASTER COVERAGE");
+  $display("--------------------------------------");
+  $display("");
+endfunction : display
+
+//--------------------------------------------------------------------------------------------
 // Function: write
 // // TODO(mshariff): Add comments
 // sampiling is done
@@ -64,10 +137,6 @@ endfunction : new
 function void i2c_master_coverage::write(i2c_master_tx t);
 //  // TODO(mshariff): 
    master_covergroup.sample(i2c_master_agent_cfg_h,t);     
-//   `uvm_info(get_type_name(),$sformatf("master_cg=%0d",master_cg),UVM_LOW);
-//
-//   `uvm_info(get_type_name(),$sformatf(master_cg),UVM_LOW);
-//
 endfunction: write
 
 //--------------------------------------------------------------------------------------------
@@ -75,6 +144,7 @@ endfunction: write
 // Used for reporting the coverage instance percentage values
 //--------------------------------------------------------------------------------------------
 function void i2c_master_coverage::report_phase(uvm_phase phase);
+  display();
   `uvm_info(get_type_name(), $sformatf("Master Agent Coverage = %0.2f %%",master_covergroup.get_coverage()), UVM_NONE);
 //  `uvm_info(get_type_name(), $sformatf("Master Agent Coverage") ,UVM_NONE);
 endfunction: report_phase

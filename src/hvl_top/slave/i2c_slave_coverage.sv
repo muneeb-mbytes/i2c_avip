@@ -13,7 +13,7 @@ class i2c_slave_coverage extends uvm_subscriber#(i2c_slave_tx);
 
   // Variable: master_agent_cfg_h
   // Declaring handle for master agent configuration class 
-  i2c_slave_agent_config slave_agent_cfg_h;
+  i2c_slave_agent_config i2c_slave_agent_cfg_h;
 
   //-------------------------------------------------------
   // Covergroup
@@ -62,7 +62,7 @@ endfunction : display
 // To acess the subscriber write function is required with default parameter as t
 //--------------------------------------------------------------------------------------------
 function void i2c_slave_coverage::write(i2c_slave_tx t);
-    slave_covergroup.sample(slave_agent_cfg_h,t);     
+    slave_covergroup.sample(i2c_slave_agent_cfg_h,t);     
 endfunction: write
 
 //--------------------------------------------------------------------------------------------
