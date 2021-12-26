@@ -101,11 +101,11 @@ task i2c_slave_monitor_proxy::run_phase(uvm_phase phase);
     // Sample the slave address from I2C bus
     i2c_slave_mon_bfm_h.sample_slave_address(struct_cfg, struct_packet, ack, rd_wr);
     
-    `uvm_info("DEBUG_NADEEM", $sformatf("Slave address %0x :: Received ACK %0s", 
-                                       struct_cfg.slave_address, ack.name()), UVM_NONE);
-    `uvm_info("DEBUG_NADEEM10", $sformatf("Slave address %0x :: Received ACK %0s", 
-                                       struct_packet.slave_address, ack.name()), UVM_NONE);
-    `uvm_info("DEBUG_NADEEM20", $sformatf("Struct packet %0p", 
+    `uvm_info("DEBUG_chetan", $sformatf("Slave address %0x :: Received ACK %0s", 
+                                struct_cfg.slave_address, ack.name()), UVM_NONE);
+    `uvm_info("DEBUG_chetan10", $sformatf("Slave address %0x :: Received ACK %0s", 
+                                 struct_packet.slave_address, ack.name()), UVM_NONE);
+    `uvm_info("DEBUG_chetan20", $sformatf("Struct packet %0p", 
                                        struct_packet), UVM_NONE);
     i2c_slave_seq_item_converter::to_class(struct_packet,i2c_slave_packet);
     `uvm_info("Saketh", $sformatf("Received packet from BFM : \n%s",i2c_slave_packet.sprint()),UVM_HIGH)
@@ -116,7 +116,7 @@ task i2c_slave_monitor_proxy::run_phase(uvm_phase phase);
     
     // Clone and publish the cloned item to the subscribers
     $cast(i2c_slave_clone_packet, i2c_slave_packet.clone());
-    `uvm_info(get_type_name(),$sformatf("Nadeem40 Sending packet via analysis_port : , \n %s",
+    `uvm_info(get_type_name(),$sformatf("Chetan50 Sending packet via analysis_port : , \n %s",
                                         i2c_slave_clone_packet.sprint()),UVM_HIGH)
     slave_analysis_port.write(i2c_slave_clone_packet);
   
