@@ -40,6 +40,8 @@ class i2c_slave_tx extends uvm_sequence_item;
   //-------------------------------------------------------
   extern function new(string name = "i2c_slave_tx");
   extern function void do_print(uvm_printer printer);
+  extern function void do_copy(uvm_object rhs);
+  extern function bit do_compare(uvm_object rhs, uvm_comparer comparer); 
 
 endclass : i2c_slave_tx
 
@@ -77,5 +79,40 @@ function void i2c_slave_tx::do_print(uvm_printer printer);
   //end
 
 endfunction : do_print
+
+//--------------------------------------------------------------------------------------------
+// do_copy method
+//--------------------------------------------------------------------------------------------
+function void i2c_slave_tx::do_copy (uvm_object rhs);
+  i2c_slave_tx rhs_;
+  
+  if(!$cast(rhs_,rhs)) begin
+    `uvm_fatal("do_copy","cast of the rhs object failed")
+  end
+  super.do_copy(rhs);
+
+  slave_address= rhs_.slave_address;
+  register_address= rhs_.register_address;
+  wr_data = rhs_.wr_data;
+
+endfunction : do_copy
+
+
+//--------------------------------------------------------------------------------------------
+// do_compare method
+//--------------------------------------------------------------------------------------------
+function bit i2c_slave_tx::do_compare (uvm_object rhs,uvm_comparer comparer);
+  i2c_slave_tx rhs_;
+
+  if(!$cast(rhs_,rhs)) begin
+  `uvm_fatal("FATAL_I2C_MASTER_TX_DO_COMPARE_FAILED","cast of the rhs object failed")
+  return 0;
+  end
+
+  return super.do_compare(rhs,comparer) &&
+  slave_address == rhs_.slave_address &&
+  register_address == rhs_.register_address &&
+  wr_data == rhs_.wr_data;
+endfunction : do_compare 
 `endif
 

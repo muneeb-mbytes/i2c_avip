@@ -117,8 +117,8 @@ task i2c_slave_monitor_proxy::run_phase(uvm_phase phase);
     // Clone and publish the cloned item to the subscribers
     $cast(i2c_slave_clone_packet, i2c_slave_packet.clone());
     `uvm_info(get_type_name(),$sformatf("Nadeem40 Sending packet via analysis_port : , \n %s",
-                                        i2c_slave_packet.sprint()),UVM_HIGH)
-    slave_analysis_port.write(i2c_slave_packet);
+                                        i2c_slave_clone_packet.sprint()),UVM_HIGH)
+    slave_analysis_port.write(i2c_slave_clone_packet);
   
   end
 
