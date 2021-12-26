@@ -82,6 +82,11 @@ function void i2c_slave_agent::connect_phase(uvm_phase phase);
 
     i2c_slave_mon_proxy_h.i2c_slave_agent_cfg_h=i2c_slave_agent_cfg_h;
   // TODO(mshariff): Add the required connections for coverage
+  
+   if(i2c_slave_agent_cfg_h.has_coverage) begin                                                         
+        i2c_slave_cov_h.i2c_slave_agent_cfg_h = i2c_slave_agent_cfg_h;                                          
+        i2c_slave_mon_proxy_h.slave_analysis_port.connect(i2c_slave_cov_h.analysis_export);                  
+          end  
 endfunction : connect_phase
 
 `endif

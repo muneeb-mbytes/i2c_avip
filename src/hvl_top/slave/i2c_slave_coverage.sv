@@ -21,7 +21,6 @@ class i2c_slave_coverage extends uvm_subscriber#(i2c_slave_tx);
   //-------------------------------------------------------
   covergroup slave_covergroup with function sample (i2c_slave_agent_config cfg, i2c_slave_tx packet);
   option.per_instance = 1;
-
   endgroup :slave_covergroup
 
 
