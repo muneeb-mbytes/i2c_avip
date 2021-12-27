@@ -29,6 +29,16 @@ class i2c_master_coverage extends uvm_subscriber#(i2c_master_tx);
       bins SLAVE_ADDRESS_WIDTH_7 = {7};
       bins SLAVE_ADDRESS_WIDTH_10 = {10};
     }
+    
+    //this coverpoint is to check the slave address width
+    SLAVE_ADDRESS_CP : coverpoint packet.slave_address{
+      option.comment = " slave address";
+
+      bins SLAVE0_ADDRESS = {7'h68};
+      bins SLAVE1_ADDRESS = {7'h6C};
+      bins SLAVE2_ADDRESS = {7'h7C};
+      bins SLAVE3_ADDRESS = {7'h4C};
+    }
 
     //this coverpoint is to check the slave register address width
     SLAVE_REGISTER_ADDRESS_WID_CP : coverpoint cfg.slave_register_address_array.size()*REGISTER_ADDRESS_WIDTH{

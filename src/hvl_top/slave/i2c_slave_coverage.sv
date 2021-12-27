@@ -39,12 +39,13 @@ class i2c_slave_coverage extends uvm_subscriber#(i2c_slave_tx);
       bins SLAVE_ADDR_ACK = {1};
       bins SLAVE_ADDR_NACK = {0};
     }
+    
     //this coverpoint is to check the slave register address width
-    //SLAVE_REGISTER_ADDRESS_WID_CP : coverpoint cfg.slave_register_address_array.size()*REGISTER_ADDRESS_WIDTH{
-    //  option.comment = "Width of the the slave register address";
+    SLAVE_REGISTER_ADDRESS_WID_CP : coverpoint packet.register_address {
+      option.comment = "Width of the the slave register address";
 
-    //  bins SLAVE_REGISTER_ADDRESS_WIDTH_8 = {8};
-    //}
+      bins SLAVE_REGISTER_ADDRESS_WIDTH_8 = {8};
+    }
     
     //this coverpoint is to check the write data width
  //   WR_DATA_WID_CP : coverpoint packet.wr_data.size()*DATA_WIDTH{
@@ -67,13 +68,13 @@ class i2c_slave_coverage extends uvm_subscriber#(i2c_slave_tx);
  //     bins READ_DATA_WIDTH_32 = {32};
  //     bins READ_DATA_WIDTH_MAX = {[48:MAXIMUM_BITS]};
  //   }
- //   //this coverpoint is to check the operation is read or write 
- //   OPERATION_READ_WRITE_CP : coverpoint read_write_e'(packet.read_write){
- //     option.comment = "operation is read or write";
+    //this coverpoint is to check the operation is read or write 
+    OPERATION_READ_WRITE_CP : coverpoint read_write_e'(packet.read_write){
+      option.comment = "operation is read or write";
 
- //     bins READ = {1};
- //     bins WRITE = {0};
- //   }
+      bins READ = {1};
+      bins WRITE = {0};
+    }
 
     //this coverpoint is to check the direction of the data transfer 
     SHIFT_DIRECTION_CP : coverpoint shift_direction_e'(cfg.shift_dir){

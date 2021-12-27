@@ -102,7 +102,7 @@ task i2c_slave_driver_proxy::run_phase(uvm_phase phase);
 
     // Sample the slave address from I2C bus
     i2c_slave_drv_bfm_h.sample_slave_address(struct_cfg, ack, rd_wr);
-    `uvm_info("DEBUG_MSHA", $sformatf("Slave address %0x :: Received ACK %0s", 
+    `uvm_info("DEBUG_MUKUL", $sformatf("Slave address %0x :: Received ACK %0s", 
                                        struct_cfg.slave_address, ack.name()), UVM_NONE); 
 
     // Proceed further only if the I2C packet is addressed to this slave                                       
